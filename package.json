@@ -1,5 +1,5 @@
 {
-  "name": "fefd-project",
+  "name": "medicare-project",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,8 +10,25 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.13.5",
+    "@reduxjs/toolkit": "^1.9.5",
+    "axios": "^1.4.0",
+    "bcrypt": "^5.1.0",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.1.1",
+    "dotenv": "^16.2.0",
+    "express": "^4.18.2",
+    "mongoose": "^7.3.3",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-helmet": "^6.1.0",
+    "react-redux": "^8.1.1",
+    "react-router-dom": "^6.13.0",
+    "swr": "^2.2.0",
+    "validator": "^13.9.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
@@ -21,6 +38,17 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
-    "vite": "^4.4.5"
+    "vite": "^4.4.5",
+    "vite-plugin-restart": "^0.3.1",
+    "nodemon": "^2.0.22",
+    "concurrently": "^8.2.0",
+    "@types/bcrypt": "^5.0.0",
+    "@types/compression": "^1.7.2",
+    "@types/cors": "^2.8.13",
+    "@types/crypto-js": "^4.1.1",
+    "@types/express": "^4.17.17",
+    "@types/react-helmet": "^6.1.6",
+    "@types/validator": "^13.7.17",
+    "@vitejs/plugin-react-swc": "^3.0.0"
   }
 }
