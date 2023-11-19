@@ -1,10 +1,18 @@
 import { config } from "dotenv";
 config();
-import express from "express";
 import connectDB from "./db/connectDB.js"
-const app = express();
+import app from "./app.js"
+import cors from "cors"
+import bodyParser from "body-parser"
+
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cors());
 
 const port = process.env.port || 4000;
+
+
 
 const start = async () => {
     try {
