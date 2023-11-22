@@ -24,5 +24,22 @@ app.post("/hospital-registration", async function (req, res) {
     }
 });
 
+// Display registration requests on admin page
+app.get("/admin-verification", (req, res) => {
+    Hospital.find({})
+        .then((hospitals) => {
+            res.json({ RegistrationHospitals: hospitals });
+            
+        })
+        .catch((error) => {
+            console.error("Error fetching hospitals:", error);
+            res.status(500).json({ error: "Internal Server Error" });
+        });
+});
+
+
+
+
+
 export default app;
 
