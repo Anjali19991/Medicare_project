@@ -169,7 +169,7 @@ const HospitalForm = () => {
                         <label htmlFor="numDoctors" className="block text-teal-700 text-sm font-bold">Number of Doctors:</label>
                     </div>
                     <input
-                        type="text"
+                        type="number"
                         id="numDoctors"
                         name="numDoctors"
                         pattern="^[1-9]\d*$"
