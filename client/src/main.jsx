@@ -7,20 +7,20 @@ import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import MedicineReducer from './features/MedicineSlice.js'
 
+
 const store = configureStore({
-  reducer:{
-    medicines:MedicineReducer
+  reducer: {
+    medicines: MedicineReducer
   }
 })
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    
-    <BrowserRouter>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </BrowserRouter>
-   
-  </React.StrictMode>   
+
+      <BrowserRouter>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </BrowserRouter>
+  </React.StrictMode>
 );

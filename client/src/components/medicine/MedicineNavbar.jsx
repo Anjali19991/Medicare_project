@@ -11,9 +11,9 @@ export const MedicineNavbar = () => {
 
   return (
     <>
-      <nav className='flex justify-between items-center p-6 bg-[#02474d]'>
+      <nav className='fixed w-full z-10  flex justify-between items-center py-6 px-14 max-[524px]:px-4 bg-[#02474d]'>
         <div className='flex items-center gap-2'>
-          <Link to={'/buymedicines'} className='text-2xl text-white'>MEDI<span className='text-[#59ce8f]'>STORE</span></Link>
+          <Link to={'/buymedicines'} className='text-2xl font-semibold text-white'>MEDI<span className='text-[#59ce8f]'>STORE</span></Link>
           <img src="/store.png" alt="" className='w-8' />
         </div>
         <div className='text-white'>
