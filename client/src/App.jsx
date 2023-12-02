@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, Outlet } from 'react-router-dom';
+import { Route, Routes, Outlet } from 'react-router-dom';
 import HospitalForm from './components/HospitalForm/HospitalForm';
 import Home from './components/home';
 import React from 'react';
@@ -6,10 +6,11 @@ import { MedicineNavbar } from './components/medicine/MedicineNavbar';
 import { Medicines } from './components/medicine/Medicine';
 import CartPage from './components/medicine/CartPage';
 import { MedicineInfo } from './components/medicine/MedicineInfo';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AdminVerification from './components/AdminControls/AdminVerification';
 import AdminDashBoard from './components/AdminControls/AdminDashBoard';
+import AdminAnnouncements from './components/AdminControls/AdminAnnouncements';
 
 
 const Layout = () => {
@@ -29,6 +30,7 @@ export default function App() {
           <Route path='hospital-registration' element={<HospitalForm />} />
           <Route path='admin-verification' element={<AdminVerification />} />
           <Route path='admin-dashboard' element={<AdminDashBoard/>}/>
+          <Route path='admin-announcements' element={<AdminAnnouncements />} />
 
         </Route>
         <Route path='/buymedicines' element={<MedicineNavbar />}>

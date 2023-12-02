@@ -8,6 +8,7 @@ import { Provider } from 'react-redux'
 import MedicineReducer from './features/MedicineSlice.js'
 
 
+
 const store = configureStore({
   reducer: {
     medicines: MedicineReducer

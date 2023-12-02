@@ -16,9 +16,6 @@ const requestsData = [
     { id: 7, name: 'Dr. John', type: 'Doctor', status: 'Pending' },
 ];
 
-const boldText = {
-    fontWeight: 'bold',
-};
 
 const AdminVerificationPage = () => {
     const initialRequests = JSON.parse(localStorage.getItem('requestsData')) || requestsData;
@@ -70,19 +67,19 @@ const AdminVerificationPage = () => {
         <div>
             <NavBarComponent />
             <Container>
-                <Typography variant="h4" align="center" className="mt-4 mb-2 font-bold text-2xl text-gray-500">
+                <Typography variant="h4" align="center" className="mt-10 mb-4 pt-5 font-bold text-2xl text-teal-600">
                     Verification Page
                 </Typography>
 
-                <TableContainer component={Paper} className="mt-4 bg-teal-200">
+                <TableContainer component={Paper} className="mt-6 bg-teal-200">
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell className={boldText}>ID</TableCell>
-                                <TableCell className={boldText}>Name</TableCell>
-                                <TableCell className={boldText}>Type</TableCell>
-                                <TableCell className={boldText}>Status</TableCell>
-                                <TableCell className={boldText}>Action</TableCell>
+                                <TableCell >ID</TableCell>
+                                <TableCell >Name</TableCell>
+                                <TableCell >Type</TableCell>
+                                <TableCell >Status</TableCell>
+                                <TableCell >Action</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>

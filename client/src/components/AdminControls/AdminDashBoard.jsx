@@ -22,7 +22,7 @@ const AdminDashBoard = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {/* Pending Requests Card */}
-                    <div className="bg-gray-100 p-8 rounded-lg shadow-md flex flex-col justify-between">
+                    <div className="bg-teal-50 p-8 rounded-lg shadow-md flex flex-col justify-between">
                         <div>
                             <h2 className="text-2xl lg:text-3xl font-bold mb-4 flex items-center text-gray-800">
                                 <IoMdTime size={32} className="mr-4" />
@@ -38,7 +38,7 @@ const AdminDashBoard = () => {
                     </div>
 
                     {/* Approved Requests Card */}
-                    <div className="bg-gray-100 p-8 rounded-lg shadow-md flex flex-col justify-between">
+                    <div className="bg-teal-50 p-8 rounded-lg shadow-md flex flex-col justify-between">
                         <div>
                             <h2 className="text-2xl lg:text-3xl font-bold mb-4 flex items-center text-gray-800">
                                 <IoMdCheckmark size={32} className="mr-4" />
@@ -54,7 +54,7 @@ const AdminDashBoard = () => {
                     </div>
 
                     {/* Total Counts Card */}
-                    <div className="bg-gray-100 p-8 rounded-lg shadow-md flex flex-col justify-between">
+                    <div className="bg-teal-50 p-8 rounded-lg shadow-md flex flex-col justify-between">
                         <div>
                             <h2 className="text-2xl lg:text-3xl font-bold mb-4 flex items-center text-gray-800">
                                 <IoMdPeople size={32} className="mr-4" />
