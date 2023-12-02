@@ -1,84 +1,129 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { FaCheck, FaTimes } from 'react-icons/fa';
+import NavBarComponent from './NavBarComponent';
+import { Container, Paper, Typography, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
+import { MdVerifiedUser, MdClose, MdHourglassFull } from 'react-icons/md';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const AdminVerification = () => {
-    const [registrationHospitals, setRegistrationHospitals] = useState([]);
+const requestsData = [
+    { id: 1, name: 'Saint John Medical Center', type: 'Hospital', status: 'Pending' },
+    { id: 2, name: 'Dr. Emily Johnson', type: 'Doctor', status: 'Pending' },
+    { id: 3, name: 'City General Hospital', type: 'Hospital', status: 'Pending' },
+    { id: 4, name: 'Dr. Michael Anderson', type: 'Doctor', status: 'Pending' },
+    { id: 5, name: 'Sunset Medical Group', type: 'Hospital', status: 'Pending' },
+    { id: 6, name: 'Dr. Sarah Miller', type: 'Doctor', status: 'Pending' },
+    { id: 7, name: 'Dr. John', type: 'Doctor', status: 'Pending' },
+];
+
+const boldText = {
+    fontWeight: 'bold',
+};
+
+const AdminVerificationPage = () => {
+    const initialRequests = JSON.parse(localStorage.getItem('requestsData')) || requestsData;
+    const [requests, setRequests] = useState(initialRequests);
 
     useEffect(() => {
-        const fetchHospitals = async () => {
-            try {
-                const response = await axios.get('http://localhost:4000/admin-verification');
-                setRegistrationHospitals(response.data.RegistrationHospitals);
-            } catch (error) {
-                console.error('Error fetching hospitals:', error);
-            }
-        };
+        const stringifiedData = JSON.stringify(requests);
+        console.log('Storing in localStorage:', stringifiedData);
+        localStorage.setItem('requestsData', stringifiedData);
+        localStorage.clear();
+    }, [requests],[requestsData]);
 
-        fetchHospitals();
-    }, []);
-
-    const handleApproval = (hospitalId) => {
-        // You can send a request to the server to update the approval status
-        // For simplicity, let's just update the local state
-        setRegistrationHospitals((prevHospitals) =>
-            prevHospitals.map((hospital) =>
-                hospital._id === hospitalId
-                    ? { ...hospital, approved: true }
-                    : hospital
-            )
-        );
+    const showToast = (message, type) => {
+        toast[type](message, {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
     };
 
-    const handleRejection = (hospitalId) => {
-        // Similar to handleApproval, you can send a request to update the rejection status
-        setRegistrationHospitals((prevHospitals) =>
-            prevHospitals.map((hospital) =>
-                hospital._id === hospitalId
-                    ? { ...hospital, rejected: true }
-                    : hospital
-            )
-        );
+    const handleApprove = (id) => {
+        setTimeout(() => {
+            setRequests((prevRequests) =>
+                prevRequests.map((request) => ({
+                    ...request,
+                    status: request.id === id ? 'Approved' : request.status,
+                }))
+            );
+            showToast(`Request with ID ${id} approved successfully.`, 'success');
+        }, 1000);
+    };
+
+    const handleReject = (id) => {
+        setTimeout(() => {
+            setRequests((prevRequests) =>
+                prevRequests.map((request) => ({
+                    ...request,
+                    status: request.id === id ? 'Rejected' : request.status,
+                }))
+            );
+            showToast(`Request with ID ${id} rejected.`, 'error');
+        }, 1000);
     };
 
     return (
-        <div className="container mx-auto mt-8">
-            <h1 className="text-2xl font-bold mb-4">Admin Verification Page</h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {registrationHospitals.map((hospital) => (
-                    <div key={hospital._id} className="bg-white p-4 rounded shadow-md">
-                        <h2 className="text-lg font-semibold mb-2">{hospital.name}</h2>
-                        <p className="text-gray-600 mb-2">{hospital.address}</p>
-                        <p className="text-gray-600 mb-4">{hospital.email}</p>
-                        {!hospital.approved && !hospital.rejected && (
-                            <div className="flex justify-between">
-                                <button
-                                    className="bg-green-500 text-white px-4 py-2 rounded"
-                                    onClick={() => handleApproval(hospital._id)}
-                                >
-                                    <FaCheck className="inline mr-2" />
-                                    Approve
-                                </button>
-                                <button
-                                    className="bg-red-500 text-white px-4 py-2 rounded"
-                                    onClick={() => handleRejection(hospital._id)}
-                                >
-                                    <FaTimes className="inline mr-2" />
-                                    Reject
-                                </button>
-                            </div>
-                        )}
-                        {hospital.approved && (
-                            <p className="text-green-500 font-semibold mt-2">Approved</p>
-                        )}
-                        {hospital.rejected && (
-                            <p className="text-red-500 font-semibold mt-2">Rejected</p>
-                        )}
-                    </div>
-                ))}
-            </div>
+        <div>
+            <NavBarComponent />
+            <Container>
+                <Typography variant="h4" align="center" className="mt-4 mb-2 font-bold text-2xl text-gray-500">
+                    Verification Page
+                </Typography>
+
+                <TableContainer component={Paper} className="mt-4 bg-teal-200">
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell className={boldText}>ID</TableCell>
+                                <TableCell className={boldText}>Name</TableCell>
+                                <TableCell className={boldText}>Type</TableCell>
+                                <TableCell className={boldText}>Status</TableCell>
+                                <TableCell className={boldText}>Action</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {requests.map((request) => (
+                                <TableRow key={request.id}>
+                                    <TableCell>{request.id}</TableCell>
+                                    <TableCell>{request.name}</TableCell>
+                                    <TableCell>{request.type}</TableCell>
+                                    <TableCell>
+                                        {request.status === 'Approved' ? (
+                                            <MdVerifiedUser className="text-green-500" />
+                                        ) : request.status === 'Rejected' ? (
+                                            <MdClose className="text-red-500" />
+                                        ) : (
+                                            <MdHourglassFull className="text-orange-500" />
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        <IconButton
+                                            style={{ color: 'green' }}
+                                            onClick={() => handleApprove(request.id)}
+                                        >
+                                            <AiOutlineCheck />
+                                        </IconButton>
+                                        <IconButton
+                                            style={{ color: 'red' }}
+                                            onClick={() => handleReject(request.id)}
+                                        >
+                                            <AiOutlineClose />
+                                        </IconButton>
+
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Container>
+            <ToastContainer />
         </div>
     );
 };
 
-export default AdminVerification;
+export default AdminVerificationPage;

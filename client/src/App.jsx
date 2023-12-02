@@ -8,6 +8,9 @@ import CartPage from './components/medicine/CartPage';
 import { MedicineInfo } from './components/medicine/MedicineInfo';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AdminVerification from './components/AdminControls/AdminVerification';
+import AdminDashBoard from './components/AdminControls/AdminDashBoard';
+
 
 const Layout = () => {
   return (
@@ -24,6 +27,9 @@ export default function App() {
         <Route path='/' element={<Layout />}>
           <Route index element={<Home />} />
           <Route path='hospital-registration' element={<HospitalForm />} />
+          <Route path='admin-verification' element={<AdminVerification />} />
+          <Route path='admin-dashboard' element={<AdminDashBoard/>}/>
+
         </Route>
         <Route path='/buymedicines' element={<MedicineNavbar />}>
           <Route index element={<Medicines />} />
