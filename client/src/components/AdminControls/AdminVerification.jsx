@@ -1,32 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import NavBarComponent from './NavBarComponent';
-import { Container, Paper, Typography, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Container, Paper, Typography, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, MenuItem, Select } from '@mui/material';
 import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 import { MdVerifiedUser, MdClose, MdHourglassFull } from 'react-icons/md';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const requestsData = [
-    { id: 1, name: 'Saint John Medical Center', type: 'Hospital', status: 'Pending' },
-    { id: 2, name: 'Dr. Emily Johnson', type: 'Doctor', status: 'Pending' },
-    { id: 3, name: 'City General Hospital', type: 'Hospital', status: 'Pending' },
-    { id: 4, name: 'Dr. Michael Anderson', type: 'Doctor', status: 'Pending' },
-    { id: 5, name: 'Sunset Medical Group', type: 'Hospital', status: 'Pending' },
-    { id: 6, name: 'Dr. Sarah Miller', type: 'Doctor', status: 'Pending' },
-    { id: 7, name: 'Dr. John', type: 'Doctor', status: 'Pending' },
-];
-
-
 const AdminVerificationPage = () => {
-    const initialRequests = JSON.parse(localStorage.getItem('requestsData')) || requestsData;
-    const [requests, setRequests] = useState(initialRequests);
+    const [hospitalRequests, setHospitalRequests] = useState([]);
+    const [filterStatus, setFilterStatus] = useState('all');
 
     useEffect(() => {
-        const stringifiedData = JSON.stringify(requests);
-        console.log('Storing in localStorage:', stringifiedData);
-        localStorage.setItem('requestsData', stringifiedData);
-        localStorage.clear();
-    }, [requests],[requestsData]);
+        // Fetch hospital registration requests based on the selected status
+        const url = filterStatus === 'all' ? 'http://localhost:3001/hospitals' : `http://localhost:3001/hospitals?status=${filterStatus}`;
+
+        fetch(url)
+            .then((res) => res.json())
+            .then((data) => {
+                setHospitalRequests(data);
+            })
+            .catch((err) => console.log('Error fetching hospital requests:', err));
+    }, [filterStatus]);
 
     const showToast = (message, type) => {
         toast[type](message, {
@@ -40,27 +34,32 @@ const AdminVerificationPage = () => {
     };
 
     const handleApprove = (id) => {
-        setTimeout(() => {
-            setRequests((prevRequests) =>
-                prevRequests.map((request) => ({
-                    ...request,
-                    status: request.id === id ? 'Approved' : request.status,
-                }))
-            );
-            showToast(`Request with ID ${id} approved successfully.`, 'success');
-        }, 1000);
+        // Update the status to 'Approved' on the server
+        updateRequestStatus(id, 'approved');
     };
 
     const handleReject = (id) => {
-        setTimeout(() => {
-            setRequests((prevRequests) =>
-                prevRequests.map((request) => ({
-                    ...request,
-                    status: request.id === id ? 'Rejected' : request.status,
-                }))
-            );
-            showToast(`Request with ID ${id} rejected.`, 'error');
-        }, 1000);
+        // Update the status to 'Rejected' on the server
+        updateRequestStatus(id, 'rejected');
+    };
+
+    const updateRequestStatus = (id, status) => {
+        fetch(`http://localhost:3001/hospitals/${id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status }),
+        })
+            .then((res) => res.json())
+            .then(() => {
+                setHospitalRequests((prevRequests) =>
+                    prevRequests.map((request) => ({
+                        ...request,
+                        status: request.id === id ? status : request.status,
+                    }))
+                );
+                showToast(`Hospital request with ID ${id} ${status.toLowerCase()} successfully.`, 'success');
+            })
+            .catch((err) => console.log(`Error updating status for hospital request with ID ${id}:`, err));
     };
 
     return (
@@ -68,49 +67,56 @@ const AdminVerificationPage = () => {
             <NavBarComponent />
             <Container>
                 <Typography variant="h4" align="center" className="mt-10 mb-4 pt-5 font-bold text-2xl text-teal-600">
-                    Verification Page
+                    Hospital Verification Page
                 </Typography>
+
+                <div className="mb-4">
+                    <Typography variant="subtitle1">Filter by Status:</Typography>
+                    <Select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}>
+                        <MenuItem value="all">All</MenuItem>
+                        <MenuItem value="approved">Approved</MenuItem>
+                        <MenuItem value="rejected">Rejected</MenuItem>
+                        <MenuItem value="pending">Pending</MenuItem>
+                    </Select>
+                </div>
 
                 <TableContainer component={Paper} className="mt-6 bg-teal-200">
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell >ID</TableCell>
-                                <TableCell >Name</TableCell>
-                                <TableCell >Type</TableCell>
-                                <TableCell >Status</TableCell>
-                                <TableCell >Action</TableCell>
+                                <TableCell>ID</TableCell>
+                                <TableCell>Name</TableCell>
+                                <TableCell>Location</TableCell>
+                                <TableCell>Contact Number</TableCell>
+                                <TableCell>Email</TableCell>
+                                <TableCell>Status</TableCell>
+                                <TableCell>Action</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {requests.map((request) => (
+                            {hospitalRequests.map((request) => (
                                 <TableRow key={request.id}>
                                     <TableCell>{request.id}</TableCell>
-                                    <TableCell>{request.name}</TableCell>
-                                    <TableCell>{request.type}</TableCell>
+                                    <TableCell>{request.hospitalName}</TableCell>
+                                    <TableCell>{request.location}</TableCell>
+                                    <TableCell>{request.contactNumber}</TableCell>
+                                    <TableCell>{request.email}</TableCell>
                                     <TableCell>
-                                        {request.status === 'Approved' ? (
+                                        {request.status === 'approved' ? (
                                             <MdVerifiedUser className="text-green-500" />
-                                        ) : request.status === 'Rejected' ? (
+                                        ) : request.status === 'rejected' ? (
                                             <MdClose className="text-red-500" />
                                         ) : (
                                             <MdHourglassFull className="text-orange-500" />
                                         )}
                                     </TableCell>
                                     <TableCell>
-                                        <IconButton
-                                            style={{ color: 'green' }}
-                                            onClick={() => handleApprove(request.id)}
-                                        >
+                                        <IconButton style={{ color: 'green' }} onClick={() => handleApprove(request.id)}>
                                             <AiOutlineCheck />
                                         </IconButton>
-                                        <IconButton
-                                            style={{ color: 'red' }}
-                                            onClick={() => handleReject(request.id)}
-                                        >
+                                        <IconButton style={{ color: 'red' }} onClick={() => handleReject(request.id)}>
                                             <AiOutlineClose />
                                         </IconButton>
-
                                     </TableCell>
                                 </TableRow>
                             ))}

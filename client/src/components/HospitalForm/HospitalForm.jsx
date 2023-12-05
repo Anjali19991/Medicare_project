@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { IoMdCheckmark, IoIosPin, IoIosCall, IoMdMail, IoIosPeople, } from 'react-icons/io';
-import { GiHospital } from "react-icons/gi";
-import axios from 'axios';
-
+import { IoMdCheckmark, IoIosPin, IoIosCall, IoMdMail, IoIosPeople } from 'react-icons/io';
+import { GiHospital } from 'react-icons/gi';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const HospitalForm = () => {
+
+
     const [errors, setErrors] = useState({
         hospitalName: '',
         location: '',
@@ -13,6 +15,17 @@ const HospitalForm = () => {
         email: '',
         numDoctors: '',
     });
+
+    const showToast = (message, type) => {
+        toast[type](message, {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
+    };
 
     const [hospitalName, setHospitalName] = useState('');
     const [location, setLocation] = useState('');
@@ -22,80 +35,79 @@ const HospitalForm = () => {
 
     const handleNameChange = (e) => {
         setHospitalName(e.target.value);
-    }
+    };
 
     const locationChange = (e) => {
         setLocation(e.target.value);
-    }
+    };
 
     const contactChange = (e) => {
         setContactNumber(e.target.value);
-    }
+    };
 
     const emailChange = (e) => {
         setEmail(e.target.value);
-    }
+    };
 
     const numDoctorsChange = (e) => {
         setNumDoctors(e.target.value);
-    }
+    };
 
-    switch (hospitalName) {
-        case 'hospitalName':
-            setHospitalName(value);
-            break;
-        case 'location':
-            setLocation(value);
-            break;
-        case 'contactNumber':
-            setContactNumber(value);
-            break;
-        case 'email':
-            setEmail(value);
-            break;
-        case 'numDoctors':
-            setNumDoctors(value);
-            break;
-        default:
-            break;
-    }
+    const validate = (data) => {
+        for (const item in data) {
 
-    const handleSubmit = async (e) => {
+            if (data[item] != null) {
+                const value = typeof data[item] !== 'string' ? String(data[item]) : data[item];
+                if (value.trim().length === 0) {
+                    showToast(`${item} can't be empty`, 'error');
+                    return false;
+                }
+            }
+        }
+        return true;
+    };
+
+
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-        try {
-            console.log(hospitalName);
-            console.log(location);
-            console.log(contactNumber);
-            console.log(email);
-            console.log(numDoctors);
-            const response = await axios.post('http://localhost:4000/hospital-registration', {
-                hospitalName: hospitalName,
-                location: location,
-                contactNumber: contactNumber,
-                email: email,
-                numDoctors: numDoctors,
-            });
+        const details = {
+            hospitalName,
+            location,
+            contactNumber,
+            email,
+            numDoctors,
+            timestamp: Date.now(),
+            status: 'pending'
+        };
 
-            console.log(response.data);
-            // You can handle the success response here (e.g., show a success message to the user).
-        } catch (error) {
-            console.error('Error submitting form:', error);
-            // You can handle the error here (e.g., show an error message to the user).
+        if (validate(details)) {
+            fetch('http://localhost:3001/hospitals', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(details),
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    
+                    console.log('Data submitted successfully:', data);
+                    showToast('Hospital registered successfully', 'success');
+                  
+                    e.target.reset();
+
+
+                })
+                .catch((err) => {
+                    console.log('Error', err);
+                    showToast('Error submitting data', 'error');
+                });
         }
     };
 
     return (
         <div className="bg-white min-h-screen flex items-center justify-center">
             <div className="w-full max-w-md p-8 bg-teal-50 shadow-lg rounded-md flex flex-col items-center">
-
-
-                <form
-                    onSubmit={handleSubmit}
-                    action="/hospital-registration"
-                    method="post"
-                    className="flex flex-col"
-                >
+                <form onSubmit={handleSubmit} className="flex flex-col">
                     <h1 className="text-2xl font-bold mb-6 text-teal-800">Hospital Registration Form</h1>
 
                     <div className="flex items-center mb-1">
@@ -189,6 +201,7 @@ const HospitalForm = () => {
                     </button>
                 </form>
             </div>
+            <ToastContainer />
         </div>
     );
 };

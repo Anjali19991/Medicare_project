@@ -1,0 +1,47 @@
+{
+  "hospitals": [
+    {
+      "hospitalName": "Mercy Hospital",
+      "location": "123 Main St, Anytown USA",
+      "contactNumber": "1234567890",
+      "email": "mercy@gmail.com",
+      "numDoctors": "25",
+      "timestamp": 1701689993552,
+      "status": "approved",
+      "id": 1
+    },
+    {
+      "hospitalName": "Apollo",
+      "location": "Chennai, Tamil Nadu",
+      "contactNumber": "5555551234",
+      "email": "apollo@info.com",
+      "numDoctors": "23",
+      "timestamp": 1701709477391,
+      "status": "approved",
+      "id": 2
+    },
+    {
+      "hospitalName": "Memorial Hospital",
+      "location": "Bangalore, Karnataka",
+      "contactNumber": "5555553456",
+      "email": "memorial@info.com",
+      "numDoctors": "49",
+      "timestamp": 1701717101574,
+      "status": "approved",
+      "id": 3
+    },
+    {
+      "hospitalName": "GMAT",
+      "location": "tada",
+      "contactNumber": "5555552345",
+      "email": "gma@gmail.com",
+      "numDoctors": "15",
+      "timestamp": 1701717402074,
+      "status": "rejected",
+      "id": 4
+    }
+  ],
+  "doctors": [],
+  "announcements": [],
+  "users": []
+}

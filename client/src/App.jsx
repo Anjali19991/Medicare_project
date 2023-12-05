@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AdminVerification from './components/AdminControls/AdminVerification';
 import AdminDashBoard from './components/AdminControls/AdminDashBoard';
 import AdminAnnouncements from './components/AdminControls/AdminAnnouncements';
+import HospitalList from './components/HospitalsList/HospitalList';
 
 
 const Layout = () => {
@@ -28,6 +29,7 @@ export default function App() {
         <Route path='/' element={<Layout />}>
           <Route index element={<Home />} />
           <Route path='hospital-registration' element={<HospitalForm />} />
+          <Route path='hospital-listing' element={<HospitalList />} />
           <Route path='admin-verification' element={<AdminVerification />} />
           <Route path='admin-dashboard' element={<AdminDashBoard/>}/>
           <Route path='admin-announcements' element={<AdminAnnouncements />} />
