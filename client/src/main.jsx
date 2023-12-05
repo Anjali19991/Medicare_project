@@ -18,7 +18,8 @@ import { Error, HomeLayout, Landing, Login, Register } from "./pages";
 import AdminDashBoard from "./components/AdminControls/AdminDashBoard";
 import AdminAnnouncements from "./components/AdminControls/AdminAnnouncements";
 import { ErrorElement } from "./components";
-import Users from "./components/Users/Users.jsx";
+import Users from "./components/AdminControls/Users.jsx";
+import AnnouncementsDisplay from "./components/AnnouncementsDisplay/AnnouncementsDisplay";
 
 
 // actions
@@ -85,6 +86,12 @@ const router = createBrowserRouter([
     errorElement: <Error />,
     action: registerAction,
   },
+  {
+    path: "/display-announcements",
+    element: <AnnouncementsDisplay />,
+    errorElement: <Error />,
+  },
+  
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

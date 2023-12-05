@@ -42,14 +42,51 @@
     }
   ],
   "doctors": [],
-  "announcements": [],
+  "announcements": [
+    {
+      "id": 1,
+      "title": "New Product Launch",
+      "content": "Exciting news! We're launching a new product that will revolutionize the tech industry.",
+      "timestamp": "2023-12-10T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "title": "Upcoming Webinar",
+      "content": "Join us for an insightful webinar on the latest trends in artificial intelligence. Don't miss out!",
+      "timestamp": "2023-12-15T14:30:00Z"
+    },
+    {
+      "id": 3,
+      "title": "Security Update",
+      "content": "Important security update: Ensure your software is up-to-date to protect against potential vulnerabilities.",
+      "timestamp": "2023-12-20T12:00:00Z"
+    },
+    {
+      "id": 4,
+      "title": "Developer Conference 2024",
+      "content": "Save the date! Our annual Developer Conference is scheduled for March 1-3, 2024. Get ready for exciting talks and workshops.",
+      "timestamp": "2024-01-05T09:00:00Z"
+    },
+    {
+      "id": 5,
+      "title": "New API Release",
+      "content": "We're thrilled to announce the release of version 2.0 for our API. Check out the documentation for the latest features and improvements.",
+      "timestamp": "2024-01-15T11:30:00Z"
+    },
+    {
+      "id": 6,
+      "title": "Tech Startup Pitch Night",
+      "content": "Calling all tech startups! Join us for a pitch night on February 1, 2024. Showcase your innovative ideas and connect with investors.",
+      "timestamp": "2024-01-20T18:00:00Z"
+    }
+  ],
   "users": [
     {
       "id": 1,
       "username": "john_smith",
       "age": 30,
       "isDoctor": true,
-      "isActive": false
+      "isActive": true
     },
     {
       "id": 2,
@@ -91,7 +128,7 @@
       "username": "emma_black",
       "age": 27,
       "isDoctor": true,
-      "isActive": true
+      "isActive": false
     },
     {
       "id": 8,

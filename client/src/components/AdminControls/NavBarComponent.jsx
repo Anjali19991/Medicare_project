@@ -18,6 +18,7 @@ const NavBarComponent = () => {
                     <li>
                         <a href="/admin-announcements" className="hover:underline">Post Announcements</a>
                     </li>
+                   
                 </ul>
             </div>
         </nav>

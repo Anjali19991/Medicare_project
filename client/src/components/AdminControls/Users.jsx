@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaBan, FaCheck } from 'react-icons/fa';
 import { IoMdPerson } from 'react-icons/io';
+import NavBarComponent from './NavBarComponent';
 
 
 const fetchUsers = async () => {
@@ -114,6 +115,8 @@ const Users = () => {
     };
 
     return (
+        <>
+        <NavBarComponent/>
         <div className="container mx-auto mt-8 p-8">
             <h1 className="text-4xl lg:text-5xl font-bold mb-6 text-teal-600">User Details</h1>
 
@@ -149,7 +152,6 @@ const Users = () => {
                 </div>
             </div>
 
-
             <table className="min-w-full bg-white border border-teal-500 shadow-md rounded-md">
                 <thead>
                     <tr>
@@ -168,6 +170,7 @@ const Users = () => {
                 </tbody>
             </table>
         </div>
+        </>
     );
 };
 

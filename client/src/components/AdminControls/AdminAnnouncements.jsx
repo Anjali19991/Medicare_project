@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import { IoMdSend } from 'react-icons/io';
-import { FaBell } from 'react-icons/fa'; // Example icon, replace with your preferred icon
+import { FaBell } from 'react-icons/fa';
 import NavBarComponent from './NavBarComponent';
-
-
 
 const AdminAnnouncements = () => {
     const [announcementTitle, setAnnouncementTitle] = useState('');
     const [announcementContent, setAnnouncementContent] = useState('');
-    const [announcementsList, setAnnouncementsList] = useState([]);
 
     const handleTitleChange = (e) => {
         setAnnouncementTitle(e.target.value);
@@ -18,22 +15,36 @@ const AdminAnnouncements = () => {
         setAnnouncementContent(e.target.value);
     };
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
 
         if (announcementTitle.trim() !== '' && announcementContent.trim() !== '') {
-            // Add the announcement to the list with timestamp
             const newAnnouncement = {
                 title: announcementTitle,
                 content: announcementContent,
                 timestamp: new Date().toLocaleString(),
             };
 
-            setAnnouncementsList([...announcementsList, newAnnouncement]);
+            try {
+                const response = await fetch('http://localhost:3001/announcements', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newAnnouncement),
+                });
 
-            // Clear the input fields
-            setAnnouncementTitle('');
-            setAnnouncementContent('');
+                if (response.ok) {
+                    console.log('Announcement posted successfully');
+                    // Clear the input fields
+                    setAnnouncementTitle('');
+                    setAnnouncementContent('');
+                } else {
+                    console.error('Failed to post announcement:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error posting announcement:', error);
+            }
         }
     };
 
@@ -51,7 +62,7 @@ const AdminAnnouncements = () => {
                 <div className="max-w-md bg-white p-6 rounded-lg shadow-xl ml-48 -mt-64 h-96">
                     <h1 className="text-3xl font-bold mb-4 text-teal-800">
                         <FaBell className="text-4xl inline-block mr-2" />
-                        Admin Announcements
+                        Post Announcement
                     </h1>
 
                     <form onSubmit={handleFormSubmit} className="space-y-4">
@@ -80,29 +91,8 @@ const AdminAnnouncements = () => {
                         </button>
                     </form>
                 </div>
-
-               {/* Announcement List */}
-{announcementsList.length > 0 && (
-    <div className="max-w-md bg-white p-6 rounded-lg shadow-xl ml-40 -mt-80 overflow-hidden">
-        <div className="mt-8 max-h-80 overflow-y-auto">
-            <h2 className="text-xl font-bold mb-2 text-teal-800">Announcements:</h2>
-            <ul>
-                {announcementsList.map((announcement, index) => (
-                    <li key={index} className="mb-2 p-2 bg-gray-100 rounded">
-                        <strong className="text-teal-600">{announcement.title} ({announcement.timestamp}):</strong>
-                        <div className="whitespace-pre-wrap break-words">{announcement.content}</div>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    </div>
-)}
-
-
-
             </div>
         </>
-
     );
 };
 
