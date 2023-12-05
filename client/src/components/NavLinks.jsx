@@ -17,7 +17,7 @@ const NavLinks = () => {
         const { id, url, text } = link;
         if ((url === "checkout" || url === "orders") && !user) return null;
         return (
-          <li key={id}>
+          <li key={id} className="hover:bg-teal-200 rounded-xl">
             <NavLink className="capitalize" to={url}>
               {text}
             </NavLink>

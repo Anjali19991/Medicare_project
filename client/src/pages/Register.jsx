@@ -22,12 +22,14 @@ export const action = async ({ request }) => {
 
 const Register = () => {
   return (
-    <section className="h-screen grid place-items-center">
+    <section className="h-screen grid place-items-center bg-zinc-200">
       <Form
         method="POST"
-        className="card w-96 p-8 bg-base-100 shadow-lg flex flex-col gap-y-4"
+        className="card w-96 p-8 bg-base-100 shadow-lg flex flex-col gap-y-4 bg-opacity-40"
       >
-        <h4 className="text-center text-3xl font-bold">Register</h4>
+        <h4 className="text-center text-3xl font-bold text-teal-800">
+          Register
+        </h4>
         <FormInput type="text" label="username" name="username" />
         <FormInput type="email" label="email" name="email" />
         <FormInput type="password" label="password" name="password" />

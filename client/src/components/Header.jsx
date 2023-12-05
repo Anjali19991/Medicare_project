@@ -17,13 +17,21 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-neutral py-2 text-neutral-content">
+    <header className="bg-teal-800 py-2 text-neutral-content h-1/4  px-6">
       <div className="align-element flex justify-center sm:justify-end">
         {user ? (
           <div className="flex gap-x-2 sm:gap-x-8 items-center">
-            <p className="text-xs sm:text-sm">Hello, {user.username}</p>
+            <p className="text-sm sm:text-sm font-bold text-white">
+              Hello, {user.username}
+            </p>
+            {/* <button
+              className="btn btn-sm btn-outline btn-primary font-bold"
+              onClick={handleLogout}
+            >
+              logout
+            </button> */}
             <button
-              className="btn btn-xs btn-outline btn-primary"
+              className="bg-white hover:bg-gray-100 text-teal-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow "
               onClick={handleLogout}
             >
               logout
@@ -31,10 +39,16 @@ const Header = () => {
           </div>
         ) : (
           <div className="flex gap-x-6 justify-center items-center">
-            <Link to="/login" className="link link-hover text-xs sm:text-sm">
+            <Link
+              to="/login"
+              className="link link-hover text-sm sm:text-sm font-bold text-white"
+            >
               Sign in / Guest
             </Link>
-            <Link to="/register" className="link link-hover text-xs sm:text-sm">
+            <Link
+              to="/register"
+              className="link link-hover text-sm sm:text-sm font-bold text-white"
+            >
               Create Account
             </Link>
           </div>
