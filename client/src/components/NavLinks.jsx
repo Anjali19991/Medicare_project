@@ -4,9 +4,9 @@ import { NavLink } from "react-router-dom";
 const links = [
   { id: 1, url: "/", text: "home" },
   { id: 2, url: "/hospital-registration", text: "hospital-registration" },
-  { id: 3, url: "/admin-verification", text: "admin-verification" },
-  { id: 4, url: "/admin-dashboard", text: "admin-dashboard" },
-  { id: 4, url: "/admin-announcements", text: "admin-announcements" },
+  { id: 3, url: "/buymedicines", text: "MediStore" },
+  { id: 4, url: "/display-announcements", text: "Announcements" },
+  
 ];
 
 const NavLinks = () => {

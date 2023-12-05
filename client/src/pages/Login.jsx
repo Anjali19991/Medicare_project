@@ -7,23 +7,38 @@ import { useDispatch } from "react-redux";
 
 export const action =
   (store) =>
-  async ({ request }) => {
-    const formData = await request.formData();
-    const data = Object.fromEntries(formData);
+    async ({ request }) => {
+      const formData = await request.formData();
+      const data = Object.fromEntries(formData);
 
-    try {
-      const response = await customFetch.post("/auth/local", data);
-      store.dispatch(loginUser(response.data));
-      toast.success("logged in successfully");
-      return redirect("/");
-    } catch (error) {
-      const errorMessage =
-        error?.response?.data?.error?.message ||
-        "please double check your credentials";
-      toast.error(errorMessage);
-      return null;
-    }
-  };
+      try {
+        const response = await customFetch.post("/auth/local", data);
+
+        // Check if the login credentials match the admin credentials
+        if (
+          data.identifier === "medicareadmin@gmail.com" &&
+          data.password === "medicare_admin"
+        ) {
+          // If the credentials match, treat the user as an admin
+          // Redirect to admin page or show admin-specific content
+          return redirect("/admin-dashboard");
+        }
+
+        // For regular users, dispatch the login action and show success toast
+        store.dispatch(loginUser(response.data));
+        toast.success("Logged in successfully");
+
+        // Redirect to the default home page
+        return redirect("/");
+      } catch (error) {
+        const errorMessage =
+          error?.response?.data?.error?.message ||
+          "Please double-check your credentials";
+        toast.error(errorMessage);
+        return null;
+      }
+    };
+
 
 const Login = () => {
   const dispatch = useDispatch();

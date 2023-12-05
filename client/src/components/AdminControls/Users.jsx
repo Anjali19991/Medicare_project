@@ -117,8 +117,11 @@ const Users = () => {
     return (
         <>
         <NavBarComponent/>
-        <div className="container mx-auto mt-8 p-8">
-            <h1 className="text-4xl lg:text-5xl font-bold mb-6 text-teal-600">User Details</h1>
+        <div className="container mx-auto mt-3 p-8">
+                <h1 className="text-4xl lg:text-5xl font-bold mb-6 text-teal-800 text-center">
+                    User Details
+                </h1>
+
 
             <div className="flex mb-4">
                 <div className="mr-4">

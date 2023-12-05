@@ -20,6 +20,11 @@ import AdminAnnouncements from "./components/AdminControls/AdminAnnouncements";
 import { ErrorElement } from "./components";
 import Users from "./components/AdminControls/Users.jsx";
 import AnnouncementsDisplay from "./components/AnnouncementsDisplay/AnnouncementsDisplay";
+import { MedicineNavbar } from "./components/medicine/MedicineNavbar";
+import { Medicines } from "./components/medicine/Medicine";
+import CartPage from "./components/medicine/CartPage";
+import { MedicineInfo } from "./components/medicine/MedicineInfo";
+
 
 
 // actions
@@ -50,28 +55,13 @@ const router = createBrowserRouter([
         index: true,
         element: <Landing />,
         errorElement: <ErrorElement />,
-        // loader: landingLoader(queryClient),
+         //loader: landingLoader(queryClient),
       },
       {
         path: "hospital-registration",
         element: <HospitalForm />,
       },
-      {
-        path: "admin-verification",
-        element: <AdminVerification />,
-      },
-      {
-        path: "admin-dashboard",
-        element: <AdminDashBoard />,
-      },
-      {
-        path: "admin-announcements",
-        element: <AdminAnnouncements />,
-      },
-      {
-        path: "users",
-        element: <Users />,
-      },
+     
     ],
   },
   {
@@ -91,6 +81,45 @@ const router = createBrowserRouter([
     element: <AnnouncementsDisplay />,
     errorElement: <Error />,
   },
+  {
+    path: "admin-verification",
+    element: <AdminVerification />,
+    errorElement: <Error />,
+  },
+  {
+    path: "admin-dashboard",
+    element: <AdminDashBoard />,
+    errorElement: <Error />,
+  },
+  {
+    path: "admin-announcements",
+    element: <AdminAnnouncements />,
+    errorElement: <Error />,
+  },
+  {
+    path: "users",
+    element: <Users />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/buymedicines",
+    element: <MedicineNavbar />,
+    children: [
+      {
+        index: true,
+        element: <Medicines />,
+      },
+      {
+        path: "cart",
+        element: <CartPage />,
+      },
+      {
+        path: "info/:id",
+        element: <MedicineInfo />,
+      },
+    ],
+  },
+  
   
 ]);
 

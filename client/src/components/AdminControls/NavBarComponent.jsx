@@ -1,24 +1,27 @@
-// NavBarComponent.js
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const NavBarComponent = () => {
     return (
         <nav className="bg-teal-500 p-5">
-            <div className="container mx-auto flex items-center justify-center">
+            <div className="container mx-auto flex items-center justify-between">
+
+                {/* Home link on the left with special styling */}
+                <Link to="/" className="text-white text-lg font-semibold hover:underline bg-gray-800 px-4 py-2 rounded">Home</Link>
+
                 <ul className="flex space-x-7 text-white text-lg font-semibold">
                     <li>
-                        <a href="/admin-dashboard" className="hover:underline">Dashboard</a>
+                        <Link to="/admin-dashboard" className="hover:underline">Dashboard</Link>
                     </li>
                     <li>
-                        <a href="/users" className="hover:underline">All Users</a>
+                        <Link to="/users" className="hover:underline">All Users</Link>
                     </li>
                     <li>
-                        <a href="/admin-verification" className="hover:underline">Approval Requests</a>
+                        <Link to="/admin-verification" className="hover:underline">Approval Requests</Link>
                     </li>
                     <li>
-                        <a href="/admin-announcements" className="hover:underline">Post Announcements</a>
+                        <Link to="/admin-announcements" className="hover:underline">Post Announcements</Link>
                     </li>
-                   
                 </ul>
             </div>
         </nav>
