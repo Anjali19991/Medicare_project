@@ -1,27 +1,96 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App.jsx';
+import React from "react";
+import { createBrowserRouter } from "react-router-dom";
+import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
 import "./index.css";
-import { BrowserRouter } from 'react-router-dom'
-import { configureStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
-import MedicineReducer from './features/MedicineSlice.js'
+import { BrowserRouter } from "react-router-dom";
+import { configureStore } from "@reduxjs/toolkit";
+import { Provider } from "react-redux";
+import MedicineReducer from "./features/MedicineSlice.js";
+import userReducer from "./features/user/userSlice";
+import { ToastContainer } from "react-toastify";
+import { RouterProvider } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import HospitalForm from "./components/HospitalForm/HospitalForm";
+import AdminVerification from "./components/AdminControls/AdminVerification";
 
+import { Error, HomeLayout, Landing, Login, Register } from "./pages";
+import AdminDashBoard from "./components/AdminControls/AdminDashBoard";
+import AdminAnnouncements from "./components/AdminControls/AdminAnnouncements";
+import { ErrorElement } from "./components";
 
+// actions
+import { action as registerAction } from "./pages/Register";
+import { action as loginAction } from "./pages/Login";
 
 const store = configureStore({
   reducer: {
-    medicines: MedicineReducer
-  }
-})
+    medicines: MedicineReducer,
+    userState: userReducer,
+  },
+});
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5,
+    },
+  },
+});
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <HomeLayout />,
+    errorElement: <Error />,
+    children: [
+      {
+        index: true,
+        element: <Landing />,
+        errorElement: <ErrorElement />,
+        // loader: landingLoader(queryClient),
+      },
+      {
+        path: "hospital-registration",
+        element: <HospitalForm />,
+      },
+      {
+        path: "admin-verification",
+        element: <AdminVerification />,
+      },
+      {
+        path: "admin-dashboard",
+        element: <AdminDashBoard />,
+      },
+      {
+        path: "admin-announcements",
+        element: <AdminAnnouncements />,
+      },
+    ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+    errorElement: <Error />,
+    action: loginAction(store),
+  },
+  {
+    path: "/register",
+    element: <Register />,
+    errorElement: <Error />,
+    action: registerAction,
+  },
+]);
+
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
       <BrowserRouter>
-        <Provider store={store}>
-          <App />
-        </Provider>
+        <App />
+        <ToastContainer position="top-center" />
       </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );
