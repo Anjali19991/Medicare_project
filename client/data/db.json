@@ -43,5 +43,76 @@
   ],
   "doctors": [],
   "announcements": [],
-  "users": []
+  "users": [
+    {
+      "id": 1,
+      "username": "john_smith",
+      "age": 30,
+      "isDoctor": true,
+      "isActive": false
+    },
+    {
+      "id": 2,
+      "username": "mary_jones",
+      "age": 25,
+      "isDoctor": false,
+      "isActive": false
+    },
+    {
+      "id": 3,
+      "username": "alice_miller",
+      "age": 28,
+      "isDoctor": true,
+      "isActive": false
+    },
+    {
+      "id": 4,
+      "username": "bob_white",
+      "age": 35,
+      "isDoctor": false,
+      "isActive": true
+    },
+    {
+      "id": 5,
+      "username": "susan_green",
+      "age": 32,
+      "isDoctor": true,
+      "isActive": true
+    },
+    {
+      "id": 6,
+      "username": "michael_brown",
+      "age": 29,
+      "isDoctor": false,
+      "isActive": true
+    },
+    {
+      "id": 7,
+      "username": "emma_black",
+      "age": 27,
+      "isDoctor": true,
+      "isActive": true
+    },
+    {
+      "id": 8,
+      "username": "alex_carter",
+      "age": 34,
+      "isDoctor": false,
+      "isActive": true
+    },
+    {
+      "id": 9,
+      "username": "olivia_red",
+      "age": 31,
+      "isDoctor": true,
+      "isActive": true
+    },
+    {
+      "id": 10,
+      "username": "ryan_blue",
+      "age": 26,
+      "isDoctor": false,
+      "isActive": true
+    }
+  ]
 }

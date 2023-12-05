@@ -18,6 +18,8 @@ import { Error, HomeLayout, Landing, Login, Register } from "./pages";
 import AdminDashBoard from "./components/AdminControls/AdminDashBoard";
 import AdminAnnouncements from "./components/AdminControls/AdminAnnouncements";
 import { ErrorElement } from "./components";
+import Users from "./components/Users/Users.jsx";
+
 
 // actions
 import { action as registerAction } from "./pages/Register";
@@ -64,6 +66,10 @@ const router = createBrowserRouter([
       {
         path: "admin-announcements",
         element: <AdminAnnouncements />,
+      },
+      {
+        path: "users",
+        element: <Users />,
       },
     ],
   },
