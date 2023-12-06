@@ -32,7 +32,7 @@ export const DoctorRegister = () => {
     const handleSubmit = (e)=>{
         e.preventDefault()
         dispatch(register(doctor))
-        navigate("/doctordashboard")
+        navigate("/consultdoctor")
     }
 
 

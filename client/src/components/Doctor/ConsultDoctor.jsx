@@ -19,17 +19,23 @@ export const ConsultDoctor = () => {
                 <div className='w-[40%] max-[600px]:w-full max-[1200px]:w-[80%] flex flex-col gap-4'>
                     <h1 className='text-4xl'>Consult Your Doctor</h1>
                     <p>Discover expert healthcare at your fingertips. Connect with certified doctors for personalized consultations and medical guidance.Empower your well-being with convenient access to professional advice. Our platform ensures confidential and cost-effective healthcare solutions tailored to your needs.</p>
-                    <a href='#doctors' className='bg-teal-700 px-4 py-2 rounded-md text-white w-32'>
-                        <ScrollLink to='doctors' smooth={true} duration={500}>
-                            Consult Now
-                        </ScrollLink>
-                    </a>
+                    <div className='flex gap-4'> 
+                        <a href='#doctors' className='bg-teal-700 px-4 py-2 rounded-md text-white w-32'>
+                            <ScrollLink to='doctors' smooth={true} duration={500}>
+                                Consult Now
+                            </ScrollLink>
+                        </a>
+                        <Link to={'/'} className='bg-teal-700 text-center px-4 py-2 rounded-md text-white w-20'>
+                            Home
+                        </Link>
+                   </div>
+
                 </div>
                 <div className='w-[50%] max-[600px]:w-full max-[1200px]:w-[80%]'>
                     <img src="/doctors.png" alt="" />
                 </div>
             </div>
-            <div className={`flex max-[1000px]:flex-wrap gap-4 max-[1000px]:gap-12 items-center my-4 px-12 py-12 ${theme === 'winter' ? 'text-black bg-white' : 'text-white bg-[#00465e500]'}  `}>
+            <div className={`flex max-[1000px]:flex-wrap gap-4 max-[1000px]:gap-12 items-center my-4 px-12 py-12 bg-slate-600 text-white`}>
                 <div className='w-1/4 max-[1000px]:w-full flex flex-col items-center gap-2'>
                     <img src="/protection.png" alt="" className='w-40' />
                     <h1 className='text-2xl'>100% Confidential</h1>
