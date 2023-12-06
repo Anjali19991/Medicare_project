@@ -14,7 +14,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import HospitalForm from "./components/HospitalForm/HospitalForm";
 import AdminVerification from "./components/AdminControls/AdminVerification";
 
-import { Error, HomeLayout, Landing, Login, Register } from "./pages";
+import { About, Error, HomeLayout, Landing, Login, Register } from "./pages";
 import AdminDashBoard from "./components/AdminControls/AdminDashBoard";
 import AdminAnnouncements from "./components/AdminControls/AdminAnnouncements";
 import { ErrorElement } from "./components";
@@ -60,6 +60,10 @@ const router = createBrowserRouter([
         path: "hospital-registration",
         element: <HospitalForm />,
       },
+      {
+        path: "about-us",
+        element: <About/>
+      }
     ],
   },
   {
