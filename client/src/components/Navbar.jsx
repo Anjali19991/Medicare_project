@@ -4,14 +4,14 @@ import { NavLink } from "react-router-dom";
 import NavLinks from "./NavLinks";
 
 import { useDispatch, useSelector } from "react-redux";
-// import { toggleTheme } from "../features/user/userSlice";
+import { toggleTheme } from "../features/user/userSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
 
-  // const handleTheme = () => {
-  //   dispatch(toggleTheme());
-  // };
+  const handleTheme = () => {
+    dispatch(toggleTheme());
+  };
 
   return (
     <nav className="bg-teal-50 px-6">

@@ -14,7 +14,15 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import HospitalForm from "./components/HospitalForm/HospitalForm";
 import AdminVerification from "./components/AdminControls/AdminVerification";
 
-import { Error, HomeLayout, Landing, Login, Register } from "./pages";
+import {
+  Error,
+  HomeLayout,
+  Landing,
+  Login,
+  Register,
+  About,
+  Contact,
+} from "./pages";
 import AdminDashBoard from "./components/AdminControls/AdminDashBoard";
 import AdminAnnouncements from "./components/AdminControls/AdminAnnouncements";
 import { ErrorElement } from "./components";
@@ -24,8 +32,6 @@ import { MedicineNavbar } from "./components/medicine/MedicineNavbar";
 import { Medicines } from "./components/medicine/Medicine";
 import CartPage from "./components/medicine/CartPage";
 import { MedicineInfo } from "./components/medicine/MedicineInfo";
-
-
 
 // actions
 import { action as registerAction } from "./pages/Register";
@@ -55,13 +61,20 @@ const router = createBrowserRouter([
         index: true,
         element: <Landing />,
         errorElement: <ErrorElement />,
-         //loader: landingLoader(queryClient),
+        //loader: landingLoader(queryClient),
       },
       {
         path: "hospital-registration",
         element: <HospitalForm />,
       },
-     
+      {
+        path: "about-us",
+        element: <About />,
+      },
+      {
+        path: "contact",
+        element: <Contact />,
+      },
     ],
   },
   {
@@ -119,8 +132,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-  
-  
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

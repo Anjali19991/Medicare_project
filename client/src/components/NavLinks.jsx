@@ -6,7 +6,7 @@ const links = [
   { id: 2, url: "/hospital-registration", text: "hospital-registration" },
   { id: 3, url: "/buymedicines", text: "MediStore" },
   { id: 4, url: "/display-announcements", text: "Announcements" },
-  
+  { id: 5, url: "/about-us", text: "About" },
 ];
 
 const NavLinks = () => {
