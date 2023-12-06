@@ -30,6 +30,7 @@ import { MedicineInfo } from "./components/medicine/MedicineInfo";
 // actions
 import { action as registerAction } from "./pages/Register";
 import { action as loginAction } from "./pages/Login";
+import HospitalList from "./components/HospitalsList/HospitalList.jsx";
 
 const store = configureStore({
   reducer: {
@@ -57,10 +58,8 @@ const router = createBrowserRouter([
         errorElement: <ErrorElement />,
          //loader: landingLoader(queryClient),
       },
-      {
-        path: "hospital-registration",
-        element: <HospitalForm />,
-      },
+      
+
      
     ],
   },
@@ -70,6 +69,11 @@ const router = createBrowserRouter([
     errorElement: <Error />,
     action: loginAction(store),
   },
+  {
+    path: "hospital-registration",
+    element: <HospitalForm />,
+  },
+
   {
     path: "/register",
     element: <Register />,
@@ -101,6 +105,12 @@ const router = createBrowserRouter([
     element: <Users />,
     errorElement: <Error />,
   },
+  {
+    path: "display-hospitals",
+    element: <HospitalList />,
+    errorElement: <Error />,
+  },
+  
   {
     path: "/buymedicines",
     element: <MedicineNavbar />,
