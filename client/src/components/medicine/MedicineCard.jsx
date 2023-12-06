@@ -68,7 +68,7 @@ const MedicineCard = ({ medicineData, onAddToCart, isAddedToCart, setIsAddedToCa
                 <div className='flex px-4 flex-wrap justify-between items-center'>
                     <p className='text-sm'> © {manufactures}</p>
                     <div>
-                        <span className='text-xl'>₹.</span>
+                        <span className='text-xl'>₹</span>
                         <span className='text-2xl'>{MRP}</span>
                     </div>
                 </div>
