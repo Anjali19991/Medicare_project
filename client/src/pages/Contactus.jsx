@@ -1,122 +1,70 @@
-import React, { useState } from 'react';
+import React from "react";
 
-const ContactUsPage = () => {
-  const [showForm, setShowForm] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [userName, setUserName] = useState('');
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitted(true);
-  };
-
-  const handleContactClick = () => {
-    window.scrollTo({
-        top: 320,
-        behavior: 'smooth'
-      });
-    setShowForm(true);
-   
-  };
-
-  const handleBackToHome = () => {
-    setShowForm(false);
-    setIsSubmitted(false);
-  };
-
+const ContactUs = () => {
   return (
-    <div
-      className="min-h-screen pb-96 flex flex-col justify-center items-center "
-    >
-      {/* <img src="https://mondial.com.ph/wp-content/uploads/2020/02/contact-header.jpg" alt="" className='w-screen -mt-16' /> */}
-      <div className={"bg-white mt-16 p-8 ${showForm?'rounded-lg shadow-md max-w-lg':'max-w-lg'} w-full max-w-lg"}>
-        {!showForm ? (
-          <>
-            <h2 className="text-4xl font-bold text-teal-500 mb-6">Medicare</h2>
-            <section className="text-gray-700 mb-6">
-              <p className="mb-4">Providing healthcare services at your fingertips.</p>
-              <p>Contact us for any inquiries or support.</p>
-            </section>
-            <button
-              onClick={handleContactClick}
-              className="bg-teal-500 text-white p-2 rounded-md hover:bg-teal-600 focus:outline-none focus:ring focus:border-teal-300"
-            >
-              Contact Us
-            </button>
-          </>
-        ) : (
-          <>
-            {isSubmitted ? (
-              <div>
-                <p className="text-teal-500 text-2xl mb-4">
-                  Hi {userName}, we received your query!
-                </p>
-                <p>We will get back to you soon. Thank you!</p>
-                <button
-                  onClick={handleBackToHome}
-                  className="mt-4 bg-teal-500 text-white p-2 rounded-md hover:bg-teal-600 focus:outline-none focus:ring focus:border-teal-300"
-                >
-                  Back to Home
-                </button>
-              </div>
-            ) : (
-              <form className="space-y-4" onSubmit={handleSubmit}>
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                    Your Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-teal-500"
-                    placeholder="John Doe"
-                    onChange={(e) => setUserName(e.target.value)}
-                    required
-                  />
-                </div>
+    <div className="bg-teal-800 text-white min-h-30">
+      <div className="container mx-auto p-8">
+        <h1 className="text-3xl font-bold mb-4">
+          Contact Us - Your Medicare Partner
+        </h1>
 
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-teal-500"
-                    placeholder="john@example.com"
-                    required
-                  />
-                </div>
+        <div className="flex flex-wrap -mx-4">
+          <div className="w-full sm:w-1/2 px-4 mb-8">
+            <h2 className="text-2xl font-semibold mb-4">How to Reach Us</h2>
+            <p>
+              <strong>Customer Support:</strong> <br />
+              Phone: 999999999 <br />
+              Email: medicate@gmail.com <br />
+            </p>
+          </div>
 
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700">
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows="4"
-                    className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-teal-500"
-                    placeholder="Type your message here..."
-                    required
-                  ></textarea>
-                </div>
+          <div className="w-full sm:w-1/2 px-4 mb-8">
+            <h2 className="text-2xl font-semibold mb-4">Visit Us</h2>
+            <p>
+              <strong>Location:</strong> At sun below star <br />
+              <strong>Business Hours:</strong> 9:00am to 9:00pm
+            </p>
+          </div>
+        </div>
 
-                <button
-                  type="submit"
-                  className="w-full bg-teal-500 text-white p-2 rounded-md hover:bg-teal-600 focus:outline-none focus:ring focus:border-teal-300"
-                >
-                  Submit
-                </button>
-              </form>
-            )}
-          </>
-        )}
+        <div className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">
+            Connect on Social Media
+          </h2>
+          <p>
+            Follow us on <a href="#">Facebook</a> ,<a href="#">Instagram</a> for
+            updates, health tips, and community events.
+            <br />
+            Direct message us on social media for quick responses to your
+            inquiries.
+          </p>
+        </div>
+
+        <div className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">Services We Offer</h2>
+          <ul>
+            <li>Pharmacy Services</li>
+            <li>Doctor Appointments</li>
+            <li>Medicine Purchase</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 className="text-2xl font-semibold mb-4">
+            Feedback and Suggestions
+          </h2>
+          <p>
+            We value your feedback! If you have any suggestions, concerns, or
+            compliments, please reach out to us through our{" "}
+            <a className="underline" href="[Link to Feedback Form]">
+              Feedback Form
+            </a>
+            .
+          </p>
+        </div>
       </div>
     </div>
   );
 };
 
-export default ContactUsPage;
+export default ContactUs;

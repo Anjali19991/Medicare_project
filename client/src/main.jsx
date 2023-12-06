@@ -34,7 +34,7 @@ import { AppointmentForm } from "./components/Doctor/AppointmentForm.jsx";
 // actions
 import { action as registerAction } from "./pages/Register";
 import { action as loginAction } from "./pages/Login";
-import ContactUsPage from "./pages/Contactus.jsx";
+// import ContactUsPage from "./pages/Contactus.jsx";
 import HospitalList from "./components/HospitalsList/HospitalList.jsx";
 
 const store = configureStore({
