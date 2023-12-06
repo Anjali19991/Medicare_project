@@ -14,15 +14,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import HospitalForm from "./components/HospitalForm/HospitalForm";
 import AdminVerification from "./components/AdminControls/AdminVerification";
 
-import {
-  Error,
-  HomeLayout,
-  Landing,
-  Login,
-  Register,
-  About,
-  Contact,
-} from "./pages";
+import { Error, HomeLayout, Landing, Login, Register } from "./pages";
 import AdminDashBoard from "./components/AdminControls/AdminDashBoard";
 import AdminAnnouncements from "./components/AdminControls/AdminAnnouncements";
 import { ErrorElement } from "./components";
@@ -36,6 +28,7 @@ import { MedicineInfo } from "./components/medicine/MedicineInfo";
 // actions
 import { action as registerAction } from "./pages/Register";
 import { action as loginAction } from "./pages/Login";
+import HospitalList from "./components/HospitalsList/HospitalList.jsx";
 
 const store = configureStore({
   reducer: {
@@ -67,14 +60,6 @@ const router = createBrowserRouter([
         path: "hospital-registration",
         element: <HospitalForm />,
       },
-      {
-        path: "about-us",
-        element: <About />,
-      },
-      {
-        path: "contact",
-        element: <Contact />,
-      },
     ],
   },
   {
@@ -83,6 +68,11 @@ const router = createBrowserRouter([
     errorElement: <Error />,
     action: loginAction(store),
   },
+  {
+    path: "hospital-registration",
+    element: <HospitalForm />,
+  },
+
   {
     path: "/register",
     element: <Register />,
@@ -114,6 +104,12 @@ const router = createBrowserRouter([
     element: <Users />,
     errorElement: <Error />,
   },
+  {
+    path: "display-hospitals",
+    element: <HospitalList />,
+    errorElement: <Error />,
+  },
+
   {
     path: "/buymedicines",
     element: <MedicineNavbar />,

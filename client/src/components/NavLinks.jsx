@@ -3,9 +3,10 @@ import { NavLink } from "react-router-dom";
 
 const links = [
   { id: 1, url: "/", text: "home" },
-  { id: 2, url: "/hospital-registration", text: "hospital-registration" },
+  { id: 2, url: "/hospital-registration", text: "Hospital Registration" },
   { id: 3, url: "/buymedicines", text: "MediStore" },
   { id: 4, url: "/display-announcements", text: "Announcements" },
+
   { id: 5, url: "/about-us", text: "About" },
 ];
 
@@ -18,7 +19,7 @@ const NavLinks = () => {
         if ((url === "checkout" || url === "orders") && !user) return null;
         return (
           <li key={id} className="hover:bg-teal-200 rounded-xl">
-            <NavLink className="capitalize" to={url}>
+            <NavLink className="capitalize mx-2" to={url}>
               {text}
             </NavLink>
           </li>

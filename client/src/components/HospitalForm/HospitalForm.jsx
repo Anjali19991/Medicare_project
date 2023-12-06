@@ -3,6 +3,7 @@ import { IoMdCheckmark, IoIosPin, IoIosCall, IoMdMail, IoIosPeople } from 'react
 import { GiHospital } from 'react-icons/gi';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { HomeLayout } from '../../pages';
 
 const HospitalForm = () => {
 
@@ -105,8 +106,10 @@ const HospitalForm = () => {
 
     return (
         <>
-        
-        <div className="bg-white min-h-screen flex items-center justify-center -mt-24">
+    
+        <HomeLayout className="-mt-24"/>
+
+        <div className="bg-white flex mt-10 justify-center ">
             <div className="w-full max-w-md p-8 bg-teal-50 shadow-lg rounded-md flex flex-col items-center">
                 <form onSubmit={handleSubmit} className="flex flex-col">
                     <h1 className="text-2xl font-bold mb-6 text-teal-800">Hospital Registration Form</h1>

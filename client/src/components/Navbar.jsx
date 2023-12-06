@@ -1,17 +1,17 @@
-import { BsMoonFill, BsSunFill } from "react-icons/bs";
+// import { BsMoonFill, BsSunFill } from "react-icons/bs";
 import { FaBarsStaggered } from "react-icons/fa6";
 import { NavLink } from "react-router-dom";
 import NavLinks from "./NavLinks";
 
-import { useDispatch, useSelector } from "react-redux";
-import { toggleTheme } from "../features/user/userSlice";
+// import { useDispatch, useSelector } from "react-redux";
+// import { toggleTheme } from "../features/user/userSlice";
 
 const Navbar = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const handleTheme = () => {
-    dispatch(toggleTheme());
-  };
+  // const handleTheme = () => {
+  //   dispatch(toggleTheme());
+  // };
 
   return (
     <nav className="bg-teal-50 px-6">
