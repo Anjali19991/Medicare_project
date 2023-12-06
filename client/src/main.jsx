@@ -35,6 +35,7 @@ import { AppointmentForm } from "./components/Doctor/AppointmentForm.jsx";
 import { action as registerAction } from "./pages/Register";
 import { action as loginAction } from "./pages/Login";
 import ContactUsPage from "./pages/Contactus.jsx";
+import HospitalList from "./components/HospitalsList/HospitalList.jsx";
 
 const store = configureStore({
   reducer: {
@@ -62,17 +63,13 @@ const router = createBrowserRouter([
         element: <Landing />,
         errorElement: <ErrorElement />,
         //loader: landingLoader(queryClient),
+        //loader: landingLoader(queryClient),
       },
       {
         path: "hospital-registration",
         element: <HospitalForm />,
       },
-      {
-        path:"/contactus",
-        element:<ContactUsPage />,
-        errorElement:<Error />
-      }
-
+     
     ],
   },
   {
@@ -81,6 +78,11 @@ const router = createBrowserRouter([
     errorElement: <Error />,
     action: loginAction(store),
   },
+  {
+    path: "hospital-registration",
+    element: <HospitalForm />,
+  },
+
   {
     path: "/register",
     element: <Register />,
@@ -112,6 +114,12 @@ const router = createBrowserRouter([
     element: <Users />,
     errorElement: <Error />,
   },
+  {
+    path: "display-hospitals",
+    element: <HospitalList />,
+    errorElement: <Error />,
+  },
+
   {
     path: "/buymedicines",
     element: <MedicineNavbar />,

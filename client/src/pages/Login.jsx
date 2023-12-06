@@ -21,6 +21,7 @@ export const action =
         ) {
           // If the credentials match, treat the user as an admin
           // Redirect to admin page or show admin-specific content
+          store.dispatch(loginUser(response.data));
           return redirect("/admin-dashboard");
         }
 

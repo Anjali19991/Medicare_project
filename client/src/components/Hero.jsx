@@ -1,9 +1,9 @@
-
 import hero1 from "../assets/hero_3.jpg";
 import hero2 from "../assets/hero_2.jpg";
 import hero3 from "../assets/hero_1.jpg";
 import hero4 from "../assets/hero_4.jpg";
 import Services from "./Services";
+import { Contact } from "../pages";
 
 const carouselImages = [hero2, hero3, hero4, hero1];
 
@@ -39,6 +39,7 @@ const Hero = () => {
 
         <Services></Services>
       </div>
+      <Contact></Contact>
     </>
   );
 };

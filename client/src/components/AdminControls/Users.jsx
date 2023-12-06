@@ -41,7 +41,7 @@ const updateUserStatus = async (userId, isActive) => {
 
 
 const UserRow = ({ user, toggleUserStatus }) => (
-    <tr key={user.id} className="border-b hover:bg-teal-50">
+    <tr key={user.id} className="border-b hover:bg-teal-50 ">
         <td className="p-4 text-teal-700">{user.id}</td>
         <td className="p-4 flex items-center text-teal-700">
             <IoMdPerson className="text-lg mr-2" />
