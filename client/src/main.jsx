@@ -7,6 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import MedicineReducer from "./features/MedicineSlice.js";
+import DoctorReducer from './features/DoctorSlice.js'
 import userReducer from "./features/user/userSlice";
 import { ToastContainer } from "react-toastify";
 import { RouterProvider } from "react-router-dom";
@@ -24,16 +25,23 @@ import { MedicineNavbar } from "./components/medicine/MedicineNavbar";
 import { Medicines } from "./components/medicine/Medicine";
 import CartPage from "./components/medicine/CartPage";
 import { MedicineInfo } from "./components/medicine/MedicineInfo";
+import { ConsultDoctor } from "./components/Doctor/ConsultDoctor.jsx";
+import { DoctorRegister } from "./components/Doctor/DoctorRegister.jsx";
+import { DoctorDashboard } from "./components/Doctor/DoctorDashboard.jsx";
+import { AppointmentForm } from "./components/Doctor/AppointmentForm.jsx";
+
 
 // actions
 import { action as registerAction } from "./pages/Register";
 import { action as loginAction } from "./pages/Login";
+// import ContactUsPage from "./pages/Contactus.jsx";
 import HospitalList from "./components/HospitalsList/HospitalList.jsx";
 
 const store = configureStore({
   reducer: {
     medicines: MedicineReducer,
     userState: userReducer,
+    doctors:DoctorReducer
   },
 });
 const queryClient = new QueryClient({
@@ -54,6 +62,7 @@ const router = createBrowserRouter([
         index: true,
         element: <Landing />,
         errorElement: <ErrorElement />,
+        //loader: landingLoader(queryClient),
         //loader: landingLoader(queryClient),
       },
       {
@@ -132,6 +141,33 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/consultdoctor",
+    element: <ConsultDoctor />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/consultdoctor/:id",
+    element: <AppointmentForm />,
+    errorElement: <Error />
+  },
+  {
+    path: "/:id",
+    element: <AppointmentForm />,
+    errorElement: <Error />
+  },
+  {
+    path: "/doc_register",
+    element: <DoctorRegister />,
+    errorElement: <Error />
+  }
+  , {
+    path: "/doctordashboard",
+    element: <DoctorDashboard />,
+    errorElement: <Error />
+  },
+
+
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
