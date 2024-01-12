@@ -120,14 +120,14 @@
       "username": "alice_miller",
       "age": 28,
       "isDoctor": true,
-      "isActive": false
+      "isActive": true
     },
     {
       "id": 4,
       "username": "bob_white",
       "age": 35,
       "isDoctor": false,
-      "isActive": true
+      "isActive": false
     },
     {
       "id": 5,
@@ -148,7 +148,7 @@
       "username": "emma_black",
       "age": 27,
       "isDoctor": true,
-      "isActive": false
+      "isActive": true
     },
     {
       "id": 8,
