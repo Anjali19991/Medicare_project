@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const NavBarComponent = () => {
     return (
-        <nav className="bg-teal-500 p-5">
+        <nav className="bg-teal-800 p-5">
             <div className="container mx-auto flex items-center justify-between">
 
                 {/* Home link on the left with special styling */}

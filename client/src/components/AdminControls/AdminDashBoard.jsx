@@ -1,8 +1,6 @@
-// AdminDashBoard.js
-import React from 'react';
+
 import { IoMdTime, IoMdPeople, IoMdCheckmark } from 'react-icons/io'; // Assuming IoMdCheckmark is your checkmark icon
 import NavbarComponent from './NavBarComponent';
-
 
 
 const AdminDashBoard = () => {

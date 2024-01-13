@@ -7,7 +7,7 @@
       "email": "mercy@gmail.com",
       "numDoctors": "25",
       "timestamp": 1701689993552,
-      "status": "approved",
+      "status": "rejected",
       "id": 1
     },
     {
@@ -37,7 +37,7 @@
       "email": "gma@gmail.com",
       "numDoctors": "15",
       "timestamp": 1701717402074,
-      "status": "rejected",
+      "status": "approved",
       "id": 4
     },
     {
@@ -47,7 +47,7 @@
       "email": "abxd@gmail.com",
       "numDoctors": "67",
       "timestamp": 1701798538789,
-      "status": "pending",
+      "status": "rejected",
       "id": 5
     },
     {

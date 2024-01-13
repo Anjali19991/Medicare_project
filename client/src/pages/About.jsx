@@ -22,7 +22,7 @@ const About = () => {
         our community. We strive to go beyond conventional healthcare by
         providing personalized and accessible services that empower individuals
         on their journey to a healthier life. We believe that everyone deserves
-        high-quality care, and we're dedicated to making that belief a reality.
+        high-quality care, and we are dedicated to making that belief a reality.
         <br />
         <br />
         Our Team Behind every successful healthcare journey is a team of
