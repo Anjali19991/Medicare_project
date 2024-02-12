@@ -1,53 +1,85 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Services = () => {
-  const mystyle = {
-    boxShadow: "2px 2px 5px black",
-  };
-  return (
-    <section className="pb-12 pt-20 dark:bg-dark lg:pb-[90px] lg:pt-[120px] mt-9">
-      <div className="container mx-auto">
-        <div className="-mx-4 flex flex-wrap">
-          <div className="w-full px-4">
-            <div className="mx-auto mb-12 max-w-[510px] text-center lg:mb-20">
-              <span className="mb-2 block text-4xl font-bold  text-teal-800">
-                Our Services
-              </span>
-              <h2 className="mb-3 text-3xl font-bold leading-[1.2] text-dark dark:text-white sm:text-4xl md:text-[40px]">
-                What We Offer
-              </h2>
-              <p className="text-base text-body-color dark:text-dark-6">
+  const [imageIndex, setImageIndex] = useState(0);
 
-                Explore our cutting-edge services designed to elevate your well-being. We've enhanced and expanded our offerings to bring you the latest in healthcare, ensuring you receive the best support for a healthier and happier life.
-              </p>
+  const carouselImages = [
+    "https://img.freepik.com/free-vector/people-sitting-waiting-room-medical-clinic-flat-illustration_74855-17095.jpg?w=1380&t=st=1706016658~exp=1706017258~hmac=aea50c23e790e3f4bb8f579f49b73605a390f4aeb7624aa0ad01b7c35cf3a5bd",
+    "https://img.freepik.com/free-vector/medical-occupation-set_74855-1466.jpg?w=1380&t=st=1706017592~exp=1706018192~hmac=d9890dc27b71b1cf799a82a73ce33b60a2f704113506e0af6685ffa5a64968e3"
+    // Add more image URLs as needed
+  ];
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setImageIndex((prevIndex) => (prevIndex + 1) % carouselImages.length);
+    }, 4000);
+
+    return () => clearInterval(intervalId);
+  }, [carouselImages.length]);
+
+  return (
+
+    <section>
+      <div className="items-center w-full px-4 py-24 mx-auto  max-w-7xl">
+        <div className="text-left">
+          <div className="items-center mx-auto lg:inline-flex">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-24">
+              <div>
+                <p className="text-2xl font-medium tracking-tight text-teal-700 sm:text-4xl">
+                  Our Services
+                </p>
+              </div>
+              <div className="lg:ml-auto">
+                <p className="mt-4 text-lg tracking-tight text-gray-600 lg:mt-0">
+                  Discover a comprehensive range of wellness solutions tailored to enhance your physical and mental well-being, ensuring a holistic approach to health improvement
+                </p>
+              </div>
             </div>
           </div>
         </div>
-
-        <div className="-mx-4 flex flex-wrap">
-          <ServiceCard
-            className={`{mystyle} text-teal-800`}
-            title="List Hospitals"
-            details="View a list of approved hospitals"
-            linkTag={'/display-hospitals'}
-
+        <div className="relative items-center w-full mx-auto mt-12">
+        <img
+            className="object-contain w-full h-96 transition-opacity duration-500 ease-in-out"
+            src={carouselImages[imageIndex]}
+            alt=""
           />
-
-          <ServiceCard
-            className={`{mystyle} text-teal-800`}
-            title=" Doctor Registration"
-            details="Become a part of our family to provide services"
-            linkTag={'/doc_register'}
-
-          />
-
-          <ServiceCard
-            title="Consult Doctors"
-            details="We are here to help you out!!"
-            linkTag={'/consultdoctor'}
-            className="text-teal-800"
-          />
+        </div>
+        <div>
+          <div className="pt-12 mx-auto lg:max-w-7xl">
+            <div className="grid grid-cols-1 gap-6 space-y-0 lg:gap-24 lg:grid-cols-3">
+              <Link to={'/consultdoctor'} className="hover:bg-gray-300 px-2 py-2 rounded-sm">
+                <div>
+                  <p className="text-lg font-medium leading-6 text-black">
+                    Consult Doctor
+                  </p>
+                </div>
+                <div className="mt-2 text-[0.95rem] text-gray-500">
+                  Connect with experienced healthcare professionals for personalized consultations, ensuring your health is in expert hands.
+                </div>
+              </Link>
+              <Link to={'/buymedicines'} className="hover:bg-gray-300 px-2 py-2 rounded-sm">
+                <div>
+                  <p className="text-lg font-medium leading-6 text-black">
+                    Buy Medicines
+                  </p>
+                </div>
+                <div className="mt-2 text-[0.95rem] text-gray-500">
+                  Effortlessly order your prescribed medications online, providing a convenient and reliable solution for all your pharmaceutical needs.
+                </div>
+              </Link>
+              <Link to={'/display-hospitals'} className="hover:bg-gray-300 px-2 py-2 rounded-sm">
+                <div>
+                  <p className="text-lg font-medium leading-6 text-black">
+                    Find Hospitals
+                  </p>
+                </div>
+                <div className="mt-2 text-[0.95rem] text-gray-500">
+                  Locate top-tier medical facilities in your vicinity, ensuring quick access to quality healthcare whenever you need it.
+                </div>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -56,20 +88,20 @@ const Services = () => {
 
 export default Services;
 
-const ServiceCard = ({ icon, title, details, linkTag }) => {
-  return (
-    <>
-      <div className="w-full px-4 md:w-1/2 lg:w-1/3">
-        <div className="mb-9 rounded-[20px] bg-white p-10 shadow-2 hover:shadow-lg dark:bg-dark-2 md:px-7 xl:px-10">
-          <Link to={`${linkTag}`}>
-            <h4 className="mb-[14px] text-2xl font-semibold text-dark ">
-              {title}
-            </h4>
-          </Link>
+// const ServiceCard = ({ icon, title, details, linkTag }) => {
+//   return (
+//     <>
+//       <div classNameName="w-full px-4 md:w-1/2 lg:w-1/3">
+//         <div classNameName="mb-9 rounded-[20px] bg-white p-10 shadow-2 hover:shadow-lg dark:bg-dark-2 md:px-7 xl:px-10">
+//           <Link to={`${linkTag}`}>
+//             <h4 classNameName="mb-[14px] text-2xl font-semibold text-dark ">
+//               {title}
+//             </h4>
+//           </Link>
 
-          <p className="text-body-color dark:text-dark-6">{details}</p>
-        </div>
-      </div>
-    </>
-  );
-};
+//           <p classNameName="text-body-color dark:text-dark-6">{details}</p>
+//         </div>
+//       </div>
+//     </>
+//   );
+// }; 

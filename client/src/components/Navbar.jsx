@@ -1,17 +1,19 @@
 // import { BsMoonFill, BsSunFill } from "react-icons/bs";
 import { FaBarsStaggered } from "react-icons/fa6";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import NavLinks from "./NavLinks";
-
-// import { useDispatch, useSelector } from "react-redux";
-// import { toggleTheme } from "../features/user/userSlice";
+import { Link } from "react-router-dom";
+import { useAuth } from "../AuthContext";
+import { useSelector } from "react-redux";
+import { BsCart4 } from "react-icons/bs";
 
 const Navbar = () => {
-  // const dispatch = useDispatch();
 
-  // const handleTheme = () => {
-  //   dispatch(toggleTheme());
-  // };
+  const location = useLocation();
+  console.log(location.pathname)
+  const { user, setUser } = useAuth();
+  const cartItems = useSelector((state) => state.medicines.items);
+  const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <nav className="bg-teal-50 px-6">
@@ -43,6 +45,28 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end">
+          {
+            user ? (
+              <Link to={'/appointments'} className="p-2 hover:bg-teal-200 hover:rounded-lg">Appointments</Link>
+            ) : ("")
+          }
+          {
+            location.pathname.includes("buymedicines") ? (
+              <div className="text-white">
+                <Link to={'/buymedicines/cart'} className='text-2xl text-slate-700 relative'>
+                  <BsCart4 />
+                  {totalItems > 0 && (
+                    <span className="bg-red-500 text-sm text-white rounded-full absolute -top-2 -right-2 px-2">
+                      {totalItems}
+                    </span>
+                  )}
+                </Link>
+              </div>
+
+            ) : (
+              ""
+            )
+          }
           {/* THEME SETUP */}
           {/* <label className="swap swap-rotate">
             <input type="checkbox" onChange={handleTheme} />

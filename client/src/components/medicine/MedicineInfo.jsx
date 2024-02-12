@@ -24,7 +24,7 @@ export const MedicineInfo = () => {
     }, [id]);
 
     return (
-        <div className='my-32 max-w-4xl mx-auto'>
+        <div className='my-16 max-w-4xl mx-auto'>
             {medicine != null ? (
                 <>
                     <h1 className='text-3xl font-bold mb-4'>{medicine.name}</h1>

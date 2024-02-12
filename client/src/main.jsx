@@ -30,10 +30,11 @@ import { DoctorRegister } from "./components/Doctor/DoctorRegister.jsx";
 import { DoctorDashboard } from "./components/Doctor/DoctorDashboard.jsx";
 import { AppointmentForm } from "./components/Doctor/AppointmentForm.jsx";
 
+import { AuthProvider } from "./AuthContext.jsx";
 
 // actions
-import { action as registerAction } from "./pages/Register";
-import { action as loginAction } from "./pages/Login";
+// import { action as registerAction } from "./pages/Register";
+// import { action as loginAction } from "./pages/Login";
 // import ContactUsPage from "./pages/Contactus.jsx";
 import HospitalList from "./components/HospitalsList/HospitalList.jsx";
 
@@ -41,7 +42,7 @@ const store = configureStore({
   reducer: {
     medicines: MedicineReducer,
     userState: userReducer,
-    doctors:DoctorReducer
+    doctors: DoctorReducer
   },
 });
 const queryClient = new QueryClient({
@@ -71,27 +72,60 @@ const router = createBrowserRouter([
       },
       {
         path: "about-us",
-        element: <About/>
+        element: <About />
+      },
+      {
+        path: "/login",
+        element: <Login />,
+        errorElement: <Error />,
+        // action: loginAction(store),
+      },
+      {
+        path: "/register",
+        element: <Register />,
+        errorElement: <Error />,
+        // action: registerAction,
+      },
+      {
+        path: "/buymedicines",
+        // element: <MedicineNavbar />,
+        children: [
+          {
+            index: true,
+            element: <Medicines />,
+          },
+          {
+            path: "cart",
+            element: <CartPage />,
+          },
+          {
+            path: "info/:id",
+            element: <MedicineInfo />,
+          },
+        ],
+      },
+      {
+        path: "/consultdoctor",
+        element: <ConsultDoctor />,
+        errorElement: <Error />,
+      },
+      {
+        path: "/doc_register",
+        element: <DoctorRegister />,
+        errorElement: <Error />
       }
     ],
   },
-  {
-    path: "/login",
-    element: <Login />,
-    errorElement: <Error />,
-    action: loginAction(store),
-  },
-  {
-    path: "hospital-registration",
-    element: <HospitalForm />,
-  },
-
-  {
-    path: "/register",
-    element: <Register />,
-    errorElement: <Error />,
-    action: registerAction,
-  },
+  // {
+  //   path: "/login",
+  //   element: <Login />,
+  //   errorElement: <Error />,
+  //   // action: loginAction(store),
+  // },
+  // {
+  //   path: "hospital-registration",
+  //   element: <HospitalForm />,
+  // },
   {
     path: "/display-announcements",
     element: <AnnouncementsDisplay />,
@@ -122,7 +156,6 @@ const router = createBrowserRouter([
     element: <HospitalList />,
     errorElement: <Error />,
   },
-
   {
     path: "/buymedicines",
     element: <MedicineNavbar />,
@@ -141,24 +174,15 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: "/consultdoctor",
-    element: <ConsultDoctor />,
-    errorElement: <Error />,
-  },
+
   {
     path: "/consultdoctor/:id",
     element: <AppointmentForm />,
     errorElement: <Error />
   },
   {
-    path: "/:id",
-    element: <AppointmentForm />,
-    errorElement: <Error />
-  },
-  {
-    path: "/doc_register",
-    element: <DoctorRegister />,
+    path: "/appointments",
+    element: <>Your Appointments</>,
     errorElement: <Error />
   }
   , {
@@ -172,14 +196,16 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-      </QueryClientProvider>
-      <BrowserRouter>
-        <App />
-        <ToastContainer position="top-center" />
-      </BrowserRouter>
-    </Provider>
+    <AuthProvider>
+      <Provider store={store}>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
+        <BrowserRouter>
+          <App />
+          <ToastContainer position="top-center" />
+        </BrowserRouter>
+      </Provider>
+    </AuthProvider>
   </React.StrictMode>
 );

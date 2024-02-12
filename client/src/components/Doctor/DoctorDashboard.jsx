@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../AuthContext';
+
 
 export const DoctorDashboard = () => {
 
     const [active, setActive] = useState("home");
+    const {user,setUser} = useAuth();
+
+    console.log(user);
 
 
     return (
@@ -21,7 +26,7 @@ export const DoctorDashboard = () => {
             </nav>
             <div className='my-16 ml-72 mr-8'>
                 <div className={`${active === 'home' ? 'block' : 'hidden'}`}>
-                    <h1 className='text-3xl'>Welcome Doctor!!!</h1>
+                    <h1 className='text-3xl'>Welcome!!!</h1>
                     <div className=' m-16 text-white grid grid-cols-3 max-[1200px]:grid-cols-2 gap-8 items-center justify-center place-items-center overflow-hidden'>
                         <div className='rounded-full shadow-2xl w-64 h-64 flex flex-col gap-8 items-center  justify-center bg-indigo-500 hover:-translate-y-2 hover:scale-105 duration-300 transition-all cursor-pointer' >
                             <h1 className='font-semibold text-5xl'>5</h1>

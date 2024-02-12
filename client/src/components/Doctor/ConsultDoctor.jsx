@@ -7,10 +7,10 @@ import { Link } from 'react-router-dom';
 
 export const ConsultDoctor = () => {
 
-    const doctors = useSelector((state) => state.doctors.doctors)
-    console.log(doctors)
-    const theme = useSelector((state) => state.userState.theme)
-    console.log(theme)
+    // const doctors = useSelector((state) => state.doctors.doctors)
+    // console.log(doctors)
+    // const theme = useSelector((state) => state.userState.theme)
+    // console.log(theme)
 
 
     return (
@@ -20,14 +20,11 @@ export const ConsultDoctor = () => {
                     <h1 className='text-4xl'>Consult Your Doctor</h1>
                     <p>Discover expert healthcare at your fingertips. Connect with certified doctors for personalized consultations and medical guidance.Empower your well-being with convenient access to professional advice. Our platform ensures confidential and cost-effective healthcare solutions tailored to your needs.</p>
                     <div className='flex gap-4'> 
-                        <a href='#doctors' className='bg-teal-700 px-4 py-2 rounded-md text-white w-32'>
+                        {/* <a href='#doctors' className='bg-teal-700 px-4 py-2 rounded-md text-white w-32'>
                             <ScrollLink to='doctors' smooth={true} duration={500}>
                                 Consult Now
                             </ScrollLink>
-                        </a>
-                        <Link to={'/'} className='bg-teal-700 text-center px-4 py-2 rounded-md text-white w-20'>
-                            Home
-                        </Link>
+                        </a> */}
                    </div>
 
                 </div>
@@ -35,7 +32,7 @@ export const ConsultDoctor = () => {
                     <img src="/doctors.png" alt="" />
                 </div>
             </div>
-            <div className={`flex max-[1000px]:flex-wrap gap-4 max-[1000px]:gap-12 items-center my-4 px-12 py-12 bg-slate-600 text-white`}>
+            <div className={`flex max-[1000px]:flex-wrap gap-4 max-[1000px]:gap-12 items-center px-12 py-12 bg-slate-600 text-white`}>
                 <div className='w-1/4 max-[1000px]:w-full flex flex-col items-center gap-2'>
                     <img src="/protection.png" alt="" className='w-40' />
                     <h1 className='text-2xl'>100% Confidential</h1>
@@ -58,8 +55,8 @@ export const ConsultDoctor = () => {
                 </div>
             </div>
             <div id='doctors' className='my-8 px-16'>
-                <h1 className='text-2xl font-semibold my-8'>Doctors Available</h1>
-                <div className='grid grid-cols-4 w-full gap-4'>
+                <h1 className='text-2xl font-semibold my-8'>Find Doctors</h1>
+                {/* <div className='grid grid-cols-4 w-full gap-4'>
                     {
                         doctors.map((doctor) => (
                             <div className={`p-4 ${theme === 'winter' ? 'bg-slate-300 ' : 'bg-slate-700'} shadow-2xl rounded-md text-center`}>
@@ -91,7 +88,7 @@ export const ConsultDoctor = () => {
                             </div>
                         ))
                     }
-                </div>
+                </div> */}
             </div>
         </>
     )

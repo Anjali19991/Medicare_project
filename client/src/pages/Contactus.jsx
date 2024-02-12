@@ -1,69 +1,85 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ContactUs = () => {
+
+
   return (
-    <div className="bg-teal-800 text-white min-h-30">
-      <div className="container mx-auto p-8">
-        <h1 className="text-3xl font-bold mb-4">
-          Contact Us - Your Medicare Partner
-        </h1>
-
-        <div className="flex flex-wrap -mx-4">
-          <div className="w-full sm:w-1/2 px-4 mb-8">
-            <h2 className="text-2xl font-semibold mb-4">How to Reach Us</h2>
-            <p>
-              <strong>Customer Support:</strong> <br />
-              Phone: 999999999 <br />
-              Email: medicate@gmail.com <br />
-            </p>
+    <footer className="bg-gray-300">
+      <div className="px-4 py-12 mx-auto overflow-hidden max-w-7xl sm:px-6 lg:px-8">
+        <nav className="flex flex-wrap justify-center -mx-5 -my-2" aria-label="Footer">
+          <div className="px-5 py-2">
+            <Link to="/" className="text-sm text-gray-500 hover:text-blue-600">
+              Home
+            </Link>
           </div>
 
-          <div className="w-full sm:w-1/2 px-4 mb-8">
-            <h2 className="text-2xl font-semibold mb-4">Visit Us</h2>
-            <p>
-              <strong>Location:</strong> At sun below star <br />
-              <strong>Business Hours:</strong> 9:00am to 9:00pm
-            </p>
+          <div className="px-5 py-2">
+            <Link to="/" className="text-sm text-gray-500 hover:text-blue-600">
+              Home
+            </Link>
           </div>
-        </div>
 
-        <div className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">
-            Connect on Social Media
-          </h2>
-          <p>
-            Follow us on <a href="#">Facebook</a> ,<a href="#">Instagram</a> for
-            updates, health tips, and community events.
-            <br />
-            Direct message us on social media for quick responses to your
-            inquiries.
-          </p>
-        </div>
+          <div className="px-5 py-2">
+            <Link to="/" className="text-sm text-gray-500 hover:text-blue-600">
+              Home
+            </Link>
+          </div>
 
-        <div className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Services We Offer</h2>
-          <ul>
-            <li>Pharmacy Services</li>
-            <li>Doctor Appointments</li>
-            <li>Medicine Purchase</li>
-          </ul>
-        </div>
+          <div className="px-5 py-2">
+            <Link to="/" className="text-sm text-gray-500 hover:text-blue-600">
+              Home
+            </Link>
+          </div>
 
-        <div>
-          <h2 className="text-2xl font-semibold mb-4">
-            Feedback and Suggestions
-          </h2>
-          <p>
-            We value your feedback! If you have any suggestions, concerns, or
-            compliments, please reach out to us through our{" "}
-            <a className="underline" href="[Link to Feedback Form]">
-              Feedback Form
+          <div className="px-5 py-2">
+            <Link to="/" className="text-sm text-gray-500 hover:text-blue-600">
+              Home
+            </Link>
+          </div>
+
+          <div className="px-5 py-2">
+            <Link to="/" className="text-sm text-gray-500 hover:text-blue-600">
+              Home
+            </Link>
+          </div>
+        </nav>
+        {/* <div className="flex justify-center mt-8 space-x-6">
+          <span className="inline-flex justify-center w-full gap-3 m-auto md:justify-start md:w-auto">
+            <a className="w-6 h-6 transition fill-black hover:text-blue-500">
+              <span className="sr-only">
+                github
+              </span>
+              <ion-icon className="w-5 h-5 md hydrated" name="logo-github" role="img" aria-label="logo github"></ion-icon>
             </a>
-            .
-          </p>
-        </div>
+            <a className="w-6 h-6 transition fill-black hover:text-blue-500">
+              <span className="sr-only">
+                twitter
+              </span>
+              <ion-icon className="w-5 h-5 md hydrated" name="logo-twitter" role="img" aria-label="logo twitter"></ion-icon>
+            </a>
+            <a className="w-6 h-6 transition fill-black hover:text-blue-500">
+              <span className="sr-only">
+                Instagram
+              </span>
+              <ion-icon className="w-5 h-5 md hydrated" name="logo-instagram" role="img" aria-label="logo instagram"></ion-icon>
+            </a>
+            <a className="w-6 h-6 transition fill-black hover:text-blue-500">
+              <span className="sr-only">
+                Linkedin
+              </span>
+              <ion-icon className="w-5 h-5 md hydrated" name="logo-linkedin" role="img" aria-label="logo linkedin"></ion-icon>
+            </a>
+          </span>
+        </div> */}
+        <p className="mt-8 text-center">
+          <span className="mx-auto mt-2 text-sm text-gray-500">
+              Copyright ©
+             <span className="text-teal-600 font-semibold">MEDICARE</span>   
+          </span>
+        </p>
       </div>
-    </div>
+    </footer>
   );
 };
 

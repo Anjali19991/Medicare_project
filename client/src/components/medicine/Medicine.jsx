@@ -49,7 +49,7 @@ export const Medicines = () => {
 
     return (
         <>
-            <div className='my-20 py-4 px-8 max-[480px]:px-1 -z-10'>
+            <div className='my-8 py-4 px-8 max-[480px]:px-1 -z-10'>
                 <div className='text-center relative w-96 mx-auto max-[400px]:w-64'>
                     <IoSearchOutline className='text-xl absolute top-[50%] left-4 -translate-y-1/2' />
                     <input type="text" placeholder='Search For Medicines....' className='px-12 py-2 border-2 border-teal-700 rounded-md w-96 outline-none max-[400px]:w-64' onChange={(e) => handleSearch(e)} />
