@@ -1,19 +1,28 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useState,useEffect } from 'react'
+import { Link,useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
 
 
 export const DoctorDashboard = () => {
 
     const [active, setActive] = useState("home");
-    const {user,setUser} = useAuth();
+    const { user, setUser } = useAuth();
 
     console.log(user);
+    const navigate = useNavigate();
 
+    // useEffect(()=>{
+    //     if(!user){
+    //         navigate('/',{replace:true});
+    //     }
+    // })
 
     return (
         <>
-            <nav className='absolute h-full bg-teal-800 w-64'>
+        <div>
+            Doctor Dashboard
+        </div>
+            {/* <nav className='absolute h-full bg-teal-800 w-64'>
                 <Link to={'/'}>
                     <h1 className='m-4 text-3xl font-bold text-center text-white'>MEDICARE</h1>
                 </Link>
@@ -173,7 +182,7 @@ export const DoctorDashboard = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </>
     )
 }

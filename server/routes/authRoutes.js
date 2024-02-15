@@ -1,7 +1,14 @@
 const express = require('express');
 const authController = require('../controllers/authController.js');
 const router = express.Router();
+const multer = require('multer');
 
-router.post('/signup', authController.signup);
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+
+
+router.post('/signup',upload.single('photo'),authController.signup);
 router.post('/login',authController.login)
 module.exports = router;

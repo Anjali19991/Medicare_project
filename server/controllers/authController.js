@@ -4,6 +4,9 @@ const User = require('../models/UserSchema.js');
 const OTP = require('../models/OtpSchema.js');
 const Doctor = require('../models/DoctorSchema.js')
 
+
+
+
 const SECRET = "fakhawkehqw232dasasd"
 
 const generateToken = (user) => {
@@ -13,6 +16,7 @@ const generateToken = (user) => {
 }
 
 exports.signup = async (req, res) => {
+    console.log(req.file)
     try {
         console.log(req.body);
         // const { name, email, password, role, otp } = req.body;
@@ -47,6 +51,10 @@ exports.signup = async (req, res) => {
                 email,
                 password: hashedPassword,
                 role,
+                photo:{
+                    data:req.file.buffer,
+                    contentType:req.file.mimetype
+                }
             });
         }
         return res.status(201).json({

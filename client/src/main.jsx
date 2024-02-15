@@ -37,6 +37,9 @@ import { AuthProvider } from "./AuthContext.jsx";
 // import { action as loginAction } from "./pages/Login";
 // import ContactUsPage from "./pages/Contactus.jsx";
 import HospitalList from "./components/HospitalsList/HospitalList.jsx";
+import { DoctorSidebar } from "./components/Doctor/DoctorSidebar.jsx";
+import { DoctorProfile } from "./components/Doctor/DoctorProfile.jsx";
+import { Profile } from "./pages/Profile.jsx";
 
 const store = configureStore({
   reducer: {
@@ -87,6 +90,12 @@ const router = createBrowserRouter([
         // action: registerAction,
       },
       {
+        path: '/profile',
+        element: <Profile />,
+        errorElement: <Error />
+      }
+      ,
+      {
         path: "/buymedicines",
         // element: <MedicineNavbar />,
         children: [
@@ -115,6 +124,32 @@ const router = createBrowserRouter([
         errorElement: <Error />
       }
     ],
+  }, {
+    path: "/",
+    element: <DoctorSidebar />,
+    children: [
+      {
+        path: "/doctordashboard",
+        element: <DoctorDashboard />,
+        errorElement: <Error />
+      },
+      {
+        path: "/newappointments",
+        element: <h1>New Appiontments</h1>,
+        errorElement: <Error />
+      },
+      {
+        path: "/pastappointments",
+        element: <h1>Past Appiontments</h1>,
+        errorElement: <Error />
+      },
+      {
+        path: "/doctorprofile",
+        element: <DoctorProfile />
+      }
+
+    ]
+
   },
   // {
   //   path: "/login",
@@ -156,25 +191,24 @@ const router = createBrowserRouter([
     element: <HospitalList />,
     errorElement: <Error />,
   },
-  {
-    path: "/buymedicines",
-    element: <MedicineNavbar />,
-    children: [
-      {
-        index: true,
-        element: <Medicines />,
-      },
-      {
-        path: "cart",
-        element: <CartPage />,
-      },
-      {
-        path: "info/:id",
-        element: <MedicineInfo />,
-      },
-    ],
-  },
-
+  // {
+  //   path: "/buymedicines",
+  //   element: <MedicineNavbar />,
+  //   children: [
+  //     {
+  //       index: true,
+  //       element: <Medicines />,
+  //     },
+  //     {
+  //       path: "cart",
+  //       element: <CartPage />,
+  //     },
+  //     {
+  //       path: "info/:id",
+  //       element: <MedicineInfo />,
+  //     },
+  //   ],
+  // },
   {
     path: "/consultdoctor/:id",
     element: <AppointmentForm />,
@@ -185,11 +219,6 @@ const router = createBrowserRouter([
     element: <>Your Appointments</>,
     errorElement: <Error />
   }
-  , {
-    path: "/doctordashboard",
-    element: <DoctorDashboard />,
-    errorElement: <Error />
-  },
 
 
 ]);

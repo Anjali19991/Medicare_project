@@ -18,7 +18,8 @@ const UserSchema = new mongoose.Schema({
         type: Number
     },
     photo: { 
-        type: String 
+        data: Buffer,
+        contentType: String,
     },
     role: {
         type: String,

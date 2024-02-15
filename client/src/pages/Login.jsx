@@ -1,7 +1,7 @@
 import { FormInput, SubmitBtn } from "../components";
 import { Form, Link, redirect, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import Cookies from "universal-cookie";
 import { useAuth } from "../AuthContext";
 
@@ -13,7 +13,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("")
   const cookies = new Cookies()
-  const {user,setUser} = useAuth();
+  const { user, setUser } = useAuth();
 
   // useEffect(() => {
   //   if (user) {
@@ -54,14 +54,14 @@ const Login = () => {
       });
       console.log(data)
       setUser(data.user);
-      if(data.user.role === "patient"){
-        navigate('/')
+      if (data.user.role === "patient") {
+        navigate('/', { replace: true })
       }
-      else if(data.user.role === "doctor"){
-        navigate('/doctordashboard')
+      else if (data.user.role === "doctor") {
+        navigate('/doctordashboard', { replace: true })
       }
-      else{
-        navigate('/admin-dashboard')
+      else {
+        navigate('/admin-dashboard', { replace: true })
       }
       // navigate('/')
     } catch (error) {

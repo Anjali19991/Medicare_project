@@ -1,11 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-
 import { logoutUser } from "../features/user/userSlice";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useAuth } from "../AuthContext";
 import Cookies from "universal-cookie";
+import { PiUserCircleLight } from "react-icons/pi";
+import { FiLogOut } from "react-icons/fi";
+import { useState } from "react";
+
+
 
 const Header = () => {
   const navigate = useNavigate();
@@ -27,20 +31,37 @@ const Header = () => {
     setUser(null)
     navigate('/')
   };
+  const [photoUrl, setPhotoUrl] = useState("");
+
+  useEffect(() => {
+    if (user && user.photo) {
+      const imageData = new Uint8Array(user.photo.data.data);
+      const base64Image = `data:${user.photo.contentType};base64,${btoa(String.fromCharCode.apply(null, imageData))}`;
+      setPhotoUrl(base64Image);
+      console.log(photoUrl);
+    }
+  }, [user])
 
   return (
     <header className="bg-teal-800 py-2 text-neutral-content h-1/4  px-6">
       <div className="align-element flex justify-center sm:justify-end">
         {user ? (
           <div className="flex gap-x-2 sm:gap-x-8 items-center">
-            <p className="text-sm sm:text-sm font-bold text-white">
+            {/* <p className="text-sm sm:text-sm font-bold text-white">
               Hello, {user.name}
-            </p>
+            </p> */}
+            <Link to='/profile' className="text-3xl text-white">
+              {photoUrl ? (
+                <img src={photoUrl} className='rounded-full w-10 h-10' alt='profile-pic' />
+              ) : (
+                <PiUserCircleLight className='w-10 h-10' />
+              )}
+            </Link>
             <button
-              className="bg-white hover:bg-gray-100 text-teal-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow "
+              className="text-xl hover:bg-gray-100 px-2 py-2 text-white-800 font-semibold rounded shadow "
               onClick={handleLogout}
             >
-              logout
+              <FiLogOut />
             </button>
           </div>
         ) : (

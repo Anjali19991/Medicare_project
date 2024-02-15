@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Link as ScrollLink } from 'react-scroll';
 import { Link } from 'react-router-dom';
@@ -7,10 +7,18 @@ import { Link } from 'react-router-dom';
 
 export const ConsultDoctor = () => {
 
-    // const doctors = useSelector((state) => state.doctors.doctors)
-    // console.log(doctors)
-    // const theme = useSelector((state) => state.userState.theme)
-    // console.log(theme)
+    useEffect(()=>{
+        const fetchDoctors = async()=>{
+            try {
+                const response = await fetch('http://localhost:3000/doctor/getalldoctors')
+                const data = await response.json();
+                console.log(data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchDoctors();
+    },[])
 
 
     return (

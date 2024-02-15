@@ -8,6 +8,7 @@ const userRouter = require('./routes/userRoutes.js')
 const doctorRouter = require('./routes/doctorRoutes.js')
 const bodyParser = require('body-parser');
 const { configDotenv } = require('dotenv');
+const multer = require('multer');
 
 configDotenv();
 
