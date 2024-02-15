@@ -22,9 +22,7 @@ const Header = () => {
   const token = cookies.get("TOKEN");
   console.log(token)
 
-  useEffect(() => {
-    console.log("hello")
-  })
+ 
 
   const handleLogout = () => {
     cookies.remove('TOKEN')
@@ -34,13 +32,36 @@ const Header = () => {
   const [photoUrl, setPhotoUrl] = useState("");
 
   useEffect(() => {
-    if (user && user.photo) {
-      const imageData = new Uint8Array(user.photo.data.data);
-      const base64Image = `data:${user.photo.contentType};base64,${btoa(String.fromCharCode.apply(null, imageData))}`;
-      setPhotoUrl(base64Image);
-      console.log(photoUrl);
-    }
-  }, [user])
+    const fetchPhoto = async () => {
+      try {
+        if (user && user.photo) {
+          const imageData = new Uint8Array(user.photo.data.data);
+          const blob = new Blob([imageData], { type: user.photo.contentType });
+
+          const reader = new FileReader();
+
+          reader.onload = () => {
+            const base64Image = reader.result;
+            // Ensure photoUrl is different before updating to avoid infinite loop
+            if (base64Image !== photoUrl) {
+              setPhotoUrl(base64Image);
+            }
+          };
+
+          reader.readAsDataURL(blob);
+        }
+      } catch (error) {
+        console.error('Error fetching photo:', error);
+      }
+    };
+
+    fetchPhoto();
+  }, [user, photoUrl]);
+
+
+
+
+
 
   return (
     <header className="bg-teal-800 py-2 text-neutral-content h-1/4  px-6">
@@ -70,7 +91,7 @@ const Header = () => {
               to="/doc_register"
               className="link link-hover text-sm sm:text-sm font-bold text-white"
             >
-              Be a Doctor
+              Become a Doctor
             </Link>
             <Link
               to="/login"

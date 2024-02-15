@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 const ContactUs = () => {
@@ -44,34 +43,6 @@ const ContactUs = () => {
             </Link>
           </div>
         </nav>
-        {/* <div className="flex justify-center mt-8 space-x-6">
-          <span className="inline-flex justify-center w-full gap-3 m-auto md:justify-start md:w-auto">
-            <a className="w-6 h-6 transition fill-black hover:text-blue-500">
-              <span className="sr-only">
-                github
-              </span>
-              <ion-icon className="w-5 h-5 md hydrated" name="logo-github" role="img" aria-label="logo github"></ion-icon>
-            </a>
-            <a className="w-6 h-6 transition fill-black hover:text-blue-500">
-              <span className="sr-only">
-                twitter
-              </span>
-              <ion-icon className="w-5 h-5 md hydrated" name="logo-twitter" role="img" aria-label="logo twitter"></ion-icon>
-            </a>
-            <a className="w-6 h-6 transition fill-black hover:text-blue-500">
-              <span className="sr-only">
-                Instagram
-              </span>
-              <ion-icon className="w-5 h-5 md hydrated" name="logo-instagram" role="img" aria-label="logo instagram"></ion-icon>
-            </a>
-            <a className="w-6 h-6 transition fill-black hover:text-blue-500">
-              <span className="sr-only">
-                Linkedin
-              </span>
-              <ion-icon className="w-5 h-5 md hydrated" name="logo-linkedin" role="img" aria-label="logo linkedin"></ion-icon>
-            </a>
-          </span>
-        </div> */}
         <p className="mt-8 text-center">
           <span className="mx-auto mt-2 text-sm text-gray-500">
               Copyright ©
