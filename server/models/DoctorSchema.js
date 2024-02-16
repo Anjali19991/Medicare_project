@@ -20,10 +20,11 @@ const DoctorSchema = new mongoose.Schema({
     },
     //After registration should fill these details
     phone: {
-        type: Number
-    },
-    photo: {
         type: String
+    },
+    photo: { 
+        data: Buffer,
+        contentType: String,
     },
     tokenPrice: {
         type: Number
@@ -31,8 +32,8 @@ const DoctorSchema = new mongoose.Schema({
     specialization: {
         type: String
     },
-    qualifications: {
-        type: Array,
+    qualification: {
+        type: String,
     },
     bio: {
         type: String,

@@ -20,8 +20,8 @@ exports.signup = async (req, res) => {
     try {
         console.log(req.body);
         // const { name, email, password, role, otp } = req.body;
-        const { username, email, password, role } = req.body;
-        if (!username || !email || !password || !role) {
+        const { name, email, password, role } = req.body;
+        if (!name || !email || !password || !role) {
             return res.status(403).json({
                 success: false,
                 message: 'All fields are required',
@@ -40,14 +40,23 @@ exports.signup = async (req, res) => {
         let newUser;
         const hashedPassword = await bcrypt.hash(password, 10);
         if (role === "doctor") {
+            const {specialization,qualification,phone} = req.body;
+            console.log(specialization);
             newUser = await Doctor.create({
-                name: username,
+                name: name,
                 email,
                 password: hashedPassword,
+                photo:{
+                    data:req.file.buffer,
+                    contentType:req.file.mimetype
+                },
+                specialization,
+                qualification,
+                phone
             });
         } else {
             newUser = await User.create({
-                name: username,
+                name: name,
                 email,
                 password: hashedPassword,
                 role,
@@ -94,7 +103,7 @@ exports.signup = async (req, res) => {
         // //     role
         // // });
         // const newUser = await User.create({
-        //     name:username,
+        //     name:name,
         //     email,
         //     password: hashedPassword,
         //     role
@@ -102,7 +111,7 @@ exports.signup = async (req, res) => {
 
         // if (role === "doctor") {
         //     const newDoctor = await Doctor.create({
-        //         name:username,
+        //         name:name,
         //         email,
         //         password: hashedPassword,
         //         role

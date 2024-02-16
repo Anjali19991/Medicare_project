@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 
 const Register = () => {
-  const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -28,7 +28,7 @@ const Register = () => {
         return;
       }
       const formData = new FormData();
-      formData.append('username', username);
+      formData.append('name', name);
       formData.append('email', email);
       formData.append('password', password);
       formData.append('role', 'patient');
@@ -40,7 +40,7 @@ const Register = () => {
         //   'Accept': 'application/json',
         //   'Content-Type': 'application/json',
         // },
-        // body: JSON.stringify({ username, email, password, role: 'patient', photo: selectedImage }),
+        // body: JSON.stringify({ name, email, password, role: 'patient', photo: selectedImage }),
       });
 
       const data = await response.json();
@@ -61,9 +61,9 @@ const Register = () => {
               <label className="block text-sm my-2">Username</label>
               <input
                 type="text"
-                name="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                name="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 className="w-full px-4 py-2 text-sm border rounded-md focus:border-teal-400 focus:outline-none focus:ring-1 focus:ring-teal-600"
                 placeholder="Enter Username"
               />

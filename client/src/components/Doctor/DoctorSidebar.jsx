@@ -1,12 +1,13 @@
-import React,{useEffect} from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAuth } from '../../AuthContext'
-import { Link, Outlet,useNavigate,useLocation } from 'react-router-dom';
+import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import Cookies from "universal-cookie";
+import { PiUserCircleLight } from "react-icons/pi"
 
 
 export const DoctorSidebar = () => {
 
-    const { user,setUser } = useAuth();
+    const { user, setUser } = useAuth();
     console.log(user);
     const navigate = useNavigate();
     const cookies = new Cookies();
@@ -17,10 +18,36 @@ export const DoctorSidebar = () => {
     const handleLogout = () => {
         cookies.remove('TOKEN')
         setUser(null)
-        navigate('/',{replace:true})
+        navigate('/', { replace: true })
     };
+    const [photoUrl, setPhotoUrl] = useState("");
 
-    
+    useEffect(() => {
+        const fetchPhoto = async () => {
+            try {
+                if (user && user.photo) {
+                    const imageData = new Uint8Array(user.photo.data.data);
+                    const blob = new Blob([imageData], { type: user.photo.contentType });
+
+                    const reader = new FileReader();
+
+                    reader.onload = () => {
+                        const base64Image = reader.result;
+                        if (base64Image !== photoUrl) {
+                            setPhotoUrl(base64Image);
+                        }
+                    };
+
+                    reader.readAsDataURL(blob);
+                }
+            } catch (error) {
+                console.error('Error fetching photo:', error);
+            }
+        };
+
+        fetchPhoto();
+    }, [user, photoUrl]);
+
     // useEffect(()=>{
     //     if(!user){
     //         navigate('/',{replace:true});
@@ -32,7 +59,8 @@ export const DoctorSidebar = () => {
             <div className='fixed'>
                 <aside className="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto border-r rtl:border-r-0 rtl:border-l bg-teal-800 dark:border-gray-700">
                     <Link to="/doctordashboard">
-                        <img className="w-auto h-7" src="https://merakiui.com/images/logo.svg" alt="" />
+                        {/* <img className="w-auto h-7" src="https://merakiui.com/images/logo.svg" alt="" /> */}
+                        <h1 className='text-white'>MEDICARE</h1>
                     </Link>
 
                     <div className="flex flex-col justify-between flex-1 mt-6">
@@ -55,7 +83,7 @@ export const DoctorSidebar = () => {
                             <span className="mx-2 text-sm font-medium">Home</span>
                         </a> */}
 
-                            <Link className={`flex items-center px-3 py-2 text-gray-300 transition-colors duration-300 transform rounded-lg  ${location.pathname===""}  hover:bg-gray-100  hover:text-gray-700`} to="/doctordashboard">
+                            <Link className={`flex items-center px-3 py-2 text-gray-300 transition-colors duration-300 transform rounded-lg  ${location.pathname === ""}  hover:bg-gray-100  hover:text-gray-700`} to="/doctordashboard">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-5 h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605" />
                                 </svg>
@@ -108,7 +136,11 @@ export const DoctorSidebar = () => {
                         <div className="mt-6">
                             <div className="flex items-center justify-between mt-6">
                                 <a to="#" className="flex items-center gap-x-2">
-                                    <img className="object-cover rounded-full h-7 w-7" src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&h=634&q=80" alt="avatar" />
+                                    {photoUrl ? (
+                                        <img src={photoUrl} className='rounded-full border-white border-2 w-11 h-11' alt='profile-pic' />
+                                    ) : (
+                                        <PiUserCircleLight className='w-10 h-10' />
+                                    )}
                                     <span className="text-sm font-medium text-gray-700 dark:text-gray-200">{user ? user.name : ""}</span>
                                 </a>
 

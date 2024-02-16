@@ -47,7 +47,7 @@ const Navbar = () => {
         <div className="navbar-end">
           {
             user ? (
-              <Link to={'/appointments'} className="p-2 hover:bg-teal-200 hover:rounded-lg">Appointments</Link>
+              <Link to={'/appointments'} className="p-2 mx-8 hover:bg-teal-200 hover:rounded-lg">Appointments</Link>
             ) : ("")
           }
           {
