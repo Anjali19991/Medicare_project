@@ -1,15 +1,9 @@
-import React, { useState,useEffect } from 'react'
-import { Link,useNavigate } from 'react-router-dom';
-import { useAuth } from '../../AuthContext';
 
 
 export const DoctorDashboard = () => {
 
-    const [active, setActive] = useState("home");
-    const { user, setUser } = useAuth();
+  
 
-    console.log(user);
-    const navigate = useNavigate();
 
     // useEffect(()=>{
     //     if(!user){

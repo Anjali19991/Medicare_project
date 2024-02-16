@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import{ useState, useEffect } from "react";
 import { useAuth } from "../AuthContext";
 import { PiUserCircleLight } from "react-icons/pi";
 
 export const Profile = () => {
   const { user, token, setUser } = useAuth();
   console.log(user);
-  // console.log(user.name);
   console.log(token);
   const [photoUrl, setPhotoUrl] = useState("");
 
@@ -90,7 +89,7 @@ export const Profile = () => {
     <div>
       <h1 className="text-center mt-4 text-3xl">User Profile</h1>
       {user ? (
-        <div className="mt-8 w-screen flex justify-center items-center">
+        <div className="mt-8 w-[80vw] min-h-[80vh] flex justify-center items-center">
           <div className="p-4 sm:w-[480px] w-full flex items-center flex-col gap-4 shadow-2xl">
             <span className="text-5xl mx-auto">
               {photoUrl ? (
@@ -127,12 +126,7 @@ export const Profile = () => {
                 onChange={(e) => handleInputChange(e)}
               />
             </div>
-            {/* <div className='flex gap-[3.35rem] items-center'>
-                                <label htmlFor="password" className='text-lg'>
-                                    Password:
-                                </label>
-                                <input type="text" name='email' value={user.password} className='p-2 border-2 w-64' />
-                            </div> */}
+           
             <div className="flex gap-[2.9rem] items-center">
               <label htmlFor="phone" className="text-lg ">
                 Phone:

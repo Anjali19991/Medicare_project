@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { useAuth } from "../../AuthContext";
 import { PiUserCircleLight } from "react-icons/pi";
 
@@ -131,12 +131,7 @@ export const DoctorProfile = () => {
                                 onChange={(e) => handleInputChange(e)}
                             />
                         </div>
-                        {/* <div className='flex gap-[3.35rem] items-center'>
-                                <label htmlFor="password" className='text-lg'>
-                                    Password:
-                                </label>
-                                <input type="text" name='email' value={user.password} className='p-2 border-2 w-64' />
-                            </div> */}
+                      
                         <div className="flex gap-[2.9rem] items-center">
                             <label htmlFor="phone" className="text-lg ">
                                 Phone:

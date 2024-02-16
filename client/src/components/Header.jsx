@@ -65,7 +65,7 @@ const Header = () => {
         {user ? (
           <div className="flex gap-x-2 sm:gap-x-8 items-center">
            
-            <Link to='/profile' className="text-3xl text-white">
+            <Link to={user.role === "patient" ? '/userdashboard' : '/doctordashboard'} className="text-3xl text-white">
               {photoUrl ? (
                 <img src={photoUrl} className='rounded-full border-white border-2 w-11 h-11' alt='profile-pic' />
               ) : (

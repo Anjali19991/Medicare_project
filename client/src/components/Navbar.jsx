@@ -3,7 +3,6 @@ import { FaBarsStaggered } from "react-icons/fa6";
 import { NavLink, useLocation } from "react-router-dom";
 import NavLinks from "./NavLinks";
 import { Link } from "react-router-dom";
-import { useAuth } from "../AuthContext";
 import { useSelector } from "react-redux";
 import { BsCart4 } from "react-icons/bs";
 
@@ -11,7 +10,6 @@ const Navbar = () => {
 
   const location = useLocation();
   console.log(location.pathname)
-  const { user, setUser } = useAuth();
   const cartItems = useSelector((state) => state.medicines.items);
   const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
 
@@ -45,11 +43,7 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end">
-          {
-            user ? (
-              <Link to={'/appointments'} className="p-2 mx-8 hover:bg-teal-200 hover:rounded-lg">Appointments</Link>
-            ) : ("")
-          }
+         
           {
             location.pathname.includes("buymedicines") ? (
               <div className="text-white">
@@ -67,15 +61,7 @@ const Navbar = () => {
               ""
             )
           }
-          {/* THEME SETUP */}
-          {/* <label className="swap swap-rotate">
-            <input type="checkbox" onChange={handleTheme} />
-
-            <BsSunFill className="swap-on h-4 w-4" />
-
-            <BsMoonFill className="swap-off h-4 w-4" />
-          </label> */}
-          {/* CART LINK */}
+        
         </div>
       </div>
     </nav>
