@@ -1,7 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { logoutUser } from "../features/user/userSlice";
-import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useAuth } from "../AuthContext";
 import Cookies from "universal-cookie";
@@ -13,9 +10,8 @@ import { useState } from "react";
 
 const Header = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const queryClient = useQueryClient();
-  const { user, loggedIn, setUser } = useAuth()
+  
+  const { user,  setUser } = useAuth()
 
   console.log(user);
   const cookies = new Cookies();
@@ -68,9 +64,7 @@ const Header = () => {
       <div className="align-element flex justify-center sm:justify-end">
         {user ? (
           <div className="flex gap-x-2 sm:gap-x-8 items-center">
-            {/* <p className="text-sm sm:text-sm font-bold text-white">
-              Hello, {user.name}
-            </p> */}
+           
             <Link to='/profile' className="text-3xl text-white">
               {photoUrl ? (
                 <img src={photoUrl} className='rounded-full border-white border-2 w-11 h-11' alt='profile-pic' />
@@ -79,11 +73,12 @@ const Header = () => {
               )}
             </Link>
             <button
-              className="text-xl hover:bg-gray-100 hover:text-black bg-teal-900 px-2 py-2 text-white-800 font-semibold rounded shadow-2xl"
+              className="text-xl hover:bg-gray-50 hover:text-teal-800 px-2 py-2 text-white-800 font-semibold rounded shadow"
               onClick={handleLogout}
             >
               <FiLogOut />
             </button>
+
           </div>
         ) : (
           <div className="flex gap-x-6 justify-center items-center">
