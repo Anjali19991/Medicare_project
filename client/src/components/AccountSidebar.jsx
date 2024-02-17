@@ -95,6 +95,7 @@ export const AccountSidebar = () => {
                                     </Link>
                                 </>
                             )}
+                            
 
                             {user.role === "patient" && (
                                 <>
@@ -137,6 +138,8 @@ export const AccountSidebar = () => {
                                     </Link>
                                 </>
                             )}
+
+                            
                         </nav>
 
                         <div className="mt-6">

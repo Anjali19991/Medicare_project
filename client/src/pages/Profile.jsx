@@ -87,9 +87,9 @@ export const Profile = () => {
 
   return (
     <div>
-      <h1 className="text-center mt-4 text-3xl">User Profile</h1>
+      <h1 className="text-center mt-4 text-3xl font-semibold">User Profile</h1>
       {user ? (
-        <div className="mt-8 w-[80vw] min-h-[80vh] flex justify-center items-center">
+        <div className="mt-8 w-[75vw] min-h-[75vh] flex justify-center items-center">
           <div className="p-4 sm:w-[480px] w-full flex items-center flex-col gap-4 shadow-2xl">
             <span className="text-5xl mx-auto">
               {photoUrl ? (
