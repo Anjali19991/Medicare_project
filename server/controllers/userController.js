@@ -1,6 +1,7 @@
 const Doctor = require('../models/DoctorSchema');
 const User = require('../models/UserSchema')
 const Appointment = require('../models/AppointmentSchema')
+const Review = require('../models/ReviewSchema')
 
 
 exports.getUserDetails = async (req, res) => {
@@ -46,8 +47,6 @@ exports.updateUser = async (req, res) => {
 exports.bookappointment = async (req, res) => {
     const { doctorId, ticketPrice, appointmentDate } = req.body;
     const { id } = req.user;
-    // console.log(req.user);
-    // console.log(req.body);
     try {
         const user = await User.findOne({ _id: id });
         const doctor = await Doctor.findOne({ _id: doctorId })
@@ -72,5 +71,36 @@ exports.bookappointment = async (req, res) => {
         console.log(error.message);
         return res.status(500).json({ success: false, error: error.message })
     }
-
 }
+
+exports.writeReview = async (req, res) => {
+    const { id, role } = req.user;
+    const { docId } = req.params;
+
+    if (role !== "patient") {
+        return res.status(400).send({ message: "Only Patients can write a review for doctors", success: false });
+    }
+
+    try {
+        const user = await User.findById(id);
+        const doc = await Doctor.findById(docId);
+
+        if (!user || !doc) {
+            return res.status(400).send({ message: "User or Doctor not found", success: false });
+        }
+
+        const { review, rating } = req.body;
+        const newReview = await Review.create({ doctor: docId, user: id, reviewText: review, rating });
+
+        doc.reviews.push(newReview);
+        await doc.save();
+
+        return res.status(200).send({ message: "Review Created Successfully", success: true });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send({ message: "Error in Creating review", success: false });
+    }
+};
+
+
+

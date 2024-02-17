@@ -6,6 +6,7 @@ const authRouter = require('./routes/authRoutes.js');
 const otpRouter = require('./routes/otpRoutes.js')
 const userRouter = require('./routes/userRoutes.js')
 const doctorRouter = require('./routes/doctorRoutes.js')
+const adminRouter = require('./routes/adminRoutes.js')
 const bodyParser = require('body-parser');
 require('dotenv').config();
 const multer = require('multer');
@@ -26,6 +27,7 @@ app.use('/auth', authRouter);
 app.use('/otp', otpRouter);
 app.use('/user',userRouter)
 app.use('/doctor',doctorRouter)
+app.use('/admin',adminRouter);
 
 
 const start = async () => {

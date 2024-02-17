@@ -17,21 +17,26 @@ const UserSchema = new mongoose.Schema({
     phone: {
         type: Number
     },
-    photo: { 
+    photo: {
         data: Buffer,
         contentType: String,
     },
     role: {
         type: String,
-        enum: ["patient","doctor","admin"],
+        enum: ["patient", "doctor", "admin"],
         default: "patient",
     },
-    gender: { 
-        type: String, 
-        enum: ["male", "female", "other"] 
+    gender: {
+        type: String,
+        enum: ["male", "female", "other"]
     },
-    bloodType: { 
-        type: String 
+    bloodType: {
+        type: String
+    },
+    isActive: {
+        type: String,
+        enum: ["active", "blocked"],
+        default: "active"
     },
     appointments: [{ type: mongoose.Types.ObjectId, ref: "Appointment" }],
 })

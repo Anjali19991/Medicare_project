@@ -6,6 +6,6 @@ const userController = require('../controllers/userController.js')
 router.get('/getuser',auth,userController.getUserDetails)
 router.put('/updateprofile',auth,userController.updateUser)
 router.post('/bookappointment',auth,userController.bookappointment)
-
+router.post('/writereview/:docId',auth,userController.writeReview)
 
 module.exports = router;

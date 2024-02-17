@@ -1,6 +1,8 @@
 
 import { IoMdTime, IoMdPeople, IoMdCheckmark } from 'react-icons/io'; // Assuming IoMdCheckmark is your checkmark icon
 import NavbarComponent from './NavBarComponent';
+import { useAuth } from '../../AuthContext';
+import { useEffect } from 'react';
 
 
 const AdminDashBoard = () => {
@@ -11,10 +13,16 @@ const AdminDashBoard = () => {
     const totalDoctors = 100;
     const totalHospitals = 50;
 
+    const {user,setUser} = useAuth();
+
+    useEffect(()=>{
+        console.log("Hello world")
+    },[user])
+
     return (
         <div>
             <NavbarComponent />
-
+            <h1 className='mx-4 my-4 text-2xl'> Hello {user ? user.name:""}</h1>
             <div className="container mx-auto mt-8 p-8">
                 <h1 className="text-4xl lg:text-5xl font-bold mb-6 text-gray-800">Overview of the Platform</h1>
 

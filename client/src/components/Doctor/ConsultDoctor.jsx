@@ -1,24 +1,28 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link as ScrollLink } from 'react-scroll';
 import { Link } from 'react-router-dom';
+import DoctorCard from './DoctorCard';
 
 
 
 export const ConsultDoctor = () => {
 
-    useEffect(()=>{
-        const fetchDoctors = async()=>{
+    const [doctors, setDoctors] = useState({});
+
+    useEffect(() => {
+        const fetchDoctors = async () => {
             try {
                 const response = await fetch('http://localhost:3000/doctor/getalldoctors')
                 const data = await response.json();
                 console.log(data);
+                setDoctors(data.data);
             } catch (error) {
                 console.log(error);
             }
         }
         fetchDoctors();
-    },[])
+    }, [])
 
 
     return (
@@ -27,13 +31,13 @@ export const ConsultDoctor = () => {
                 <div className='w-[40%] max-[600px]:w-full max-[1200px]:w-[80%] flex flex-col gap-4'>
                     <h1 className='text-4xl'>Consult Your Doctor</h1>
                     <p>Discover expert healthcare at your fingertips. Connect with certified doctors for personalized consultations and medical guidance.Empower your well-being with convenient access to professional advice. Our platform ensures confidential and cost-effective healthcare solutions tailored to your needs.</p>
-                    <div className='flex gap-4'> 
+                    <div className='flex gap-4'>
                         {/* <a href='#doctors' className='bg-teal-700 px-4 py-2 rounded-md text-white w-32'>
                             <ScrollLink to='doctors' smooth={true} duration={500}>
                                 Consult Now
                             </ScrollLink>
                         </a> */}
-                   </div>
+                    </div>
 
                 </div>
                 <div className='w-[50%] max-[600px]:w-full max-[1200px]:w-[80%]'>
@@ -64,6 +68,18 @@ export const ConsultDoctor = () => {
             </div>
             <div id='doctors' className='my-8 px-16'>
                 <h1 className='text-2xl font-semibold my-8'>Find Doctors</h1>
+                <div>
+                    {
+                        doctors.length ? (
+                            doctors.map((doctor,index) => {
+                                return (
+                                    <DoctorCard key={index} doctor={doctor} />
+                                )
+                            })
+                        ) : ""
+                    }
+                </div>
+
                 {/* <div className='grid grid-cols-4 w-full gap-4'>
                     {
                         doctors.map((doctor) => (

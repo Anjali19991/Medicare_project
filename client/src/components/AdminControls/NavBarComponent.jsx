@@ -1,7 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Cookies from "universal-cookie";
+import { FiLogOut } from "react-icons/fi";
+import { useAuth } from '../../AuthContext';
+
 
 const NavBarComponent = () => {
+
+    const cookies = new Cookies();
+    const {user,setUser} = useAuth();
+    const navigate = useNavigate();
+
+
+    const handleLogout = () => {
+        cookies.remove('TOKEN')
+        setUser(null)
+        navigate('/')
+      };
+
     return (
         <nav className="bg-teal-800 p-5">
             <div className="container mx-auto flex items-center justify-between">
@@ -22,6 +38,12 @@ const NavBarComponent = () => {
                     <li>
                         <Link to="/admin-announcements" className="hover:underline">Post Announcements</Link>
                     </li>
+                    <button
+                        className="text-xl hover:bg-gray-50 hover:text-teal-800 px-2 py-2 text-white-800 font-semibold rounded shadow"
+                        onClick={handleLogout}
+                    >
+                        <FiLogOut />
+                    </button>
                 </ul>
             </div>
         </nav>
