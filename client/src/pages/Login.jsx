@@ -99,7 +99,7 @@ const Login = () => {
 
   return (
     <div className="h-full w-full flex items-center justify-center min-h-[80vh]">
-      <div className="flex flex-row p-8 rounded-md shadow-2xl">
+      <div className="flex flex-row p-10 rounded-md shadow-2xl">
         <div className="bg-teal-700 p-6 shadow-lg flex items-center justify-center flex-col w-[32rem] rounded-l-md">
           <h1 className="text-white font-medium text-3xl">Welcome Back!</h1>
           <h3 className="text-white text-lg mt-4 w-[24rem]">
@@ -109,9 +109,10 @@ const Login = () => {
         </div>
 
         <section className="grid place-items-center bg-zinc-200 rounded-r-md">
+
           <form
             method="post"
-            className="p-6 bg-base-100 shadow-lg flex flex-col gap-y-4 bg-opacity-40 w-[26rem]"
+            className="p-6 bg-base-100 shadow-lg flex flex-col gap-y-4 bg-opacity-40 w-[26rem] min-h-[60vh]" 
           >
             <h4 className="text-center text-3xl font-bold text-teal-800">
               Login
@@ -187,6 +188,7 @@ const Login = () => {
       </div>
     </div>
   );
+
 };
 
 export default Login;

@@ -3,6 +3,8 @@ import { useAuth } from '../AuthContext'
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import Cookies from "universal-cookie";
 import { PiUserCircleLight } from "react-icons/pi"
+import { FiLogOut } from "react-icons/fi";
+
 
 export const AccountSidebar = () => {
     const { user, setUser } = useAuth();
@@ -153,9 +155,14 @@ export const AccountSidebar = () => {
                                     <span className="text-sm font-medium text-gray-700 dark:text-gray-200">{user ? user.name : ""}</span>
                                 </a>
 
-                                <button onClick={handleLogout} className="text-gray-500 transition-colors duration-200 dark:text-gray-400 rtl:rotate-0 hover:text-blue-500 dark:hover:text-blue-400">
-                                    logout
+                                <button
+                                    className="text-xl px-2 py-2 font-semibold rounded shadow transition duration-300 ease-in-out transform hover:scale-105"
+                                    style={{ backgroundColor: "#008080", color: "white" }}
+                                    onClick={handleLogout}
+                                >
+                                    <FiLogOut />
                                 </button>
+
                             </div>
                         </div>
                     </div>

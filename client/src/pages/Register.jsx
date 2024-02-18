@@ -12,11 +12,13 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
+
   const [UserNameError, setUserNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword,setShowConfirmPassword]=useState(false);
 
   const navigate = useNavigate();
   const { user, setUser } = useAuth();
@@ -138,16 +140,20 @@ const Register = () => {
   };
 
   return (
-    <div className="flex items-center min-h-[82vh]">
-      <div className="flex-1 h-full max-w-2xl mx-auto bg-zinc-100 rounded-lg shadow-xl">
-        <div className="flex items-center justify-center p-6 sm:p-12">
-          <form
-            className="w-full"
-            onSubmit={(e) => registerUser(e)}
-            encType="multipart/form-data"
-          >
+    <>
+      <div className="h-full w-full flex items-center justify-center min-h-[10vh]">
+        <div className="flex flex-row p-6 rounded-md shadow-2xl">
+          <section className="grid place-items-center bg-zinc-200 rounded-l-md">
+            <form
+              method="post"
+              className="p-3 bg-base-100 shadow-lg flex flex-col gap-y-2 bg-opacity-40 w-[32rem]"
+              onSubmit={(e) => registerUser(e)}
+              encType="multipart/form-data"
+            >
+
+
             <h3 className="mb-4 text-2xl font-bold text-teal-600">Sign up</h3>
-            <div className="mt-4 mb-4">
+            <div className="mt-2 mb-2">
               <div className="flex items-center border-b-2 border-teal-500 py-2">
                 <FaUser className="text-teal-500 mr-2" />
                 <input
@@ -166,7 +172,7 @@ const Register = () => {
               )}
             </div>
 
-            <div className="mt-4 mb-4">
+            <div className="mt-2 mb-2">
               <div className="flex items-center border-b-2 border-teal-500 py-2">
                 <FaEnvelope className="text-teal-500 mr-2" />
                 <input
@@ -185,7 +191,7 @@ const Register = () => {
               )}
             </div>
 
-            <div className="mt-4 mb-4">
+            <div className="mt-2 mb-2">
               <div className="flex items-center border-b-2 border-teal-500 py-2 relative">
                 <FaLock className="text-teal-500 mr-2" />
                 <input
@@ -213,11 +219,12 @@ const Register = () => {
                 <p className="text-red-500 text-sm mt-1">{passwordError}</p>
               )}
             </div>
-            <div className="mt-4 mb-4">
+
+            <div className="mt-2 mb-2">
               <div className="flex items-center border-b-2 border-teal-500 py-2 relative">
                 <FaLock className="text-teal-500 mr-2" />
                 <input
-                  type={showPassword ? "text" : "password"}
+                  type={showConfirmPassword ? "text" : "password"}
                   name="confirmPassword"
                   value={confirmPassword}
                   onChange={handleConfirmPasswordChange}
@@ -226,15 +233,15 @@ const Register = () => {
                   }`}
                   placeholder="Confirm Password"
                 />
-                {showPassword ? (
+                {showConfirmPassword ? (
                   <FaEyeSlash
                     className="text-teal-500 cursor-pointer absolute right-3 top-1/2 transform -translate-y-1/2"
-                    onClick={() => setShowPassword(false)}
+                    onClick={() => setShowConfirmPassword(false)}
                   />
                 ) : (
                   <FaEye
                     className="text-teal-500 cursor-pointer absolute right-3 top-1/2 transform -translate-y-1/2"
-                    onClick={() => setShowPassword(true)}
+                    onClick={() => setShowConfirmPassword(true)}
                   />
                 )}
               </div>
@@ -245,7 +252,7 @@ const Register = () => {
               )}
             </div>
 
-            <div className="mt-4 mb-4">
+            <div className="mt-2 mb-2">
               <label className="block text-sm my-2">Profile Picture</label>
               <input
                 type="file"
@@ -276,10 +283,22 @@ const Register = () => {
               </Link>
             </p>
           </form>
+          </section>
+
+          <div className="bg-teal-700 p-6 shadow-lg flex items-center justify-center flex-col w-[30rem]">
+            <h1 className="text-white font-medium text-3xl">Welcome to Our Community!</h1>
+            <h3 className="text-white text-lg mt-4 w-[20rem]">
+              We are thrilled to have you join us. Get ready to explore, connect, and experience a world of possibilities. Your journey with us begins now!
+            </h3>
+
+          </div>
         </div>
       </div>
-    </div>
+
+
+    </>
   );
+
 };
 
 export default Register;
