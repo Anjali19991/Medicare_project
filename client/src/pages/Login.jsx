@@ -1,58 +1,89 @@
-// import { FormInput, SubmitBtn } from "../components";
-import { Form, Link, redirect, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
+import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import Cookies from "universal-cookie";
 import { useAuth } from "../AuthContext";
 
-
 const Login = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("")
-  const cookies = new Cookies()
+  const [password, setPassword] = useState("");
+  const cookies = new Cookies();
   const { user, setUser } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
-  // useEffect(() => {
-  //   if (user) {
-  //     navigate('/')
-  //   }
-  // })
+  const validateEmail = (value) => {
+    const emailRegex = /^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/;
 
-  // const loginAsGuestUser = async () => {
-  //   try {
-  //     const response = await customFetch.post("/auth/local", {
-  //       identifier: "test@test.com",
-  //       password: "secret",
-  //     });
-  //     dispatch(loginUser(response.data));
-  //     toast.success("Welcome guest user");
-  //     navigate("/");
-  //   } catch (error) {
-  //     console.log(error);
-  //     toast.error("Guest user login error. Please try again");
-  //   }
-  // };
+    if (!emailRegex.test(value)) {
+      setEmailError("Please enter a valid email address (e.g  jonh@gmail.com)");
+      return false;
+    } else {
+      setEmailError("");
+      return true;
+    }
+  };
+
+  const validatePassword = () => {
+    const isValidPassword =
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/.test(
+        password
+      );
+
+    if (!isValidPassword) {
+      setPasswordError(
+        "Password must contain at least 6 characters with one uppercase letter, one number, and one special character."
+      );
+      return false;
+    } else {
+      setPasswordError("");
+      return true;
+    }
+  };
+
+  const handleEmailChange = (e) => {
+    const { value } = e.target;
+    setEmail(value);
+    validateEmail(value);
+  };
+
+  const handlePasswordChange = (e) => {
+    const { value } = e.target;
+    setPassword(value);
+    validatePassword(value);
+  };
 
   const loginUser = async () => {
-    console.log(email)
-    console.log(password)
+    const isEmailValid = validateEmail(email);
+    const isPasswordValid = validatePassword();
+
+ 
+    if (!isEmailValid || !isPasswordValid ) {
+      toast.error("Please fix the validation errors before submitting.");
+      return;
+    }
+
+
     try {
-      const response = await fetch('http://localhost:3000/auth/login', {
-        method: 'POST',
+      const response = await fetch("http://localhost:3000/auth/login", {
+        method: "POST",
         headers: {
-          'Accept': 'application/json',
-          'Content-type': 'application/json'
+          Accept: "application/json",
+          "Content-type": "application/json",
         },
-        body: JSON.stringify({ email, password })
-      })
-      const data = await response.json();
-      cookies.set('TOKEN', data.token, {
-        path: '/',
+        body: JSON.stringify({ email, password }),
       });
-      console.log(data)
+      const data = await response.json();
+      cookies.set("TOKEN", data.token, {
+        path: "/",
+      });
+      console.log(data);
       setUser(data.user);
       if (data.user.role === "patient") {
         navigate('/', { replace: true,state: data.user })
@@ -63,46 +94,88 @@ const Login = () => {
       else {
         navigate('/admin-dashboard', { replace: true,state: data.user })
       }
-      // navigate('/')
     } catch (error) {
-      console.log('Error: ', error.message)
+      console.log("Error: ", error.message);
     }
-  }
+  };
 
   return (
     <div className="h-full w-full flex items-center justify-center min-h-[80vh]">
-      <div className="flex flex-row p-7 rounded-md shadow-2xl">
-
-        <div className="bg-teal-700 p-5 shadow-lg  flex items-center justify-center flex-col w-[30rem] rounded-l-md">
+      <div className="flex flex-row p-10 rounded-md shadow-2xl">
+        <div className="bg-teal-700 p-6 shadow-lg flex items-center justify-center flex-col w-[32rem] rounded-l-md">
           <h1 className="text-white font-medium text-3xl">Welcome Back!</h1>
-          <h3 className="text-white  text-lg mt-4 w-[22rem]">
+          <h3 className="text-white text-lg mt-4 w-[24rem]">
             We are so very happy to have you here. It is great to see you again.
             We hope you had a safe and enjoyable time away.
           </h3>
         </div>
 
         <section className="grid place-items-center bg-zinc-200 rounded-r-md">
+
           <form
             method="post"
-            className=" p-8 bg-base-100 shadow-lg flex flex-col gap-y-4 bg-opacity-40 w-[25rem]"
+            className="p-6 bg-base-100 shadow-lg flex flex-col gap-y-4 bg-opacity-40 w-[26rem] min-h-[60vh]" 
           >
             <h4 className="text-center text-3xl font-bold text-teal-800">
               Login
             </h4>
-            <input className="px-4 py-3 rounded-md" placeholder="email" type="email" label="Email" name="identifier" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <input className="px-4 py-3 rounded-md" placeholder="password" type="password" label="Password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <div className="mt-4">
-              <button className="px-4 py-3 w-full text-white rounded-md bg-teal-600" type="submit" onClick={(e) => {
-                e.preventDefault()
-                loginUser()
-              }}>Login</button>
+            <div className="flex items-center border-b-2 border-teal-500 py-2">
+              <FaEnvelope className="text-teal-500 mr-2" />
+              <input
+                className={`px-4 py-3 rounded-md flex-1 ${
+                  emailError ? "border-red-500" : ""
+                }`}
+                placeholder="Email"
+                type="email"
+                name="identifier"
+                value={email}
+                onChange={handleEmailChange}
+              />
             </div>
-            <button
-              type="button"
-              className="btn btn-secondary btn-block"
-            >
-              Guest User
-            </button>
+            {emailError && (
+              <p className="text-red-500 text-sm mt-1">{emailError}</p>
+            )}
+            
+            <div className="flex items-center border-b-2 border-teal-500 py-2 relative">
+              <FaLock className="text-teal-500 mr-2" />
+              <input
+                className={`px-4 py-3 rounded-md flex-1 ${
+                  passwordError ? "border-red-500" : ""
+                }`}
+                placeholder="Password"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={password}
+                onChange={handlePasswordChange}
+              />
+              {showPassword ? (
+                <FaEyeSlash
+                  className="text-teal-500 cursor-pointer absolute right-3 top-1/2 transform -translate-y-1/2"
+                  onClick={() => setShowPassword(false)}
+                />
+              ) : (
+                <FaEye
+                  className="text-teal-500 cursor-pointer absolute right-3 top-1/2 transform -translate-y-1/2"
+                  onClick={() => setShowPassword(true)}
+                />
+              )}
+            </div>
+            {passwordError && (
+              <p className="text-red-500 text-sm mt-1">{passwordError}</p>
+            )}
+            <div className="mt-4">
+              <button
+                className="px-4 py-3 w-full text-white rounded-md bg-teal-600"
+                type="submit"
+                onClick={(e) => {
+                  e.preventDefault();
+                  loginUser();
+                }}
+              >
+                Login
+              </button>
+            </div>
+
             <p className="text-center">
               Not a member yet?{" "}
               <Link
@@ -115,9 +188,9 @@ const Login = () => {
           </form>
         </section>
       </div>
-
     </div>
   );
+
 };
 
 export default Login;
