@@ -16,11 +16,10 @@ const AppointmentSchema = mongoose.Schema({
         type: Date,
         required: true,
     },
-    // bookedSlot:{
-    //     type:mongoose.Types.DocumentArray,
-    //     ref:"Doctor",
-    //     required:true
-    // } ,
+    slot: {
+        startTime: { type: String, required: true },
+        endTime: { type: String, required: true },
+    },
     status: {
         type: String,
         enum: ["pending", "approved", "cancelled"],
@@ -29,11 +28,9 @@ const AppointmentSchema = mongoose.Schema({
     isPaid: {
         type: Boolean,
         default: true,
-      },
     },
-    {timestamps: true },
+},
+    { timestamps: true },
 )
 
-const AppointmentModel = mongoose.model('AppointmentModel',AppointmentSchema)
-
-module.exports = AppointmentModel;
+module.exports =  mongoose.model('AppointmentModel', AppointmentSchema)

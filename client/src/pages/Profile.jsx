@@ -1,4 +1,4 @@
-import{ useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../AuthContext";
 import { PiUserCircleLight } from "react-icons/pi";
 
@@ -6,7 +6,6 @@ export const Profile = () => {
   const { user, token, setUser } = useAuth();
   console.log(user);
   console.log(token);
-  const [photoUrl, setPhotoUrl] = useState("");
 
   const [newUser, setNewUser] = useState({
     name: user?.name || "",
@@ -17,32 +16,6 @@ export const Profile = () => {
   });
 
   useEffect(() => {
-    const fetchPhoto = async () => {
-      try {
-        if (user && user.photo) {
-          const imageData = new Uint8Array(user.photo.data.data);
-          const blob = new Blob([imageData], { type: user.photo.contentType });
-
-          const reader = new FileReader();
-
-          reader.onload = () => {
-            const base64Image = reader.result;
-            // Ensure photoUrl is different before updating to avoid infinite loop
-            if (base64Image !== photoUrl) {
-              setPhotoUrl(base64Image);
-              console.log(base64Image);
-            }
-          };
-
-          reader.readAsDataURL(blob);
-        }
-      } catch (error) {
-        console.error("Error fetching photo:", error);
-      }
-    };
-
-    fetchPhoto();
-
     setNewUser({
       name: user?.name || "",
       email: user?.email || "",
@@ -92,9 +65,9 @@ export const Profile = () => {
         <div className="mt-8 w-[80vw] min-h-[80vh] flex justify-center items-center">
           <div className="p-4 sm:w-[480px] w-full flex items-center flex-col gap-4 shadow-2xl">
             <span className="text-5xl mx-auto">
-              {photoUrl ? (
+              {user.photo ? (
                 <img
-                  src={photoUrl}
+                  src={user.photo}
                   className="rounded-full w-24 h-24"
                   alt="profile-pic"
                 />
@@ -126,7 +99,7 @@ export const Profile = () => {
                 onChange={(e) => handleInputChange(e)}
               />
             </div>
-           
+
             <div className="flex gap-[2.9rem] items-center">
               <label htmlFor="phone" className="text-lg ">
                 Phone:

@@ -45,7 +45,9 @@ exports.updateUser = async (req, res) => {
 
 
 exports.bookappointment = async (req, res) => {
-    const { doctorId, ticketPrice, appointmentDate } = req.body;
+    console.log(req.body);
+    console.log(req.user);
+    const { doctorId, ticketPrice, selectedDate, selectedSlot } = req.body;
     const { id } = req.user;
     try {
         const user = await User.findOne({ _id: id });
@@ -57,7 +59,16 @@ exports.bookappointment = async (req, res) => {
                 message: "User not found",
             });
         }
-        const newAppointment = await Appointment.create({ doctor: doctorId, user: id, ticketPrice, appointmentDate })
+        const newAppointment = await Appointment.create({
+            doctor: doctorId,
+            user: id,
+            ticketPrice,
+            appointmentDate: selectedDate,
+            slot: {
+                startTime: selectedSlot.startTime,
+                endTime: selectedSlot.endTime
+            }
+        })
         console.log(newAppointment);
         user.appointments.push(newAppointment);
         doctor.appointments.push(newAppointment);
@@ -72,6 +83,35 @@ exports.bookappointment = async (req, res) => {
         return res.status(500).json({ success: false, error: error.message })
     }
 }
+
+
+exports.getUserAppointments = async (req, res) => {
+    const { id } = req.user;
+    try {
+        const user = await User.findById(id).populate({
+            path: 'appointments',
+            populate: {
+                path: 'doctor',
+                model: 'DoctorModel',
+            },
+        });
+
+        if (!user) {
+            res.status(400).send({ message: "Invalid Request", success: false });
+        }
+
+        return res.status(200).send({
+            message: "User Appointments Fetched Successfully",
+            success: true,
+            user
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ message: "Internal server Error", success: false });
+    }
+};
+
 
 exports.writeReview = async (req, res) => {
     const { id, role } = req.user;

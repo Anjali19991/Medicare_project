@@ -11,33 +11,7 @@ export const AccountSidebar = () => {
     const location = useLocation();
     const [photoUrl, setPhotoUrl] = useState("");
 
-    useEffect(() => {
-        const fetchPhoto = async () => {
-            try {
-                if (user && user.photo) {
-                    const imageData = new Uint8Array(user.photo.data.data);
-                    const blob = new Blob([imageData], { type: user.photo.contentType });
-
-                    const reader = new FileReader();
-
-                    reader.onload = () => {
-                        const base64Image = reader.result;
-                        if (base64Image !== photoUrl) {
-                            setPhotoUrl(base64Image);
-                        }
-                    };
-
-                    reader.readAsDataURL(blob);
-                }
-            } catch (error) {
-                console.error('Error fetching photo:', error);
-            }
-        };
-
-        fetchPhoto();
-    }, [user, photoUrl]);
-
-
+    console.log(location.state)
 
     const handleLogout = () => {
         cookies.remove('TOKEN');
@@ -55,7 +29,7 @@ export const AccountSidebar = () => {
 
                     <div className="flex flex-col justify-between flex-1 mt-6">
                         <nav className="flex-1 -mx-3 space-y-3 ">
-                            {user.role === "doctor" && (
+                            {user && user.role === "doctor" && (
                                 <>
                                     <Link className={`flex items-center px-3 py-2 text-gray-300 transition-colors duration-300 transform rounded-lg  ${location.pathname === ""}  hover:bg-gray-100  hover:text-gray-700`} to="/doctordashboard">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
@@ -78,12 +52,12 @@ export const AccountSidebar = () => {
                                         <span className="mx-2 text-sm font-medium">Past Appointments</span>
                                     </Link>
 
-                                    <Link className="flex items-center px-3 py-2 text-gray-300 transition-colors duration-300 transform rounded-lg  hover:bg-gray-100  hover:text-gray-700" to="#">
+                                    <Link className="flex items-center px-3 py-2 text-gray-300 transition-colors duration-300 transform rounded-lg  hover:bg-gray-100  hover:text-gray-700" to="/manageslots">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3 3 0 016 0z" />
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                         </svg>
-                                        <span className="mx-2 text-sm font-medium">Patients</span>
+                                        <span className="mx-2 text-sm font-medium">Manage Slots</span>
                                     </Link>
 
                                     <Link className="flex items-center px-3 py-2 text-gray-300 transition-colors duration-300 transform rounded-lg  hover:bg-gray-100  hover:text-gray-700" to="/doctorprofile">
@@ -96,7 +70,7 @@ export const AccountSidebar = () => {
                                 </>
                             )}
 
-                            {user.role === "patient" && (
+                            {user && user.role === "patient" && (
                                 <>
                                     <Link className={`flex items-center px-3 py-2 text-gray-300 transition-colors duration-300 transform rounded-lg  ${location.pathname === ""}  hover:bg-gray-100  hover:text-gray-700`} to="/userdashboard">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
@@ -142,8 +116,8 @@ export const AccountSidebar = () => {
                         <div className="mt-6">
                             <div className="flex items-center justify-between mt-6">
                                 <a to="#" className="flex items-center gap-x-2">
-                                    {photoUrl ? (
-                                        <img src={photoUrl} className='rounded-full border-white border-2 w-11 h-11' alt='profile-pic' />
+                                    {user.photo ? (
+                                        <img src={user.photo} className='rounded-full border-white border-2 w-11 h-11' alt='profile-pic' />
                                     ) : (
                                         <PiUserCircleLight className='w-10 h-10' />
                                     )}

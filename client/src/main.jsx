@@ -14,7 +14,6 @@ import { RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import HospitalForm from "./components/HospitalForm/HospitalForm";
 import AdminVerification from "./components/AdminControls/AdminVerification";
-
 import { About, Error, HomeLayout, Landing, Login, Register } from "./pages";
 import AdminDashBoard from "./components/AdminControls/AdminDashBoard";
 import AdminAnnouncements from "./components/AdminControls/AdminAnnouncements";
@@ -29,10 +28,7 @@ import { DoctorRegister } from "./components/Doctor/DoctorRegister.jsx";
 import { DoctorDashboard } from "./components/Doctor/DoctorDashboard.jsx";
 import { AppointmentForm } from "./components/Doctor/AppointmentForm.jsx";
 import UserDashBoard from "./components/UserAccount/UserDashBoard.jsx";
-
 import { AuthProvider } from "./AuthContext.jsx";
-
-
 import HospitalList from "./components/HospitalsList/HospitalList.jsx";
 import { AccountSidebar } from "./components/AccountSidebar.jsx";
 import { DoctorProfile } from "./components/Doctor/DoctorProfile.jsx";
@@ -40,6 +36,7 @@ import { Profile } from "./pages/Profile.jsx";
 import UserAppointmentHistory from "./components/UserAccount/UserAppointmentHistory.jsx";
 import UserMedicineHistory from "./components/UserAccount/UserMedicineHistory.jsx";
 import UserFeedbacks from "./components/UserAccount/UserFeedbacks.jsx";
+import SlotManager from "./components/Doctor/SlotManager.jsx";
 
 const store = configureStore({
   reducer: {
@@ -87,7 +84,6 @@ const router = createBrowserRouter([
         errorElement: <Error />,
         // action: registerAction,
       },
-      
       {
         path: "/buymedicines",
         children: [
@@ -111,13 +107,17 @@ const router = createBrowserRouter([
         errorElement: <Error />,
       },
       {
+        path: "/getappointment",
+        element: <AppointmentForm />,
+        errorElement: <Error />,
+      },
+      {
         path: "/doc_register",
         element: <DoctorRegister />,
         errorElement: <Error />,
       },
     ],
   },
-
   {
     path: "/",
     element: <AccountSidebar />,
@@ -138,11 +138,15 @@ const router = createBrowserRouter([
         errorElement: <Error />,
       },
       {
+        path: '/manageslots',
+        // element: <>Manage Slots</>,
+        element: <SlotManager />,
+        errorElement: <Error />
+      },
+      {
         path: "/doctorprofile",
         element: <DoctorProfile />,
       },
-
-
       {
         path: "/userdashboard",
         element: <UserDashBoard />,
@@ -154,8 +158,8 @@ const router = createBrowserRouter([
         errorElement: <Error />,
       },
       {
-        path:"/appointment-history",
-        element:<UserAppointmentHistory/>,
+        path: "/appointment-history",
+        element: <UserAppointmentHistory />,
         errorElement: <Error />,
       },
       {
@@ -202,12 +206,7 @@ const router = createBrowserRouter([
     element: <HospitalList />,
     errorElement: <Error />,
   },
- 
-  {
-    path: "/consultdoctor/:id",
-    element: <AppointmentForm />,
-    errorElement: <Error />,
-  },
+
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

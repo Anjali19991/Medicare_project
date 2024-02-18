@@ -18,8 +18,7 @@ const UserSchema = new mongoose.Schema({
         type: Number
     },
     photo: {
-        data: Buffer,
-        contentType: String,
+        type: String
     },
     role: {
         type: String,
@@ -38,7 +37,7 @@ const UserSchema = new mongoose.Schema({
         enum: ["active", "blocked"],
         default: "active"
     },
-    appointments: [{ type: mongoose.Types.ObjectId, ref: "Appointment" }],
+    appointments: [{ type: mongoose.Types.ObjectId, ref: 'AppointmentModel' }],
 })
 
 const UserModel = mongoose.model('UserModel', UserSchema);

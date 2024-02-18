@@ -1,15 +1,11 @@
-
+import { useLocation } from "react-router-dom"
+import React from 'react'
 
 export const DoctorDashboard = () => {
 
+    const location = useLocation();
+    console.log(location.state);
   
-
-
-    // useEffect(()=>{
-    //     if(!user){
-    //         navigate('/',{replace:true});
-    //     }
-    // })
 
     return (
         <>

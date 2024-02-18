@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { Link as ScrollLink } from 'react-scroll';
-import { Link } from 'react-router-dom';
+// import { useSelector } from 'react-redux'
+// import { Link as ScrollLink } from 'react-scroll';
+// import { Link } from 'react-router-dom';
 import DoctorCard from './DoctorCard';
 
 
@@ -68,10 +68,10 @@ export const ConsultDoctor = () => {
             </div>
             <div id='doctors' className='my-8 px-16'>
                 <h1 className='text-2xl font-semibold my-8'>Find Doctors</h1>
-                <div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {
                         doctors.length ? (
-                            doctors.map((doctor,index) => {
+                            doctors.map((doctor, index) => {
                                 return (
                                     <DoctorCard key={index} doctor={doctor} />
                                 )
@@ -79,40 +79,6 @@ export const ConsultDoctor = () => {
                         ) : ""
                     }
                 </div>
-
-                {/* <div className='grid grid-cols-4 w-full gap-4'>
-                    {
-                        doctors.map((doctor) => (
-                            <div className={`p-4 ${theme === 'winter' ? 'bg-slate-300 ' : 'bg-slate-700'} shadow-2xl rounded-md text-center`}>
-                                <img src={`${doctor.gender === 'Male' ? 'doctor.png' : 'doctor_female.png'}`} alt="" className='w-36 mx-auto' />
-                                <div className='flex items-center justify-between'>
-                                    <p>Doctor Name:</p>
-                                    <p>{doctor.username}</p>
-                                </div>
-                                <div className='flex items-center justify-between'>
-                                    <p>Doctor Email:</p>
-                                    <p>{doctor.email}</p>
-                                </div>
-                                <div className='flex items-center justify-between'>
-                                    <p>Doctor Gender:</p>
-                                    <p>{doctor.gender}</p>
-                                </div>
-                                <div className='flex items-center justify-between'>
-                                    <p>Doctor Specialisation:</p>
-                                    <p>{doctor.specialisation}</p>
-                                </div>
-                                <div className='flex items-center justify-between'>
-                                    <p>Doctor Qualification:</p>
-                                    <p>{doctor.Qualification}</p>
-                                </div>
-                                <div className='mt-4 mb-2'>
-                                    <Link className='px-4 py-2 text-white rounded-md bg-teal-500' to={`${doctor.id}`}>Book Appointment</Link>
-                                </div>
-
-                            </div>
-                        ))
-                    }
-                </div> */}
             </div>
         </>
     )

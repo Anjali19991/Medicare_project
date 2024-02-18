@@ -1,63 +1,65 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { FaEnvelope, FaPhoneAlt } from 'react-icons/fa';
+import { LuStethoscope } from "react-icons/lu";
+import { PiCertificateDuotone } from "react-icons/pi";
+import { Link, useNavigate } from 'react-router-dom'
 
 const DoctorCard = ({ doctor }) => {
-    const { name, email, role, phone, photo, specialization, qualification } = doctor;
-    const [photoUrl, setPhotoUrl] = useState("");
+    const { _id, name, email, role, phone, photo, specialization, qualification, reviews } = doctor;
+    const [avgRating, setAvgRating] = useState(null);
+    const navigate = useNavigate();
+    const handleGetAppointment = () => {
+        navigate('/getappointment', {
+            state: {doctor}
+        })
+        console.log("hello");
+    }
 
     useEffect(() => {
-        const fetchPhoto = async () => {
-            try {
-                const imageData = new Uint8Array(photo.data.data);
-                const blob = new Blob([imageData], { type: photo.contentType });
 
-                const reader = new FileReader();
-
-                reader.onload = () => {
-                    const base64Image = reader.result;
-                    // Ensure photoUrl is different before updating to avoid infinite loop
-                    if (base64Image !== photoUrl) {
-                        setPhotoUrl(base64Image);
-                        console.log(base64Image);
-                    }
-                };
-
-                reader.readAsDataURL(blob);
-
-            } catch (error) {
-                console.error("Error fetching photo:", error);
+        const calculateAvgRating = () => {
+            if (reviews.length !== 0) {
+                const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+                const averageRating = totalRating / reviews.length;
+                setAvgRating(averageRating.toFixed(2)); // Displaying average rating with 2 decimal places
+            } else {
+                setAvgRating("No ratings");
             }
         };
+        calculateAvgRating();
+    }, [reviews]);
 
-        fetchPhoto();
-    }, [])
     return (
         <div className="max-w-md mx-auto bg-white rounded-xl overflow-hidden shadow-md mb-4">
-            <img className="w-full h-64 object-cover" src={photoUrl ? photoUrl : ''} alt={name} />
+            <img className="w-full h-64 object-cover" src={photo || ''} alt={name} />
 
             <div className="p-4">
-                <div className="mb-4">
-                    <h2 className="text-xl font-semibold">{name}</h2>
-                    <p className="text-gray-500">{role}</p>
+                <div className="mb-4 flex justify-between items-center">
+                    <h2 className="text-xl font-semibold">Dr. {name}</h2>
+                    <h2 className=''>{avgRating}</h2>
                 </div>
 
-                <div className="mb-4">
-                    <p className="text-gray-700">
-                        <span className="font-bold">Email:</span> {email}
+                <div className="mb-4 flex justify-between">
+                    <p className="text-gray-700 flex items-center">
+                        <FaEnvelope className="mr-2" />
+                        {email}
                     </p>
-                    <p className="text-gray-700">
-                        <span className="font-bold">Phone:</span> {phone}
+                    <p className="text-gray-700 flex items-center">
+                        <FaPhoneAlt className="mr-2" />
+                        {phone}
                     </p>
                 </div>
 
-                <div className="mb-4">
-                    <p className="text-gray-700">
-                        <span className="font-bold">Specialization:</span> {specialization}
+                <div className="mb-4 flex justify-between items-center">
+                    <p className="text-gray-700 flex items-center  text-lg">
+                        <LuStethoscope className="mr-2" />{specialization}
                     </p>
-                    <p className="text-gray-700">
-                        <span className="font-bold">Qualification:</span> {qualification}
+                    <p className="text-gray-700 flex items-center  text-lg">
+                        <PiCertificateDuotone className='mr-2' />{qualification}
                     </p>
                 </div>
             </div>
+            <button onClick={handleGetAppointment} className='mx-auto mb-4 px-4 py-2 flex justify-center w-48 bg-teal-500 text-white rounded-md'>Get Appointment</button>
         </div>
     );
 };

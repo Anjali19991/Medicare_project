@@ -25,34 +25,33 @@ const Header = () => {
     setUser(null)
     navigate('/')
   };
-  const [photoUrl, setPhotoUrl] = useState("");
 
-  useEffect(() => {
-    const fetchPhoto = async () => {
-      try {
-        if (user && user.photo) {
-          const imageData = new Uint8Array(user.photo.data.data);
-          const blob = new Blob([imageData], { type: user.photo.contentType });
+  // useEffect(() => {
+  //   const fetchPhoto = async () => {
+  //     try {
+  //       if (user && user.photo) {
+  //         const imageData = new Uint8Array(user.photo.data.data);
+  //         const blob = new Blob([imageData], { type: user.photo.contentType });
 
-          const reader = new FileReader();
+  //         const reader = new FileReader();
 
-          reader.onload = () => {
-            const base64Image = reader.result;
-            // Ensure photoUrl is different before updating to avoid infinite loop
-            if (base64Image !== photoUrl) {
-              setPhotoUrl(base64Image);
-            }
-          };
+  //         reader.onload = () => {
+  //           const base64Image = reader.result;
+  //           // Ensure photoUrl is different before updating to avoid infinite loop
+  //           if (base64Image !== photoUrl) {
+  //             setPhotoUrl(base64Image);
+  //           }
+  //         };
 
-          reader.readAsDataURL(blob);
-        }
-      } catch (error) {
-        console.error('Error fetching photo:', error);
-      }
-    };
+  //         reader.readAsDataURL(blob);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching photo:', error);
+  //     }
+  //   };
 
-    fetchPhoto();
-  }, [user, photoUrl]);
+  //   fetchPhoto();
+  // }, [user, photoUrl]);
 
 
 
@@ -66,8 +65,8 @@ const Header = () => {
           <div className="flex gap-x-2 sm:gap-x-8 items-center">
            
             <Link to={user.role === "patient" ? '/userdashboard' : '/doctordashboard'} className="text-3xl text-white">
-              {photoUrl ? (
-                <img src={photoUrl} className='rounded-full border-white border-2 w-11 h-11' alt='profile-pic' />
+              {user.photo ? (
+                <img src={user.photo} className='rounded-full border-white border-2 w-11 h-11' alt='profile-pic' />
               ) : (
                 <PiUserCircleLight className='w-10 h-10' />
               )}

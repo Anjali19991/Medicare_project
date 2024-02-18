@@ -1,4 +1,4 @@
-import { FormInput, SubmitBtn } from "../components";
+// import { FormInput, SubmitBtn } from "../components";
 import { Form, Link, redirect, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
@@ -55,13 +55,13 @@ const Login = () => {
       console.log(data)
       setUser(data.user);
       if (data.user.role === "patient") {
-        navigate('/', { replace: true })
+        navigate('/', { replace: true,state: data.user })
       }
       else if (data.user.role === "doctor") {
-        navigate('/doctordashboard', { replace: true })
+        navigate('/doctordashboard', { replace: true, state: data.user })
       }
       else {
-        navigate('/admin-dashboard', { replace: true })
+        navigate('/admin-dashboard', { replace: true,state: data.user })
       }
       // navigate('/')
     } catch (error) {

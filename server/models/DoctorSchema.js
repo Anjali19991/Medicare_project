@@ -1,10 +1,17 @@
 const mongoose = require('mongoose');
 
+const SlotSchema = new mongoose.Schema({
+    startTime: { type: String, required: true },
+    endTime: { type: String, required: true },
+    isAvailable: { type: Boolean, default: true },
+})
+
 
 const DoctorSchema = new mongoose.Schema({
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,
@@ -14,17 +21,16 @@ const DoctorSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    role:{
-        type:String,
-        default:'doctor'
+    role: {
+        type: String,
+        default: 'doctor'
     },
     //After registration should fill these details
     phone: {
         type: String
     },
-    photo: { 
-        data: Buffer,
-        contentType: String,
+    photo: {
+        type: String,
     },
     tokenPrice: {
         type: Number
@@ -39,28 +45,28 @@ const DoctorSchema = new mongoose.Schema({
         type: String,
         maxLength: 50
     },
-    timeSlots: { type: Array },
+    timeSlots: [SlotSchema],
     reviews: [{ type: mongoose.Types.ObjectId, ref: "Review" }],
     isApproved: {
         type: String,
         enum: ["pending", "approved", "cancelled"],
         default: "pending",
-      },
-    appointments: [{ type: mongoose.Types.ObjectId, ref: "Appointment" }],
+    },
+    appointments: [{ type: mongoose.Types.ObjectId, ref: "AppointmentModel" }],
 })
 
 
-DoctorSchema.virtual('avgRating').get(function(){
+DoctorSchema.virtual('avgRating').get(function () {
     let length = this.reviews.length;
-    if(length == 0) return 0;
+    if (length == 0) return 0;
     let Rating = 0;
-    for(let i=0;i<length;i++){
+    for (let i = 0; i < length; i++) {
         Rating = Rating + this.reviews[i];
     }
-    return Rating/length;
+    return Rating / length;
 })
 
 
-const DoctorModel = mongoose.model("DoctorModel",DoctorSchema);
+const DoctorModel = mongoose.model("DoctorModel", DoctorSchema);
 
 module.exports = DoctorModel
