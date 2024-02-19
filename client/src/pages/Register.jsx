@@ -161,7 +161,7 @@ const Register = () => {
                   name="name"
                   value={name}
                   onChange={handleNameChange}
-                  className={`w-full px-4 py-2 text-sm border rounded-md focus:border-teal-400 focus:outline-none focus:ring-1 focus:ring-teal-600 ${
+                    className={`w-full px-4 py-3 text-sm border rounded-md focus:border-teal-400 border-none focus:outline-none focus:ring-1 focus:ring-teal-600 ${
                     UserNameError ? "border-red-500" : ""
                   }`}
                   placeholder="Enter Username"
@@ -180,7 +180,7 @@ const Register = () => {
                   name="email"
                   value={email}
                   onChange={handleEmailChange}
-                  className={`w-full px-4 py-2 text-sm border rounded-md focus:border-teal-400 focus:outline-none focus:ring-1 focus:ring-teal-600 ${
+                    className={`w-full px-4 py-3 text-sm border rounded-md focus:border-teal-400 border-none focus:outline-none focus:ring-1 focus:ring-teal-600 ${
                     emailError ? "border-red-500" : ""
                   }`}
                   placeholder="Enter Email"
@@ -195,7 +195,7 @@ const Register = () => {
               <div className="flex items-center border-b-2 border-teal-500 py-2 relative">
                 <FaLock className="text-teal-500 mr-2" />
                 <input
-                  className={`px-4 py-3 rounded-md flex-1 ${passwordError ? "border-red-500" : ""
+                    className={`px-4 py-3 focus:border-teal-400 focus:outline-none border-none focus:ring-1 focus:ring-teal-600 rounded-md flex-1 ${passwordError ? "border-red-500" : ""
                     }`}
                   placeholder="Password"
                   type={showPassword ? "text" : "password"}
@@ -205,7 +205,7 @@ const Register = () => {
                 />
                 {showPassword ? (
                   <FaEyeSlash
-                    className="text-teal-500 cursor-pointer absolute right-3 top-1/2 transform -translate-y-1/2"
+                      className="text-teal-500 cursor-pointer  absolute right-3 top-1/2 transform -translate-y-1/2"
                     onClick={() => setShowPassword(false)}
                   />
                 ) : (
@@ -228,7 +228,7 @@ const Register = () => {
                   name="confirmPassword"
                   value={confirmPassword}
                   onChange={handleConfirmPasswordChange}
-                  className={`w-full px-4 py-2 text-sm border rounded-md focus:border-teal-400 focus:outline-none focus:ring-1 focus:ring-teal-600 ${
+                    className={`w-full px-4 py-3 text-sm border rounded-md focus:border-teal-400 border-none focus:outline-none focus:ring-1 focus:ring-teal-600 ${
                     confirmPasswordError ? "border-red-500" : ""
                   }`}
                   placeholder="Confirm Password"
@@ -262,12 +262,12 @@ const Register = () => {
                   console.log('Selected Image:', file);
                   setSelectedImage(file);
                 }}
-                className="w-full px-4 py-2 text-sm border rounded-md focus:border-teal-400 focus:outline-none focus:ring-1 focus:ring-teal-600"
+                className="w-full px-4 py-3 text-sm border rounded-md focus:border-teal-400 focus:outline-none focus:ring-1 focus:ring-teal-600"
               />
             </div>
             <div className="flex justify-center">
               <button
-                className="px-6 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-teal-600 border border-transparent rounded-md hover:bg-teal-700 focus:outline-none"
+                className="px-6 py-2 mt-2 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-teal-600 border border-transparent rounded-md hover:bg-teal-700 focus:outline-none"
                 type="submit"
               >
                 Register

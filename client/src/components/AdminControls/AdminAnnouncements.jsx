@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { IoMdSend } from 'react-icons/io';
 import { FaBell } from 'react-icons/fa';
-import NavBarComponent from './NavBarComponent';
 
 const AdminAnnouncements = () => {
     const [announcementTitle, setAnnouncementTitle] = useState('');
@@ -50,7 +49,6 @@ const AdminAnnouncements = () => {
 
     return (
         <>
-            <NavBarComponent />
 
             <div className="flex items-center   h-screen bg-teal-50">
                 {/* Left Section with SVG */}

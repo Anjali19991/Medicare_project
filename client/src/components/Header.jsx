@@ -1,10 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { useAuth } from "../AuthContext";
 import Cookies from "universal-cookie";
 import { PiUserCircleLight } from "react-icons/pi";
 import { FiLogOut } from "react-icons/fi";
-import { useState } from "react";
 
 
 
@@ -57,20 +55,20 @@ const Header = () => {
 
 
 
-
   return (
     <header className="bg-teal-800 py-2 text-neutral-content h-1/4  px-6">
       <div className="align-element flex justify-center sm:justify-end">
         {user ? (
           <div className="flex gap-x-2 sm:gap-x-8 items-center">
            
-            <Link to={user.role === "patient" ? '/userdashboard' : '/doctordashboard'} className="text-3xl text-white">
-              {user.photo ? (
+            <Link to={user.role === "patient" ? '/userdashboard' : (user.role === "doctor" ? '/doctordashboard' : '/admin-dashboard')} className="text-3xl text-white">
+            {user.photo ? (
                 <img src={user.photo} className='rounded-full border-white border-2 w-11 h-11' alt='profile-pic' />
               ) : (
                 <PiUserCircleLight className='w-10 h-10' />
               )}
             </Link>
+
             <button
               className="text-xl hover:bg-gray-50 hover:text-teal-800 px-2 py-2 text-white-800 font-semibold rounded shadow"
               onClick={handleLogout}

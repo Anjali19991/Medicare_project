@@ -147,6 +147,7 @@ const router = createBrowserRouter([
         path: "/doctorprofile",
         element: <DoctorProfile />,
       },
+
       {
         path: "/userdashboard",
         element: <UserDashBoard />,
@@ -158,6 +159,7 @@ const router = createBrowserRouter([
         errorElement: <Error />,
       },
       {
+        
         path: "/appointment-history",
         element: <UserAppointmentHistory />,
         errorElement: <Error />,
@@ -171,8 +173,29 @@ const router = createBrowserRouter([
         path: "/feedback-history",
         element: <UserFeedbacks />,
         errorElement: <Error />,
-      }
+      },
+      {
+        path: "/admin-dashboard",
+        element: <AdminDashBoard />,
+        errorElement: <Error />,
+      },
 
+      {
+        path: "/admin-verification",
+        element: <AdminVerification />,
+        errorElement: <Error />,
+      },
+
+      {
+        path: "/admin-announcements",
+        element: <AdminAnnouncements />,
+        errorElement: <Error />,
+      },
+      {
+        path: "/users",
+        element: <Users />,
+        errorElement: <Error />,
+      },
     ],
   },
 
@@ -181,26 +204,7 @@ const router = createBrowserRouter([
     element: <AnnouncementsDisplay />,
     errorElement: <Error />,
   },
-  {
-    path: "admin-verification",
-    element: <AdminVerification />,
-    errorElement: <Error />,
-  },
-  {
-    path: "admin-dashboard",
-    element: <AdminDashBoard />,
-    errorElement: <Error />,
-  },
-  {
-    path: "admin-announcements",
-    element: <AdminAnnouncements />,
-    errorElement: <Error />,
-  },
-  {
-    path: "users",
-    element: <Users />,
-    errorElement: <Error />,
-  },
+
   {
     path: "display-hospitals",
     element: <HospitalList />,
