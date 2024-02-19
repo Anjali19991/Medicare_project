@@ -8,11 +8,11 @@ const UserMedicineHistory = () => {
   ];
 
   return (
-    <div className="mx-8">
+    <div className="">
       <h1 className="text-2xl font-bold mb-4">Medicine Purchase History</h1>
 
-      <div className="bg-white p-4 rounded shadow mt-4">
-        <table className="min-w-full divide-y divide-gray-200">
+      <div className="bg-white w-[75vw] p-4 rounded shadow mt-4 mx-8">
+        <table className="w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">

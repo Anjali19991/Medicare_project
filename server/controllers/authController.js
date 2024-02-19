@@ -16,12 +16,12 @@ const generateToken = (user) => {
     })
 }
 
-// const hashedPass = async()=>{
-//     const hashedPass = await bcrypt.hash("John@123", 10);
-//     console.log(hashedPass);
-// }
+const hashedPass = async()=>{
+    const hashedPass = await bcrypt.hash("Admin@123", 10);
+    console.log(hashedPass);
+}
 
-// hashedPass();
+hashedPass();
 
 // exports.signup = async (req, res) => {
 //     console.log(req.file)
