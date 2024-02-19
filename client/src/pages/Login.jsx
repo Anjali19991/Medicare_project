@@ -85,11 +85,13 @@ const Login = () => {
       setUser(data.user);
       
       if (data.user.role === "patient") {
-        navigate("/", { replace: true });
-      } else if (data.user.role === "doctor") {
-        navigate("/doctordashboard", { replace: true });
-      } else {
-        navigate("/admin-dashboard", { replace: true });
+        navigate('/', { replace: true,state: data.user })
+      }
+      else if (data.user.role === "doctor") {
+        navigate('/doctordashboard', { replace: true, state: data.user })
+      }
+      else {
+        navigate('/admin-dashboard', { replace: true,state: data.user })
       }
     } catch (error) {
       console.log("Error: ", error.message);

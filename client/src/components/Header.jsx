@@ -25,34 +25,33 @@ const Header = () => {
     setUser(null)
     navigate('/')
   };
-  const [photoUrl, setPhotoUrl] = useState("");
 
-  useEffect(() => {
-    const fetchPhoto = async () => {
-      try {
-        if (user && user.photo) {
-          const imageData = new Uint8Array(user.photo.data.data);
-          const blob = new Blob([imageData], { type: user.photo.contentType });
+  // useEffect(() => {
+  //   const fetchPhoto = async () => {
+  //     try {
+  //       if (user && user.photo) {
+  //         const imageData = new Uint8Array(user.photo.data.data);
+  //         const blob = new Blob([imageData], { type: user.photo.contentType });
 
-          const reader = new FileReader();
+  //         const reader = new FileReader();
 
-          reader.onload = () => {
-            const base64Image = reader.result;
-            // Ensure photoUrl is different before updating to avoid infinite loop
-            if (base64Image !== photoUrl) {
-              setPhotoUrl(base64Image);
-            }
-          };
+  //         reader.onload = () => {
+  //           const base64Image = reader.result;
+  //           // Ensure photoUrl is different before updating to avoid infinite loop
+  //           if (base64Image !== photoUrl) {
+  //             setPhotoUrl(base64Image);
+  //           }
+  //         };
 
-          reader.readAsDataURL(blob);
-        }
-      } catch (error) {
-        console.error('Error fetching photo:', error);
-      }
-    };
+  //         reader.readAsDataURL(blob);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching photo:', error);
+  //     }
+  //   };
 
-    fetchPhoto();
-  }, [user, photoUrl]);
+  //   fetchPhoto();
+  // }, [user, photoUrl]);
 
 
 

@@ -31,6 +31,7 @@ export const AuthProvider = ({children})=>{
                 setUser(data.user);
                 setLoggedIn(true);
               }
+              
               if(data.doctor){
                 setUser(data.doctor);
                 setLoggedIn(true);

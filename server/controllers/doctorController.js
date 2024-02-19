@@ -31,7 +31,7 @@ exports.updateDoctor = async (req, res) => {
 
 exports.getAllDoctors = async (req, res) => {
     try {
-        const doctors = await Doctor.find();
+        const doctors = await Doctor.find().populate('reviews');
         console.log(doctors)
         res.status(200).json({ success: true, data: doctors });
     } catch (error) {
@@ -54,4 +54,27 @@ exports.updateAppointment = async (req, res) => {
         res.status(500).json({ success: false, message: "Error In updating Appointment" });
     }
 
+}
+
+exports.manageSlots = async (req, res) => {
+    const { daySlots } = req.body;
+
+    try {
+        // Assuming you have the doctor's ID from authentication
+        const doctorId = req.user.id;
+
+        // Find the doctor by ID
+        const doctor = await Doctor.findById(doctorId);
+
+        // Add the new slots to the doctor's timeSlots array
+        doctor.timeSlots = [...doctor.timeSlots, ...daySlots];
+
+        // Save the doctor with the new timeSlots
+        await doctor.save();
+
+        res.status(200).json({ message: 'Slots added successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 }
