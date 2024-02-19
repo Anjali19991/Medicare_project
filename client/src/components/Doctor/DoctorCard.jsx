@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { FaEnvelope, FaPhoneAlt } from 'react-icons/fa';
 import { LuStethoscope } from "react-icons/lu";
 import { PiCertificateDuotone } from "react-icons/pi";
-import { Link, useNavigate } from 'react-router-dom'
+import {  useNavigate } from 'react-router-dom'
 
 const DoctorCard = ({ doctor }) => {
     const { _id, name, email, role, phone, photo, specialization, qualification, reviews } = doctor;
