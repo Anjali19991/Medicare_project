@@ -1,84 +1,81 @@
+import { FaChevronRight } from "react-icons/fa";
+import {BarChartComponent} from "./Charts/BarChartComponent";
+import {AreaChartComponent} from "./Charts/AreaChartComponent"
+import Counter from "../Counter"
 
-import { IoMdTime, IoMdPeople, IoMdCheckmark } from 'react-icons/io'; // Assuming IoMdCheckmark is your checkmark icon
-import NavbarComponent from './NavBarComponent';
-import { useAuth } from '../../AuthContext';
-import { useEffect } from 'react';
+import { useEffect, useState } from "react";
 
-
-const AdminDashBoard = () => {
-    const pendingDoctorRequests = 5;
-    const pendingHospitalRequests = 3;
-    const approvedDoctorRequests = 80; 
-    const approvedHospitalRequests = 40; 
-    const totalDoctors = 100;
-    const totalHospitals = 50;
-
-    const {user,setUser} = useAuth();
-
-    useEffect(()=>{
-        console.log("Hello world")
-    },[user])
-
-    return (
-        <div>
-            <NavbarComponent />
-            <h1 className='mx-4 my-4 text-2xl'> Hello {user ? user.name:""}</h1>
-            <div className="container mx-auto mt-8 p-8">
-                <h1 className="text-4xl lg:text-5xl font-bold mb-6 text-gray-800">Overview of the Platform</h1>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {/* Pending Requests Card */}
-                    <div className="bg-teal-50 p-8 rounded-lg shadow-md flex flex-col justify-between">
-                        <div>
-                            <h2 className="text-2xl lg:text-3xl font-bold mb-4 flex items-center text-gray-800">
-                                <IoMdTime size={32} className="mr-4" />
-                                Pending Requests
-                            </h2>
-                            <p className="text-lg text-gray-600">
-                                <span className="font-bold">Doctors:</span> {pendingDoctorRequests}
-                            </p>
-                            <p className="text-lg text-gray-600">
-                                <span className="font-bold">Hospitals:</span> {pendingHospitalRequests}
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Approved Requests Card */}
-                    <div className="bg-teal-50 p-8 rounded-lg shadow-md flex flex-col justify-between">
-                        <div>
-                            <h2 className="text-2xl lg:text-3xl font-bold mb-4 flex items-center text-gray-800">
-                                <IoMdCheckmark size={32} className="mr-4" />
-                                Approved Requests
-                            </h2>
-                            <p className="text-lg text-gray-600">
-                                <span className="font-bold">Doctors:</span> {approvedDoctorRequests}
-                            </p>
-                            <p className="text-lg text-gray-600">
-                                <span className="font-bold">Hospitals:</span> {approvedHospitalRequests}
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Total Counts Card */}
-                    <div className="bg-teal-50 p-8 rounded-lg shadow-md flex flex-col justify-between">
-                        <div>
-                            <h2 className="text-2xl lg:text-3xl font-bold mb-4 flex items-center text-gray-800">
-                                <IoMdPeople size={32} className="mr-4" />
-                                Total Counts
-                            </h2>
-                            <p className="text-lg text-gray-600">
-                                <span className="font-bold">Doctors:</span> {totalDoctors}
-                            </p>
-                            <p className="text-lg text-gray-600">
-                                <span className="font-bold">Hospitals:</span> {totalHospitals}
-                            </p>
-                        </div>
-                    </div>
-                 
-                </div>
-            </div>
-        </div>
-    );
+// Dummy data for hospital details
+const hospitalData = {
+   totalPendingRegistrations: 25,
+   pendingDoctorRegistrations: 10,
+   pendingHospitalRegistrations:15,
+   approvedHospitals: 15,
+   approvedDoctors: 30,
+   medicineBuyingEngagement: 40
 };
 
-export default AdminDashBoard;
+const HospitalDashboard = () => {
+   const [totalPendingRegistrations, setTotalPendingRegistrations] = useState(0);
+   const [pendingDoctorRegistrations, setPendingDoctorRegistrations] = useState(0);
+   const[pendingHospitalRegistrations,setPendingHospitalRegistrations]=useState(0);
+   const [approvedHospitals, setApprovedHospitals] = useState(0);
+   const [approvedDoctors, setApprovedDoctors] = useState(0);
+   const [medicineBuyingEngagement, setMedicineBuyingEngagement] = useState(0);
+
+   useEffect(() => {
+      // Fetch data from API or set dummy data
+      setTotalPendingRegistrations(hospitalData.totalPendingRegistrations);
+      setPendingDoctorRegistrations(hospitalData.pendingDoctorRegistrations);
+      setPendingHospitalRegistrations(hospitalData.pendingHospitalRegistrations);
+      setApprovedHospitals(hospitalData.approvedHospitals);
+      setApprovedDoctors(hospitalData.approvedDoctors);
+      setMedicineBuyingEngagement(hospitalData.medicineBuyingEngagement);
+   }, []);
+
+   return (
+      <div className="w-full px-4">
+         <div className="flex justify-between items-center">
+            <h1 className="text-xl font-medium">Admin Dashboard</h1>
+            <div className="flex items-center py-2.5 gap-2 mx-5">
+               <p>Account</p>
+               <span>
+                  <FaChevronRight className="text-gray-500" />
+               </span>
+               <p className="text-teal-500 underline">Dashboard</p>
+            </div>
+         </div>
+         <div className="grid md:grid-cols-3 gap-6 grid-cols-1">
+            <div className="border-1 rounded-md items-center justify-center gap-y-3 p-3 flex flex-col hover:border-teal-500">
+               <Counter to={totalPendingRegistrations} />
+               <p className="text-lg font-medium">Total Pending Registrations</p>
+            </div>
+            <div className="border-1 rounded-md items-center justify-center gap-y-3 p-3 flex flex-col hover:border-teal-500">
+               <Counter to={pendingHospitalRegistrations} />
+               <p className="text-lg font-medium"> Pending Hospital Registrations</p>
+            </div>
+            <div className="border-1 rounded-md items-center justify-center gap-y-3 p-3 flex flex-col hover:border-teal-500">
+               <Counter to={pendingDoctorRegistrations} />
+               <p className="text-lg font-medium">Pending Doctor Registrations</p>
+            </div>
+            <div className="border-1 rounded-md items-center justify-center gap-y-3 p-3 flex flex-col hover:border-teal-500">
+               <Counter to={approvedHospitals} />
+               <p className="text-lg font-medium">Approved Hospitals</p>
+            </div>
+            <div className="border-1 rounded-md items-center justify-center gap-y-3 p-3 flex flex-col hover:border-teal-500">
+               <Counter to={approvedDoctors} />
+               <p className="text-lg font-medium">Approved Doctors</p>
+            </div>
+            <div className="border-1 rounded-md items-center justify-center gap-y-3 p-3 flex flex-col hover:border-teal-500">
+               <Counter to={medicineBuyingEngagement} />
+               <p className="text-lg font-medium">Medicine Buying Engagement</p>
+            </div>
+         </div>
+
+         <BarChartComponent  />
+         <AreaChartComponent  />
+      </div>
+   );
+};
+
+export default HospitalDashboard;

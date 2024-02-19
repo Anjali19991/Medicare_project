@@ -32,7 +32,6 @@ import UserDashBoard from "./components/UserAccount/UserDashBoard.jsx";
 
 import { AuthProvider } from "./AuthContext.jsx";
 
-
 import HospitalList from "./components/HospitalsList/HospitalList.jsx";
 import { AccountSidebar } from "./components/AccountSidebar.jsx";
 import { DoctorProfile } from "./components/Doctor/DoctorProfile.jsx";
@@ -87,7 +86,7 @@ const router = createBrowserRouter([
         errorElement: <Error />,
         // action: registerAction,
       },
-      
+
       {
         path: "/buymedicines",
         children: [
@@ -142,7 +141,6 @@ const router = createBrowserRouter([
         element: <DoctorProfile />,
       },
 
-
       {
         path: "/userdashboard",
         element: <UserDashBoard />,
@@ -154,8 +152,8 @@ const router = createBrowserRouter([
         errorElement: <Error />,
       },
       {
-        path:"/appointment-history",
-        element:<UserAppointmentHistory/>,
+        path: "/appointment-history",
+        element: <UserAppointmentHistory />,
         errorElement: <Error />,
       },
       {
@@ -167,8 +165,29 @@ const router = createBrowserRouter([
         path: "/feedback-history",
         element: <UserFeedbacks />,
         errorElement: <Error />,
-      }
+      },
+      {
+        path: "/admin-dashboard",
+        element: <AdminDashBoard />,
+        errorElement: <Error />,
+      },
 
+      {
+        path: "/admin-verification",
+        element: <AdminVerification />,
+        errorElement: <Error />,
+      },
+
+      {
+        path: "/admin-announcements",
+        element: <AdminAnnouncements />,
+        errorElement: <Error />,
+      },
+      {
+        path: "/users",
+        element: <Users />,
+        errorElement: <Error />,
+      },
     ],
   },
 
@@ -177,32 +196,13 @@ const router = createBrowserRouter([
     element: <AnnouncementsDisplay />,
     errorElement: <Error />,
   },
-  {
-    path: "admin-verification",
-    element: <AdminVerification />,
-    errorElement: <Error />,
-  },
-  {
-    path: "admin-dashboard",
-    element: <AdminDashBoard />,
-    errorElement: <Error />,
-  },
-  {
-    path: "admin-announcements",
-    element: <AdminAnnouncements />,
-    errorElement: <Error />,
-  },
-  {
-    path: "users",
-    element: <Users />,
-    errorElement: <Error />,
-  },
+
   {
     path: "display-hospitals",
     element: <HospitalList />,
     errorElement: <Error />,
   },
- 
+
   {
     path: "/consultdoctor/:id",
     element: <AppointmentForm />,

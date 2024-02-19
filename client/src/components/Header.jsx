@@ -65,13 +65,14 @@ const Header = () => {
         {user ? (
           <div className="flex gap-x-2 sm:gap-x-8 items-center">
            
-            <Link to={user.role === "patient" ? '/userdashboard' : '/doctordashboard'} className="text-3xl text-white">
+            <Link to={user.role === "patient" ? '/userdashboard' : (user.role === "doctor" ? '/doctordashboard' : '/admin-dashboard')} className="text-3xl text-white">
               {photoUrl ? (
                 <img src={photoUrl} className='rounded-full border-white border-2 w-11 h-11' alt='profile-pic' />
               ) : (
                 <PiUserCircleLight className='w-10 h-10' />
               )}
             </Link>
+
             <button
               className="text-xl hover:bg-gray-50 hover:text-teal-800 px-2 py-2 text-white-800 font-semibold rounded shadow"
               onClick={handleLogout}

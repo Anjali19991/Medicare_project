@@ -1,6 +1,6 @@
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -63,12 +63,10 @@ const Login = () => {
     const isEmailValid = validateEmail(email);
     const isPasswordValid = validatePassword();
 
- 
-    if (!isEmailValid || !isPasswordValid ) {
+    if (!isEmailValid || !isPasswordValid) {
       toast.error("Please fix the validation errors before submitting.");
       return;
     }
-
 
     try {
       const response = await fetch("http://localhost:3000/auth/login", {
@@ -85,6 +83,7 @@ const Login = () => {
       });
       console.log(data);
       setUser(data.user);
+      
       if (data.user.role === "patient") {
         navigate("/", { replace: true });
       } else if (data.user.role === "doctor") {
@@ -109,10 +108,9 @@ const Login = () => {
         </div>
 
         <section className="grid place-items-center bg-zinc-200 rounded-r-md">
-
           <form
             method="post"
-            className="p-6 bg-base-100 shadow-lg flex flex-col gap-y-4 bg-opacity-40 w-[26rem] min-h-[60vh]" 
+            className="p-6 bg-base-100 shadow-lg flex flex-col gap-y-4 bg-opacity-40 w-[26rem] min-h-[60vh]"
           >
             <h4 className="text-center text-3xl font-bold text-teal-800">
               Login
@@ -120,7 +118,7 @@ const Login = () => {
             <div className="flex items-center border-b-2 border-teal-500 py-2">
               <FaEnvelope className="text-teal-500 mr-2" />
               <input
-                className={`px-4 py-3 rounded-md flex-1 ${
+                className={`px-4 py-3 focus:border-teal-400 focus:outline-none border-none focus:ring-1 focus:ring-teal-600 rounded-md flex-1 ${
                   emailError ? "border-red-500" : ""
                 }`}
                 placeholder="Email"
@@ -133,11 +131,11 @@ const Login = () => {
             {emailError && (
               <p className="text-red-500 text-sm mt-1">{emailError}</p>
             )}
-            
+
             <div className="flex items-center border-b-2 border-teal-500 py-2 relative">
               <FaLock className="text-teal-500 mr-2" />
               <input
-                className={`px-4 py-3 rounded-md flex-1 ${
+                className={`px-4 py-3 focus:border-teal-400 focus:outline-none border-none focus:ring-1 focus:ring-teal-600 rounded-md flex-1 ${
                   passwordError ? "border-red-500" : ""
                 }`}
                 placeholder="Password"
@@ -188,7 +186,6 @@ const Login = () => {
       </div>
     </div>
   );
-
 };
 
 export default Login;
