@@ -17,7 +17,7 @@ const generateToken = (user) => {
 }
 
 // const hashedPass = async()=>{
-//     const hashedPass = await bcrypt.hash("Admin@123", 10);
+//     const hashedPass = await bcrypt.hash("John@123", 10);
 //     console.log(hashedPass);
 // }
 
