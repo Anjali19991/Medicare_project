@@ -17,7 +17,8 @@ export const AppointmentForm = () => {
     useEffect(() => {
         console.log(location.state);
         if (location.state) {
-            setDoctor(location.state);
+            console.log(location.state.doctor)
+            setDoctor(location.state.doctor);
         }
     }, [location.state]);
 
@@ -82,11 +83,8 @@ export const AppointmentForm = () => {
             <div className="flex my-12 px-12 items-start gap-8 justify-center">
                 <img
                     className="w-1/3 h-full object-cover rounded-md shadow-md"
-                    src={doctor.photo || 'placeholder-image.jpg'}
+                    src={doctor.photo || ''}
                     alt={doctor.name}
-                    onError={(e) => {
-                        e.target.src = 'placeholder-image.jpg'; // Replace with your placeholder image
-                    }}
                 />
                 <div className="ml-4">
                     <div>

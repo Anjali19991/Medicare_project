@@ -6,37 +6,11 @@ import { PiUserCircleLight } from "react-icons/pi";
 import { FiLogOut } from "react-icons/fi";
 
 export const AccountSidebar = () => {
-  const { user, setUser } = useAuth();
-  const navigate = useNavigate();
-  const cookies = new Cookies();
-  const location = useLocation();
-  const [photoUrl, setPhotoUrl] = useState("");
+    const { user, setUser } = useAuth();
+    const navigate = useNavigate();
+    const cookies = new Cookies();
+    const location = useLocation();
 
-  useEffect(() => {
-    const fetchPhoto = async () => {
-      try {
-        if (user && user.photo) {
-          const imageData = new Uint8Array(user.photo.data.data);
-          const blob = new Blob([imageData], { type: user.photo.contentType });
-
-          const reader = new FileReader();
-
-          reader.onload = () => {
-            const base64Image = reader.result;
-            if (base64Image !== photoUrl) {
-              setPhotoUrl(base64Image);
-            }
-          };
-
-          reader.readAsDataURL(blob);
-        }
-      } catch (error) {
-        console.error("Error fetching photo:", error);
-      }
-    };
-
-    fetchPhoto();
-  }, [user, photoUrl]);
 
   const handleLogout = () => {
     cookies.remove("TOKEN");
@@ -360,7 +334,7 @@ export const AccountSidebar = () => {
                   <div className="mt-6">
                     <div className="flex items-center justify-between mt-6">
                       <a to="#" className="flex items-center gap-x-2">
-                        {user.photo ? (
+                        {user ? (
                           <img src={user.photo} className='rounded-full border-white border-2 w-11 h-11' alt='profile-pic' />
                         ) : (
                           <PiUserCircleLight className='w-10 h-10' />
