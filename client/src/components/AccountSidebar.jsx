@@ -11,7 +11,6 @@ export const AccountSidebar = () => {
     const navigate = useNavigate();
     const cookies = new Cookies();
     const location = useLocation();
-    const [photoUrl, setPhotoUrl] = useState("");
 
     console.log(location.state)
 
@@ -121,7 +120,7 @@ export const AccountSidebar = () => {
                         <div className="mt-6">
                             <div className="flex items-center justify-between mt-6">
                                 <a to="#" className="flex items-center gap-x-2">
-                                    {user.photo ? (
+                                    {user ? (
                                         <img src={user.photo} className='rounded-full border-white border-2 w-11 h-11' alt='profile-pic' />
                                     ) : (
                                         <PiUserCircleLight className='w-10 h-10' />
