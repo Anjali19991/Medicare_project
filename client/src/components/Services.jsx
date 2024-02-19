@@ -47,8 +47,8 @@ const Services = () => {
         </div>
         <div>
           <div className="pt-12 mx-auto lg:max-w-7xl">
-            <div className="grid grid-cols-1 gap-6 space-y-0 lg:gap-24 lg:grid-cols-3">
-              <Link to={'/consultdoctor'} className="hover:bg-gray-300 px-2 py-2 rounded-sm">
+            <div className="grid grid-cols-1 gap-6 space-y-0 lg:gap-20 lg:grid-cols-3">
+              <Link to={'/consultdoctor'} className="hover:bg-gray-300 p-4 shadow-md rounded-md">
                 <div>
                   <p className="text-lg font-medium leading-6 text-black">
                     Consult Doctor
@@ -58,7 +58,7 @@ const Services = () => {
                   Connect with experienced healthcare professionals for personalized consultations, ensuring your health is in expert hands.
                 </div>
               </Link>
-              <Link to={'/buymedicines'} className="hover:bg-gray-300 px-2 py-2 rounded-sm">
+              <Link to={'/buymedicines'} className="hover:bg-gray-300 p-4 shadow-md rounded-md">
                 <div>
                   <p className="text-lg font-medium leading-6 text-black">
                     Buy Medicines
@@ -68,7 +68,7 @@ const Services = () => {
                   Effortlessly order your prescribed medications online, providing a convenient and reliable solution for all your pharmaceutical needs.
                 </div>
               </Link>
-              <Link to={'/display-hospitals'} className="hover:bg-gray-300 px-2 py-2 rounded-sm">
+              <Link to={'/display-hospitals'} className="hover:bg-gray-300 p-4 shadow-md rounded-md">
                 <div>
                   <p className="text-lg font-medium leading-6 text-black">
                     Find Hospitals

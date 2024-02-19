@@ -83,7 +83,7 @@ export const Profile = () => {
                 type="text"
                 name="name"
                 value={newUser.name}
-                className="p-2 border-2 w-64"
+                className="px-4 py-2 border-1 rounded-md  w-64"
                 onChange={(e) => handleInputChange(e)}
               />
             </div>
@@ -95,7 +95,7 @@ export const Profile = () => {
                 type="text"
                 name="email"
                 value={newUser.email}
-                className="p-2 border-2 w-64"
+                className="px-4 py-2 border-1 rounded-md  w-64"
                 onChange={(e) => handleInputChange(e)}
               />
             </div>
@@ -109,7 +109,7 @@ export const Profile = () => {
                 name="phone"
                 value={user.phone ? user.phone : newUser.phone}
                 placeholder="Enter Your Phone Number"
-                className="p-2 border-2 w-64"
+                className="px-4 py-2 border-1 rounded-md  w-64"
                 onChange={(e) => handleInputChange(e)}
               />
             </div>
@@ -120,7 +120,7 @@ export const Profile = () => {
               <select
                 name="gender"
                 value={user.gender ? user.gender : newUser.gender}
-                className="p-2 border-2 w-64"
+                className="px-4 py-2 border-1 rounded-md  w-64"
                 onChange={(e) => handleInputChange(e)}
               >
                 <option value="">Select Gender</option>
@@ -136,7 +136,7 @@ export const Profile = () => {
               <select
                 name="bloodType"
                 value={user.bloodType ? user.bloodType : newUser.bloodType}
-                className="p-2 border-2 w-64"
+                className="px-4 py-2 border-1 rounded-md  w-64"
                 onChange={(e) => handleInputChange(e)}
               >
                 <option value="">Select Blood Group</option>

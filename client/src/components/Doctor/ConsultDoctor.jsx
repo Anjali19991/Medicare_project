@@ -8,8 +8,9 @@ import DoctorCard from './DoctorCard';
 
 export const ConsultDoctor = () => {
 
-    const [doctors, setDoctors] = useState({});
-
+    const [doctors, setDoctors] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [selectedSpecialization, setSelectedSpecialization] = useState('');
     useEffect(() => {
         const fetchDoctors = async () => {
             try {
@@ -23,6 +24,22 @@ export const ConsultDoctor = () => {
         }
         fetchDoctors();
     }, [])
+
+    const handleSearch = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const handleSpecializationFilter = (e) => {
+        setSelectedSpecialization(e.target.value);
+    };
+
+    const filteredDoctors = doctors.filter((doctor) => {
+        const nameMatches = doctor.name.toLowerCase().includes(searchQuery.toLowerCase());
+        const specializationMatches =
+            selectedSpecialization === '' ||
+            doctor.specialization.toLowerCase() === selectedSpecialization.toLowerCase();
+        return nameMatches && specializationMatches;
+    });
 
 
     return (
@@ -67,18 +84,51 @@ export const ConsultDoctor = () => {
                 </div>
             </div>
             <div id='doctors' className='my-8 px-16'>
-                <h1 className='text-2xl font-semibold my-8'>Find Doctors</h1>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {
-                        doctors.length ? (
-                            doctors.map((doctor, index) => {
-                                return (
-                                    <DoctorCard key={index} doctor={doctor} />
-                                )
-                            })
-                        ) : ""
-                    }
+                <h1 className='text-2xl font-semibold my-4'>Find Doctors</h1>
+                <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-4">
+                        <input
+                            type="text"
+                            placeholder="Search by name"
+                            value={searchQuery}
+                            onChange={handleSearch}
+                            className="px-3 py-2 border border-gray-300 rounded"
+                        />
+                        <select
+                            value={selectedSpecialization}
+                            onChange={handleSpecializationFilter}
+                            className="px-3 py-2 border border-gray-300 rounded"
+                        >
+                            <option value="">All Specializations</option>
+                            <option value="Orthopedics">Orthopedics</option>
+                            <option value="Internal Medicine">Internal Medicine</option>
+                            <option value="Obstetrics and Gynecology">
+                                Obstetrics and Gynecology
+                            </option>
+                            <option value="Dermatology">Dermatology</option>
+                            <option value="Pediatrics">Pediatrics</option>
+                            <option value="Radiology">Radiology</option>
+                            <option value="General Surgery">General Surgery</option>
+                            <option value="Ophthalmology">Ophthalmology</option>
+                            <option value="Family Medicine">Family Medicine</option>
+                            <option value="Chest Medicine">Chest Medicine</option>
+                            <option value="Anesthesia">Anesthesia</option>
+                            <option value="Pathology">Pathology</option>
+                            <option value="ENT">ENT</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
                 </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    {filteredDoctors.length ? (
+                        filteredDoctors.map((doctor, index) => (
+                            <DoctorCard key={index} doctor={doctor} />
+                        ))
+                    ) : (
+                        <p>No matching doctors found.</p>
+                    )}
+                </div>
+
             </div>
         </>
     )
