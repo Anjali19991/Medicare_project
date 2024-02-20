@@ -38,6 +38,7 @@ const UserSchema = new mongoose.Schema({
         default: "active"
     },
     appointments: [{ type: mongoose.Types.ObjectId, ref: 'AppointmentModel' }],
+    orders:[{type:mongoose.Types.ObjectId,ref:'MedicineOrder'}]
 })
 
 const UserModel = mongoose.model('UserModel', UserSchema);

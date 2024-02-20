@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { MdDeleteOutline } from "react-icons/md";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Cookies from 'universal-cookie'
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -15,16 +16,18 @@ import {
 const CartPage = () => {
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.medicines.items);
-    
+
+    const navigate = useNavigate();
+
     const handleIncreaseQuantity = (item) => {
 
         dispatch(increaseQuantity(item));
-        toast.info("Increased Items",{autoClose:1500})
+        toast.info("Increased Items", { autoClose: 1500 })
     };
 
     const handleDecreaseQuantity = (item) => {
         dispatch(decreaseQuantity(item));
-        toast.warning("Decreased Items",{autoClose:1500})
+        toast.warning("Decreased Items", { autoClose: 1500 })
     };
 
     const handleRemoveItem = (item) => {
@@ -41,6 +44,49 @@ const CartPage = () => {
             (total, item) => total + parseFloat(item.MRP) * item.quantity,
             0
         );
+    };
+    const cookies = new Cookies();
+    const token = cookies.get('TOKEN');
+
+
+    const handleBuy = async () => {
+        try {
+            const orderData = {
+                medicines: cartItems.map(item => ({
+                    medicineName: item.name,
+                    quantity: item.quantity,
+                    medicineId: item.Id, 
+                    medicineType: item.ProductForm,
+                    packaging: item.Packaging,
+                    MRP: item.MRP,
+                })),
+                totalAmount: calculateTotal(cartItems).toFixed(2),
+            };
+            console.log(orderData)
+
+            const response = await fetch('http://localhost:3000/user/buymedicines', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                    
+                },
+                body: JSON.stringify(orderData),
+            });
+
+            if (response.ok) {
+                dispatch(clearCart());
+                toast.success("Order placed successfully", { autoClose: 2000 });
+                navigate('/medicine-history');
+                console.log('Order placed successfully');
+            } else {
+                toast.error('Error placing the order. Please try again.');
+                console.error('Error placing the order');
+            }
+        } catch (error) {
+            console.error('An error occurred:', error);
+        }
+
     };
 
     return (
@@ -99,7 +145,7 @@ const CartPage = () => {
                     {
                         cartItems.length !== 0 ? (
                             <div className="max-[1100px]:w-full w-1/2 text-center">
-                                <div className="border p-4 mb-4">
+                                <div className="border p-4 mb-4 bg-gray-200 rounded-md shadow-md">
                                     <h3 className="text-center text-lg font-bold mb-2">Your Bill</h3>
                                     {cartItems.map((item, index) => (
                                         <div key={index} className="flex justify-between my-2">
@@ -107,13 +153,13 @@ const CartPage = () => {
                                             <span>₹{item.MRP * item.quantity}</span>
                                         </div>
                                     ))}
-                                    <hr className="my-2" />
+                                    <hr className="my-2 text-white" />
                                     <div className="flex justify-between font-bold">
                                         <span>Total:</span>
                                         <span>₹{calculateTotal(cartItems).toFixed(2)}</span>
                                     </div>
                                 </div>
-                                <button className="px-4 py-2 bg-teal-800 text-white mx-auto rounded-md">Proceed To Buy</button>
+                                <button className="px-4 py-2 bg-teal-800 text-white mx-auto rounded-md" onClick={handleBuy}>Proceed To Buy</button>
                             </div>
                         ) : (
                             ""
