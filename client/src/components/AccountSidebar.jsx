@@ -261,6 +261,23 @@ export const AccountSidebar = () => {
 
                                     <Link
                                         className="flex items-center px-3 py-2 text-gray-300 transition-colors duration-300 transform rounded-lg  hover:bg-gray-100  hover:text-gray-700"
+                                        to="/medicine-delivery-status"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            strokeWidth="1.5"
+                                            stroke="currentColor"
+                                            className="w-5 h-5"
+                                        ></svg>
+                                        <span className="mx-2 text-sm font-medium">
+                                            Medicine Delivery
+                                        </span>
+                                    </Link>
+
+                                    <Link
+                                        className="flex items-center px-3 py-2 text-gray-300 transition-colors duration-300 transform rounded-lg  hover:bg-gray-100  hover:text-gray-700"
                                         to="/post-announcement"
                                     >
                                         <svg
@@ -275,6 +292,8 @@ export const AccountSidebar = () => {
                                             Post Announcements
                                         </span>
                                     </Link>
+
+
 
                                     <Link
                                         className="flex items-center px-3 py-2 text-gray-300 transition-colors duration-300 transform rounded-lg  hover:bg-gray-100  hover:text-gray-700"
@@ -331,7 +350,7 @@ export const AccountSidebar = () => {
                     </div>
                 </aside>
             </div>
-            <div className="mx-72 my-12">
+            <div className="ml-72 mr-10 my-12">
                 <Outlet />
             </div>
         </div>

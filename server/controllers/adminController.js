@@ -94,3 +94,7 @@ exports.getAnnouncements = async (req, res) => {
     }
 };
 
+exports.updateMedicineDeliveryStatus = async(req,res) =>{
+
+}
+
