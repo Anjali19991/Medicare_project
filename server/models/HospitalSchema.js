@@ -13,10 +13,12 @@ const HospitalSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  phoneNumber: {
-    type: Number,
-    required: true,
-  },
+  phoneNumber: [
+    {
+      type: Number,
+      required: true,
+    },
+  ],
   email: {
     type: String,
     required: true,
@@ -42,6 +44,10 @@ const HospitalSchema = new mongoose.Schema({
       ref: "UserModel",
     },
   ],
+  approved: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const HospitalModel = mongoose.model("HospitalModel", HospitalSchema);
