@@ -1,25 +1,45 @@
+import React, { useState, useEffect } from 'react';
+import Cookies from 'universal-cookie'
+
 const UserMedicineHistory = () => {
-  const medicinePurchaseData = [
-    { id: 1, date: "2024-02-17", medicine: "Aspirin", quantity: 2, status: "Paid", cost: 20 },
-    { id: 2, date: "2024-02-18", medicine: "Paracetamol", quantity: 1, status: "Failed", cost: 10 },
-    { id: 3, date: "2024-02-19", medicine: "Antibiotics", quantity: 1, status: "Paid", cost: 30 },
-    { id: 4, date: "2024-02-20", medicine: "Dental Paste", quantity: 3, status: "Pending Payment", cost: 45 },
-    { id: 5, date: "2024-02-21", medicine: "Painkillers", quantity: 2, status: "Paid", cost: 25 },
-  ];
+  const [medicineHistory, setMedicineHistory] = useState([]);
+
+  const cookies = new Cookies();
+
+  useEffect(() => {
+    const fetchMedicineHistory = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/user/getmedicinehistory', {
+          headers: {
+            Authorization: `Bearer ${cookies.get("TOKEN")}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const userOrders = data.user?.orders || [];
+          setMedicineHistory(userOrders);
+        } else {
+          console.error('Invalid response structure:', response);
+        }
+      } catch (error) {
+        console.error('Error fetching medicine history:', error);
+      }
+    };
+
+    fetchMedicineHistory();
+  }, []);
 
   return (
-    <div className="">
+    <div className="my-8">
       <h1 className="text-2xl font-bold mb-4">Medicine Purchase History</h1>
 
-      <div className="bg-white w-[75vw] p-4 rounded shadow mt-4 mx-8">
+      <div className="bg-white w-full p-4 rounded shadow mt-4 mx-8">
         <table className="w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                ID
-              </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Date
+                Order Date
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Medicine
@@ -31,28 +51,32 @@ const UserMedicineHistory = () => {
                 Cost
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Payment Status
+                Delivery Status
               </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {medicinePurchaseData.map((purchase) => (
-              <tr key={purchase.id}>
-                <td className="px-6 py-4 whitespace-nowrap">{purchase.id}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{purchase.date}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{purchase.medicine}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{purchase.quantity}</td>
-                <td className="px-6 py-4 whitespace-nowrap">₹{purchase.cost}</td>
+            {medicineHistory.map((order) => (
+              <tr key={order._id}>
+                <td className="px-6 py-4 whitespace-nowrap">{new Date(order.orderDate).toLocaleDateString()}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {purchase.status === "Paid" && (
-                    <span className="text-green-500">Paid</span>
-                  )}
-                  {purchase.status === "Failed" && (
-                    <span className="text-red-500">Failed</span>
-                  )}
-                  {purchase.status === "Pending Payment" && (
-                    <span className="text-yellow-500">Pending Payment</span>
-                  )}
+                  {order.medicines.map((medicine) => (
+                    <div key={medicine._id}>{medicine.medicineName}</div>
+                  ))}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {order.medicines.map((medicine) => (
+                    <div key={medicine._id}>{medicine.quantity}</div>
+                  ))}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">₹{order.totalAmount.toFixed(2)}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {order.deliveryStatus ? (
+                      <span className="text-green-500">Delivered</span>
+                  ):(
+                    <span className="text-red-500">Yet to Deliver</span>
+                  )
+                } 
                 </td>
               </tr>
             ))}

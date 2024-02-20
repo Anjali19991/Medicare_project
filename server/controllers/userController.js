@@ -2,6 +2,7 @@ const Doctor = require('../models/DoctorSchema');
 const User = require('../models/UserSchema')
 const Appointment = require('../models/AppointmentSchema')
 const Review = require('../models/ReviewSchema')
+const Order = require('../models/OrderSchema');
 
 
 exports.getUserDetails = async (req, res) => {
@@ -143,4 +144,49 @@ exports.writeReview = async (req, res) => {
 };
 
 
+exports.getMedicinesBought = async(req,res)=>{
+    const {id} = req.user;
+    try {
+        const user = await User.findById(id).populate('orders')
+        console.log(user);
+        res.send({message:"User Fetched",user});
+    } catch (error) {
+        console.log(error)
+        res.send({message:"Error in fetching",success:false}).status(500);
+    }
+}
+
+
+
+
+exports.buymedicines = async (req, res) => {
+    try {
+        const { id } = req.user;
+        const { medicines, totalAmount } = req.body;
+
+        const user = await User.findById(id);
+
+        if (!medicines || !Array.isArray(medicines) || medicines.length === 0 || !totalAmount) {
+            return res.status(400).json({ error: 'Invalid request payload' });
+        }
+
+        // Create a new order
+        const order = new Order({
+            userId: id,
+            medicines,
+            totalAmount,
+        });
+
+        // Save the order to the database
+        await order.save();
+        user.orders.push(order);
+        await user.save();
+
+        // Send a response
+        res.status(200).json({ success: true, message: 'Order placed successfully' });
+    } catch (error) {
+        console.error('Error in buymedicines controller:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
 
