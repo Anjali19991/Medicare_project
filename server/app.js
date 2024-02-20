@@ -9,7 +9,6 @@ const doctorRouter = require('./routes/doctorRoutes.js')
 const adminRouter = require('./routes/adminRoutes.js')
 const bodyParser = require('body-parser');
 require('dotenv').config();
-const multer = require('multer');
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())

@@ -1,5 +1,6 @@
 const Doctor = require("../models/DoctorSchema");
 const User = require("../models/UserSchema");
+const Announcement = require("../models/AnnouncementScheme");
 
 
 exports.approve = async (req, res) => {
@@ -37,8 +38,6 @@ exports.cancel = async (req, res) => {
         return res.status(500).json({ success: false, message: "Failed to cancel doctor" })
     }
 }
-
-
 exports.block = async (req, res) => {
     const { userId } = req.params;
     const { id, role } = req.user;
@@ -56,3 +55,42 @@ exports.block = async (req, res) => {
     }
 
 }
+
+exports.postAnnouncement = async (req, res) => {
+    const { announcementTitle, announcementContent } = req.body; // Adjust field names
+
+    if (!announcementTitle || !announcementContent) {
+        return res.status(400).json({ success: false, message: "Title and content are required" });
+    }
+
+    const { id, role } = req.user;
+
+    if (role !== 'admin') {
+        return res.status(400).json({ success: false, message: "Invalid Request - Only admins can post announcements" });
+    }
+
+    try {
+        const newAnnouncement = new Announcement({
+            title: announcementTitle, 
+            content: announcementContent, 
+        });
+        const savedAnnouncement = await newAnnouncement.save();
+
+        return res.status(201).json({ success: true, message: "Announcement posted successfully", announcement: savedAnnouncement });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ success: false, message: "Failed to post announcement" });
+    }
+};
+
+exports.getAnnouncements = async (req, res) => {
+    try {
+        const announcements = await Announcement.find();
+
+        return res.status(200).json({ success: true, announcements });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ success: false, message: "Failed to retrieve announcements" });
+    }
+};
+
