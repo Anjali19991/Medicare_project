@@ -11,4 +11,5 @@ router.get('/getuserappointments', auth, userController.getUserAppointments)
 router.post('/buymedicines',auth,userController.buymedicines)
 router.get('/getmedicinehistory',auth,userController.getMedicinesBought)
 
+
 module.exports = router;

@@ -1,28 +1,49 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; // Assuming you are using react-router-dom
+import { useState, useEffect } from 'react';
 import { FaBell } from 'react-icons/fa';
 import { HomeLayout } from '../../pages';
 
 const AnnouncementsDisplay = () => {
     const [announcements, setAnnouncements] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchAnnouncements = async () => {
             try {
-                const response = await fetch('http://localhost:3001/announcements');
+                console.log('Fetching announcements...');
+                const response = await fetch('http://localhost:3000/admin/display-announcements');
+
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch announcements. Status: ${response.status}`);
+                }
                 const data = await response.json();
-                setAnnouncements(data);
+                setAnnouncements(data.announcements);
+                console.log('Announcements fetched successfully:', data);
             } catch (error) {
                 console.error('Error fetching announcements:', error);
+                setError(error.message);
+            } finally {
+                setLoading(false);
             }
         };
+
 
         fetchAnnouncements();
     }, []);
 
     const formatTimestamp = (timestamp) => {
+        if (!timestamp) {
+            return "Invalid Date";
+        }
+
+        const date = new Date(timestamp);
+
+        if (isNaN(date.getTime())) {
+            return "Invalid Date";
+        }
+
         const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' };
-        const formattedDate = new Date(timestamp).toLocaleDateString(undefined, options);
+        const formattedDate = date.toLocaleDateString(undefined, options);
         return formattedDate;
     };
 
@@ -39,20 +60,23 @@ const AnnouncementsDisplay = () => {
                 Announcements
             </h1>
 
-            {announcements.length === 0 ? (
-                <p className="text-teal-700">No announcements available.</p>
-            ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    {announcements.map((announcement) => (
-                        <div key={announcement.id} className="bg-white rounded-md shadow-md p-6 announcement-card">
-                            <h2 className="text-xl font-bold mb-4 text-teal-800">{announcement.title}</h2>
-                            <p className="text-teal-700 mb-4">{announcement.content}</p>
-                            <p className="text-teal-600">{formatTimestamp(announcement.timestamp)}</p>
-                        </div>
-                    ))}
-                </div>
-            )}
-        </div>
+                {loading && <p className="text-teal-700">Loading announcements...</p>}
+                {error && <p className="text-red-700">{error}</p>}
+                {!loading && !error && announcements.length === 0 && (
+                    <p className="text-teal-700">No announcements available.</p>
+                )}
+                {!loading && !error && announcements.length > 0 && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        {announcements.map((announcement) => (
+                            <div key={announcement.id} className="bg-white rounded-md shadow-md p-6 announcement-card">
+                                <h2 className="text-xl font-bold mb-4 text-teal-800">{announcement.title}</h2>
+                                <p className="text-teal-700 mb-4">{announcement.content}</p>
+                                <p className="text-teal-600">{formatTimestamp(announcement.date)}</p>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
         </>
     );
 };

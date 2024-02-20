@@ -204,7 +204,7 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/admin-announcements",
+        path: "/post-announcement",
         element: <AdminAnnouncements />,
         errorElement: <Error />,
       },
