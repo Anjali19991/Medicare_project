@@ -29,6 +29,7 @@ const SlotManager = () => {
             setStartTime('');
             setEndTime('');
         }
+        console.log(daySlots);
     };
 
     const handleRemoveSlot = (index) => {
@@ -40,7 +41,7 @@ const SlotManager = () => {
     useEffect(() => {
         const initialDaySlots = user && user.timeSlots ? user.timeSlots : [];
         setDaySlots(initialDaySlots);
-    })
+    }, [user])
 
     const handleSubmit = async () => {
         try {

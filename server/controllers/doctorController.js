@@ -56,22 +56,30 @@ exports.updateAppointment = async (req, res) => {
 
 }
 
+
+exports.getNewAppointments = async(req,res)=>{
+    const {id} = req.user;
+    try {
+        const doctor = await Doctor.findById(id).populate('appointments')
+        console.log(doctor);
+        res.status(200).json({success:true,data:doctor});   
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({success:false,message:"Error in fetching Appointments"})
+    }
+}
+
+
+
+
 exports.manageSlots = async (req, res) => {
     const { daySlots } = req.body;
 
     try {
-        // Assuming you have the doctor's ID from authentication
         const doctorId = req.user.id;
-
-        // Find the doctor by ID
         const doctor = await Doctor.findById(doctorId);
-
-        // Add the new slots to the doctor's timeSlots array
         doctor.timeSlots = [...doctor.timeSlots, ...daySlots];
-
-        // Save the doctor with the new timeSlots
         await doctor.save();
-
         res.status(200).json({ message: 'Slots added successfully' });
     } catch (error) {
         console.error(error);

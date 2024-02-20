@@ -28,7 +28,7 @@ const AnnouncementsDisplay = () => {
 
     return (
         <>
-        <HomeLayout/>
+        {/* <HomeLayout/> */}
            <div className="min-h-screen bg-teal-50 p-8 text-center announcements-page">
             {/* <Link to="/" className="text-teal-800 mb-4 block text-xl absolute top-0 left-0 p-4 font-semibold ml-10">
                 Back to Home

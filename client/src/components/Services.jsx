@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Services = () => {
   const [imageIndex, setImageIndex] = useState(0);
@@ -9,6 +9,8 @@ const Services = () => {
     "https://img.freepik.com/free-vector/medical-occupation-set_74855-1466.jpg?w=1380&t=st=1706017592~exp=1706018192~hmac=d9890dc27b71b1cf799a82a73ce33b60a2f704113506e0af6685ffa5a64968e3"
     // Add more image URLs as needed
   ];
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -39,7 +41,7 @@ const Services = () => {
           </div>
         </div>
         <div className="relative items-center w-full mx-auto mt-12">
-        <img
+          <img
             className="object-contain w-full h-96 transition-opacity duration-500 ease-in-out"
             src={carouselImages[imageIndex]}
             alt=""
@@ -48,7 +50,13 @@ const Services = () => {
         <div>
           <div className="pt-12 mx-auto lg:max-w-7xl">
             <div className="grid grid-cols-1 gap-6 space-y-0 lg:gap-20 lg:grid-cols-3">
-              <Link to={'/consultdoctor'} className="hover:bg-gray-300 p-4 shadow-md rounded-md">
+              <button onClick={() => {
+                navigate('/consultdoctor')
+                window.scrollTo({
+                  top: 0,
+                  behavior: 'smooth'
+                });
+              }} className="hover:bg-gray-300 text-start p-4 shadow-md rounded-md">
                 <div>
                   <p className="text-lg font-medium leading-6 text-black">
                     Consult Doctor
@@ -57,8 +65,14 @@ const Services = () => {
                 <div className="mt-2 text-[0.95rem] text-gray-500">
                   Connect with experienced healthcare professionals for personalized consultations, ensuring your health is in expert hands.
                 </div>
-              </Link>
-              <Link to={'/buymedicines'} className="hover:bg-gray-300 p-4 shadow-md rounded-md">
+              </button>
+              <button onClick={() => {
+                navigate('/buymedicines')
+                window.scrollTo({
+                  top: 0,
+                  behavior: 'smooth'
+                });
+              }} className="hover:bg-gray-300 text-start p-4 shadow-md rounded-md">
                 <div>
                   <p className="text-lg font-medium leading-6 text-black">
                     Buy Medicines
@@ -67,8 +81,14 @@ const Services = () => {
                 <div className="mt-2 text-[0.95rem] text-gray-500">
                   Effortlessly order your prescribed medications online, providing a convenient and reliable solution for all your pharmaceutical needs.
                 </div>
-              </Link>
-              <Link to={'/display-hospitals'} className="hover:bg-gray-300 p-4 shadow-md rounded-md">
+              </button>
+              <button onClick={() => {
+                navigate('/display-hospitals')
+                window.scrollTo({
+                  top: 0,
+                  behavior: 'smooth'
+                });
+              }} className="hover:bg-gray-300 text-start p-4 shadow-md rounded-md">
                 <div>
                   <p className="text-lg font-medium leading-6 text-black">
                     Find Hospitals
@@ -77,7 +97,7 @@ const Services = () => {
                 <div className="mt-2 text-[0.95rem] text-gray-500">
                   Locate top-tier medical facilities in your vicinity, ensuring quick access to quality healthcare whenever you need it.
                 </div>
-              </Link>
+              </button>
             </div>
           </div>
         </div>
