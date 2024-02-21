@@ -14,7 +14,7 @@ exports.getUserDetails = async (req, res) => {
         if (user) {
             return res.status(200).json({ user });
         }
-        const doctor = await Doctor.findById({ _id: id }).select("-password")
+        const doctor = await Doctor.findById({ _id: id }).select("-password").populate('appointments')
         console.log(doctor);
         if (doctor) {
             return res.status(200).json({ doctor });
@@ -48,11 +48,12 @@ exports.updateUser = async (req, res) => {
 exports.bookappointment = async (req, res) => {
     console.log(req.body);
     console.log(req.user);
-    const { doctorId, ticketPrice, selectedDate, selectedSlot } = req.body;
+    const { name, gender, age, problem, doctorId, ticketPrice, selectedDate, selectedTime } = req.body;
     const { id } = req.user;
+
     try {
-        const user = await User.findOne({ _id: id });
-        const doctor = await Doctor.findOne({ _id: doctorId })
+        const user = await User.findById(id);
+        const doctor = await Doctor.findById(doctorId);
 
         if (!user || !doctor) {
             return res.status(404).json({
@@ -60,30 +61,39 @@ exports.bookappointment = async (req, res) => {
                 message: "User not found",
             });
         }
+
         const newAppointment = await Appointment.create({
             doctor: doctorId,
             user: id,
             ticketPrice,
             appointmentDate: selectedDate,
             slot: {
-                startTime: selectedSlot.startTime,
-                endTime: selectedSlot.endTime
-            }
-        })
+                startTime: selectedTime.split(' - ')[0],
+                endTime: selectedTime.split(' - ')[1],
+            },
+            patientName: name,
+            patientGender: gender,
+            patientAge: age,
+            patientProblem: problem,
+        });
+
         console.log(newAppointment);
+
         user.appointments.push(newAppointment);
         doctor.appointments.push(newAppointment);
+
         await user.save();
         await doctor.save();
+
         return res.status(201).json({
             success: true,
-            message: "Appointment Booked Successfully"
-        })
+            message: "Appointment Booked Successfully",
+        });
     } catch (error) {
         console.log(error.message);
-        return res.status(500).json({ success: false, error: error.message })
+        return res.status(500).json({ success: false, error: error.message });
     }
-}
+};
 
 
 exports.getUserAppointments = async (req, res) => {
@@ -116,22 +126,20 @@ exports.getUserAppointments = async (req, res) => {
 
 exports.writeReview = async (req, res) => {
     const { id, role } = req.user;
-    const { docId } = req.params;
-
     if (role !== "patient") {
         return res.status(400).send({ message: "Only Patients can write a review for doctors", success: false });
     }
 
     try {
         const user = await User.findById(id);
-        const doc = await Doctor.findById(docId);
+        const doc = await Doctor.findById(req.body.docId);
 
         if (!user || !doc) {
             return res.status(400).send({ message: "User or Doctor not found", success: false });
         }
 
-        const { review, rating } = req.body;
-        const newReview = await Review.create({ doctor: docId, user: id, reviewText: review, rating });
+        const { userRating, userReview, docId } = req.body;
+        const newReview = await Review.create({ doctor: docId, user: id, reviewText: userReview, rating: userRating });
 
         doc.reviews.push(newReview);
         await doc.save();
@@ -144,15 +152,15 @@ exports.writeReview = async (req, res) => {
 };
 
 
-exports.getMedicinesBought = async(req,res)=>{
-    const {id} = req.user;
+exports.getMedicinesBought = async (req, res) => {
+    const { id } = req.user;
     try {
         const user = await User.findById(id).populate('orders')
         console.log(user);
-        res.send({message:"User Fetched",user});
+        res.send({ message: "User Fetched", user });
     } catch (error) {
         console.log(error)
-        res.send({message:"Error in fetching",success:false}).status(500);
+        res.send({ message: "Error in fetching", success: false }).status(500);
     }
 }
 

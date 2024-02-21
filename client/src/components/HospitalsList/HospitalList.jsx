@@ -28,8 +28,8 @@ const HospitalList = () => {
 
     return (
         <>
-            <HomeLayout />
-            <div className="flex flex-col justify-center p-14 text-center">
+            {/* <HomeLayout /> */}
+            <div className="flex flex-col min-h-screen justify-center p-14 text-center">
                 <div className="mb-4 ">
                     <input
                         type="text"

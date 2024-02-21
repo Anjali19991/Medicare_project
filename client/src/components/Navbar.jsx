@@ -18,12 +18,12 @@ const Navbar = () => {
       <div className="navbar align-element">
         <div className="navbar-start">
           {/* TITLE */}
-          <NavLink
+          <Link
             to="/"
-            className="hidden lg:flex btn  text-3xl items-center text-white bg-teal-700 hover:bg-teal-600"
+            className=""
           >
-            Medicare
-          </NavLink>
+            <img src="MEDICARE-logos_transparent.png" className="w-48 rounded" alt="" />
+          </Link>
           {/* DROPDOWN */}
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">

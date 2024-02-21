@@ -49,12 +49,16 @@ const AnnouncementsDisplay = () => {
 
     return (
         <>
-            <HomeLayout />
-            <div className="min-h-screen  p-8 text-center announcements-page">
-                <h1 className="text-4xl font-bold mb-6 text-teal-800">
-                    <FaBell className="text-5xl inline-block mr-2" />
-                    Announcements
-                </h1>
+        {/* <HomeLayout/> */}
+           <div className="min-h-screen bg-teal-50 p-8 text-center announcements-page">
+            {/* <Link to="/" className="text-teal-800 mb-4 block text-xl absolute top-0 left-0 p-4 font-semibold ml-10">
+                Back to Home
+            </Link> */}
+
+            <h1 className="text-4xl font-bold mb-6 text-teal-800">
+                <FaBell className="text-5xl inline-block mr-2" />
+                Announcements
+            </h1>
 
                 {loading && <p className="text-teal-700">Loading announcements...</p>}
                 {error && <p className="text-red-700">{error}</p>}

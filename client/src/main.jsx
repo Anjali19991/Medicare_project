@@ -26,7 +26,7 @@ import { MedicineInfo } from "./components/medicine/MedicineInfo";
 import { ConsultDoctor } from "./components/Doctor/ConsultDoctor.jsx";
 import { DoctorRegister } from "./components/Doctor/DoctorRegister.jsx";
 import { DoctorDashboard } from "./components/Doctor/DoctorDashboard.jsx";
-import { AppointmentForm } from "./components/Doctor/AppointmentForm.jsx";
+import { Doctor } from "./components/Doctor/Doctor.jsx";
 import UserDashBoard from "./components/UserAccount/UserDashBoard.jsx";
 import { AuthProvider } from "./AuthContext.jsx";
 import HospitalList from "./components/HospitalsList/HospitalList.jsx";
@@ -37,6 +37,8 @@ import UserAppointmentHistory from "./components/UserAccount/UserAppointmentHist
 import UserMedicineHistory from "./components/UserAccount/UserMedicineHistory.jsx";
 import UserFeedbacks from "./components/UserAccount/UserFeedbacks.jsx";
 import SlotManager from "./components/Doctor/SlotManager.jsx";
+import { NewAppointments } from "./components/Doctor/NewAppointments.jsx";
+import AppointmentForm from "./components/Doctor/AppointmentForm.jsx";
 
 const store = configureStore({
   reducer: {
@@ -107,13 +109,28 @@ const router = createBrowserRouter([
         errorElement: <Error />,
       },
       {
-        path: "/getappointment",
-        element: <AppointmentForm />,
+        path: "/doctor",
+        element: <Doctor />,
         errorElement: <Error />,
+      },
+      {
+        path: "/appointmentform",
+        element: <AppointmentForm />,
+        errorElement: <Error />
       },
       {
         path: "/doc_register",
         element: <DoctorRegister />,
+        errorElement: <Error />,
+      },
+      {
+        path: "/display-announcements",
+        element: <AnnouncementsDisplay />,
+        errorElement: <Error />,
+      },
+      {
+        path: "display-hospitals",
+        element: <HospitalList />,
         errorElement: <Error />,
       },
     ],
@@ -129,7 +146,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/newappointments",
-        element: <h1>New Appiontments</h1>,
+        element: <NewAppointments />,
         errorElement: <Error />,
       },
       {
@@ -159,7 +176,7 @@ const router = createBrowserRouter([
         errorElement: <Error />,
       },
       {
-        
+
         path: "/appointment-history",
         element: <UserAppointmentHistory />,
         errorElement: <Error />,
@@ -199,17 +216,7 @@ const router = createBrowserRouter([
     ],
   },
 
-  {
-    path: "/display-announcements",
-    element: <AnnouncementsDisplay />,
-    errorElement: <Error />,
-  },
 
-  {
-    path: "display-hospitals",
-    element: <HospitalList />,
-    errorElement: <Error />,
-  },
 
 ]);
 

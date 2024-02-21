@@ -1,132 +1,185 @@
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import Cookies from 'universal-cookie';
+import { useLocation } from 'react-router-dom';
+import Cookies from 'universal-cookie'
 
-export const AppointmentForm = () => {
+const AppointmentForm = () => {
     const location = useLocation();
-    const [doctor, setDoctor] = useState({});
-    const [selectedDate, setSelectedDate] = useState(new Date());
-    const [selectedSlot, setSelectedSlot] = useState(null);
-
-    const cookie = new Cookies();
-
-    const token = cookie.get('TOKEN')
-
     useEffect(() => {
-        console.log(location.state);
         if (location.state) {
-            console.log(location.state.doctor)
-            setDoctor(location.state.doctor);
+            setDoctor(location.state);
         }
-    }, [location.state]);
+    }, []);
+    const [formData, setFormData] = useState({
+        name: '',
+        gender: '',
+        age: 0,
+        problem: '',
+        selectedDate: new Date(),
+        ticketPrice: 150,
+        selectedTime: '',
+        doctorId: location.state ? location.state._id : ''
+    });
 
-    const filterSundays = (date) => {
-        return date.getDay() !== 0; // 0 corresponds to Sunday
-    };
+    const cookies = new Cookies();
+    const token = cookies.get('TOKEN');
 
-    const filterFutureDates = (date) => {
-        const currentDate = new Date();
-        const nextWeek = new Date();
-        nextWeek.setDate(currentDate.getDate() + 7);
-        return date >= currentDate && date <= nextWeek;
-    };
+    const [doctor, setDoctor] = useState({});
+
 
     const handleDateChange = (date) => {
-        setSelectedDate(date);
-        // Reset selected slot when changing the date
-        setSelectedSlot(null);
+        setFormData({ ...formData, selectedDate: date });
     };
 
-    const handleSlotSelect = (slot) => {
-        setSelectedSlot(slot);
+    const handleTimeChange = (e) => {
+        setFormData({ ...formData, selectedTime: e.target.value });
     };
 
-    const handleSubmit = async () => {
-        console.log('Selected Date:', selectedDate);
-        console.log('Selected Slot:', selectedSlot);
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
 
-        if (token) {
-            try {
-                const response = await fetch('http://localhost:3000/user/bookappointment', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({
-                        doctorId: doctor._id,
-                        selectedDate,
-                        selectedSlot,
-                        ticketPrice: 150
-                    }),
-                });
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setFormData((prevData) => ({ ...prevData, doctorId: doctor._id }));
+        try {
+            const response = await fetch('http://localhost:3000/user/bookappointment', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
 
-                if (response.ok) {
-                    // Handle success
-                    const data = await response.json();
-                    console.log('Backend response:', data);
-                } else {
-                    // Handle error
-                    const data = await response.json();
-                    console.log(data)
-                }
-            } catch (error) {
-                console.error('Error:', error);
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+            } else {
+                console.error('Failed to book appointment');
             }
+        } catch (error) {
+            console.error('Error during fetch:', error);
         }
+        console.log('Form submitted:', formData);
+        setFormData({
+            name: '',
+            gender: '',
+            age: 0,
+            problem: '',
+            selectedDate: new Date(),
+            selectedTime: '',
+            ticketPrice: 150,
+            doctorId: location.state ? location.state._id : '',
+        });
     };
+
+    const maxDate = new Date();
+    maxDate.setDate(maxDate.getDate() + 7);
 
     return (
-        <div>
-            <div className="flex my-12 px-12 items-start gap-8 justify-center">
-                <img
-                    className="w-1/3 h-full object-cover rounded-md shadow-md"
-                    src={doctor.photo || ''}
-                    alt={doctor.name}
+        <div className='flex items-center justify-center min-h-[85vh]'>
+            <form onSubmit={handleSubmit} className='flex flex-col bg-gray-100 rounded-md shadow-sm w-[500px] border-2 p-4'>
+                <h1 className='text-xl text-center mb-4'>Appointment Form</h1>
+                <label className=''>
+                    Name of the Patient:
+                </label>
+                <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    className='w-full border-b-1 my-1 border-black bg-gray-50 rounded-md'
+                    placeholder="Enter Patient's name"
+                    onChange={handleChange}
+                    required
                 />
-                <div className="ml-4">
-                    <div>
-                        <h2 className="text-4xl font-semibold">Dr.{doctor.name}</h2>
-                        <p className='text-xl font-light my-2'>{doctor.specialization},{doctor.qualification}</p>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui hic rerum voluptas obcaecati iure laborum blanditiis eligendi suscipit, alias deserunt est nobis id praesentium nam reiciendis ab sequi quo neque?</p>
-                    </div>
-                    <div className='flex gap-8 items-center'>
-                        <div className="mt-4">
-                            <label className="block text-gray-700 text-md">Select Date:</label>
-                            <DatePicker
-                                selected={selectedDate}
-                                onChange={handleDateChange}
-                                dateFormat="dd/MM/yyyy"
-                                filterDate={(date) => filterSundays(date) && filterFutureDates(date)}
-                                className="border border-gray-300 p-2 rounded-md mt-1"
-                            />
-                        </div>
-                        {doctor && doctor.timeSlots && doctor.timeSlots.length > 0 && (
-                            <div className='mt-4'>
-                                <p className="mb-1 text-md">Select a Time Slot:</p>
-                                <ul className='flex gap-4'>
-                                    {doctor.timeSlots.map((slot, index) => (
-                                        <li
-                                            key={index}
-                                            onClick={() => handleSlotSelect(slot)}
-                                            className={`px-2 py-2 cursor-pointer text-center w-28 border border-green-300 shadow-md rounded-md ${selectedSlot === slot ? 'bg-green-300' : ''
-                                                }`}
-                                        >
-                                            {slot.startTime} - {slot.endTime}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
-                    </div>
 
+                <label className=''>
+                    Patient Gender:
+                </label>
+                <select
+                    name="gender"
+                    className='w-full border-b-1 my-1 border-black bg-gray-50 rounded-md'
+                    value={formData.gender}
+                    onChange={handleChange}
+                    required
+                >
+                    <option value="" disabled>
+                        Gender
+                    </option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
 
-                    {/* Add a button or a form to submit the selected data */}
-                    <button onClick={handleSubmit} className='my-4 px-4 py-2 bg-teal-700 text-white rounded-md shadow-md'>Book Appointment</button>
+                <label className=''>
+                    Patient's Age:
+                </label>
+                <input
+                    type="number"
+                    name="age"
+                    className='w-full border-b-1 my-1 bg-gray-50 border-black rounded-md'
+                    value={formData.age}
+                    onChange={handleChange}
+                    min="3"
+                    max="80"
+                    required
+                />
+
+                <label htmlFor="message" className="block mb-2">
+                    Problem:
+                </label>
+                <textarea
+                    name="problem"
+                    rows="4"
+                    className="block p-2.5 w-full text-sm bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                    value={formData.problem}
+                    onChange={handleChange}
+                    placeholder="Tell the doctor about the problem..."
+                ></textarea>
+
+                <div className='flex my-2 gap-4 items-center'>
+                    <label className=''>
+                        Appointment Date:
+                        <br />
+                        <DatePicker
+                            className='border-b-1 my-1 bg-gray-50 border-black rounded-md'
+                            selected={formData.selectedDate}
+                            onChange={handleDateChange}
+                            dateFormat="dd/MM/yyyy"
+                            minDate={new Date()}
+                            maxDate={maxDate}
+                            required
+                        />
+                    </label>
+                    <label className=''>
+                        Time of Consultation:
+                        <br />
+                        <select
+                            name="selectedTime"
+                            className='my-1 bg-gray-50 border-black rounded-md w-full'
+                            value={formData.selectedTime}
+                            onChange={handleTimeChange}
+                        >
+                            <option value="">Select Time</option>
+                            {doctor && doctor.timeSlots && doctor.timeSlots.length && doctor.timeSlots.map((slot, index) => (
+                                <option key={index} value={`${slot.startTime} - ${slot.endTime}`}>
+                                    {slot.startTime} - {slot.endTime}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
                 </div>
-            </div>
+                <label htmlFor="ticketPrice">Consultation Fee:</label>
+                <input className='my-2' name='ticketPrice' type="number" value={150} readOnly />
+                <button type="submit" id="submit-btn" className='mt-4 bg-teal-700 text-white px-4 py-2 rounded-md'>
+                    Book Appointment
+                </button>
+            </form>
         </div>
     );
 };
+
+export default AppointmentForm;

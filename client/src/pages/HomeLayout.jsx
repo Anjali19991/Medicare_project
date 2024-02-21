@@ -1,5 +1,6 @@
 import { Outlet, useNavigation } from "react-router-dom";
 import { Header, Navbar, Loading } from "../components";
+import ContactUs from "./ContactUs";
 
 const HomeLayout = () => {
   const navigation = useNavigation();
@@ -15,6 +16,7 @@ const HomeLayout = () => {
           <Outlet />
         </section>
       )}
+      <ContactUs />
     </>
   );
 };
