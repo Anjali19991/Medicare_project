@@ -38,48 +38,57 @@ const HospitalList = () => {
                     {filteredHospitals.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {filteredHospitals.map((hospital) => (
-                                <div key={hospital._id} className="bg-white p-6 rounded-md shadow-md">
+                                <div key={hospital._id} className="bg-white max-w-md p-8 rounded-md shadow-md">
                                     <img
-                                        src={'/hosp.jpg'} 
+                                        src={'/hosp.jpg'}
                                         alt={hospital.name}
-                                        className="mb-4 rounded-md h-40 object-cover"
+                                        className="mb-4 rounded-md"
                                     />
-                                    <div className="flex items-center mb-4">
-                                        <GiHospital className="text-teal-800 text-lg mr-2" />
-                                        <h2 className="text-xl font-semibold text-teal-800">{hospital.name}</h2>
-                                    </div>
-                                    <div className="flex items-center mb-2">
-                                        <IoIosPin className="text-teal-700 text-lg mr-2" />
-                                        <p className="text-teal-700">{hospital.address}</p>
-                                    </div>
-                                    <div className="flex items-center mb-2">
-                                        <IoIosCall className="text-teal-700 text-lg mr-2" />
-                                        <p className="text-teal-700">{hospital.phoneNumber}</p>
-                                    </div>
-                                    <div className="flex items-center mb-2">
-                                        <IoMdMail className="text-teal-700 text-lg mr-2" />
-                                        <p className="text-teal-700">{hospital.email}</p>
-                                    </div>
-                                    <div className="flex items-center mb-2">
-                                        <IoIosPeople className="text-teal-700 text-lg mr-2" />
-                                        <p className="text-teal-700 font-semibold">Doctors: {hospital.doctors}</p>
-                                    </div>
-                                    <div className="flex items-center mb-2">
-                                        <IoIosShareAlt className="text-teal-700 text-lg mr-2" />
-                                        <div className="flex gap-2">
-                                            {hospital.socials.map((social, index) => (
-                                                <a
-                                                    key={index}
-                                                    href={social.url}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="text-teal-700"
-                                                >
-                                                    {social.name}
-                                                </a>
-                                            ))}
+                                    <div className='flex justify-between'>
+                                        <div className="flex items-center mb-4">
+                                            <GiHospital className="text-teal-800 text-lg mr-2" />
+                                            <h2 className="text-xl font-semibold text-teal-800">{hospital.name}</h2>
+                                        </div>
+                                        <div className="flex items-center mb-2">
+                                            <IoIosPin className="text-teal-700 text-lg mr-2" />
+                                            <p className="text-teal-700">{hospital.address}</p>
                                         </div>
                                     </div>
+                                    <div className='flex justify-between'>
+                                        <div className="flex items-center mb-2">
+                                            <IoIosCall className="text-teal-700 text-lg mr-2" />
+                                            <p className="text-teal-700">{hospital.phoneNumber}</p>
+                                        </div>
+                                        <div className="flex items-center mb-2">
+                                            <IoMdMail className="text-teal-700 text-lg mr-2" />
+                                            <p className="text-teal-700">{hospital.email}</p>
+                                        </div>
+                                    </div>
+                                    <div className='flex justify-between'>
+                                        <div className="flex items-center mb-2">
+                                            <IoIosPeople className="text-teal-700 text-lg mr-2" />
+                                            <p className="text-teal-700 font-semibold">Doctors: {hospital.doctors}</p>
+                                        </div>
+                                        <div className="flex items-center mb-2">
+                                            <IoIosShareAlt className="text-teal-700 text-lg mr-2" />
+                                            <div className="flex gap-2">
+                                                {hospital.socials.map((social, index) => (
+                                                    <a
+                                                        key={index}
+                                                        href={social.url}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="text-teal-700"
+                                                    >
+                                                        {social.name}
+                                                    </a>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
                                     <div className="flex justify-end">
                                         <IoMdCheckmark className="text-teal-700 text-lg" />
                                     </div>

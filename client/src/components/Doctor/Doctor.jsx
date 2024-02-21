@@ -181,9 +181,9 @@ export const Doctor = () => {
             <div className="w-full mt-4 min-h-[50vh]">
                 <h3 className="text-2xl font-semibold mb-4">Reviews</h3>
                 {doctor && doctor.reviews && doctor.reviews.length > 0 ? (
-                    <ul className='max-w-2xl'>
+                    <ul className='max-w-2xl flex flex-col gap-4'>
                         {doctor.reviews.map((review, index) => (
-                            <li key={index} className='rounded-md shadow-xl p-4 flex flex-col gap-4'>
+                            <li key={index} className='rounded-md shadow-md p-4 flex flex-col gap-4'>
                                 <div className='flex items-center justify-between gap-2'>
                                     <div className='flex items-center gap-2'>
                                         <img src={review.user ? review.user.photo : ""} className='w-12 rounded-full' alt="" />
