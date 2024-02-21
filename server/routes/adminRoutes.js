@@ -9,6 +9,8 @@ router.post('/post-announcement', auth, adminController.postAnnouncement);
 router.get('/display-announcements',  adminController.getAnnouncements);
 router.put('/approvehospital/:hospId',auth,adminController.approveHospital)
 router.put('/cancelhospital/:hospId', auth, adminController.rejectHospital)
+router.put('/blockuser/:userId',auth,adminController.blockUser)
+router.put('/unblockuser/:userId',auth,adminController.unblockUser)
 
 
 

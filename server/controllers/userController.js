@@ -4,6 +4,26 @@ const Appointment = require('../models/AppointmentSchema')
 const Review = require('../models/ReviewSchema')
 const Order = require('../models/OrderSchema');
 
+exports.getAllUsers = async (req, res) => {
+    try {
+        let query = { role: { $ne: 'admin' } };
+
+        const { isActive } = req.query;
+
+        if (isActive && (isActive === 'active' || isActive === 'blocked')) {
+            query.isActive = isActive;
+        }
+
+        const users = await User.find(query).select("-password");
+
+        return res.status(200).json({ users });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Failed to fetch users" });
+    }
+};
+
+
 
 exports.getUserDetails = async (req, res) => {
     console.log(req.user)
@@ -163,9 +183,6 @@ exports.getMedicinesBought = async (req, res) => {
         res.send({ message: "Error in fetching", success: false }).status(500);
     }
 }
-
-
-
 
 exports.buymedicines = async (req, res) => {
     try {

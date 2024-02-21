@@ -51,13 +51,13 @@ exports.cancel = async (req, res) => {
       .json({ success: false, message: "Failed to cancel doctor" });
   }
 };
-exports.block = async (req, res) => {
+
+exports.blockUser = async (req, res) => {
   const { userId } = req.params;
   const { id, role } = req.user;
   if (role !== "admin") {
     return res.status(400).send({ message: "Invalid Request" });
   }
-  console.log(id);
   try {
     const updatedUser = await User.findByIdAndUpdate(
       userId,
@@ -71,6 +71,27 @@ exports.block = async (req, res) => {
     return res
       .status(500)
       .json({ success: false, message: "Failed to block the User" });
+  }
+};
+
+exports.unblockUser = async (req, res) => {
+  const { userId } = req.params; 
+
+  try {
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { isActive: "active" }, 
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    return res.status(200).json({ success: true, message: "User unblocked successfully", user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Failed to unblock user" });
   }
 };
 

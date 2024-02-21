@@ -9,7 +9,6 @@ const AnnouncementsDisplay = () => {
     useEffect(() => {
         const fetchAnnouncements = async () => {
             try {
-                console.log('Fetching announcements...');
                 const response = await fetch('http://localhost:3000/admin/display-announcements');
 
                 if (!response.ok) {

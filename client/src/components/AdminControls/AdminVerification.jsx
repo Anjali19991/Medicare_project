@@ -173,40 +173,44 @@ const AdminVerification = () => {
 
 
   return (
-    <div className="min-h-screen p-8">
-      <h2 className="text-3xl font-bold text-teal-800 mb-4">Admin Verification Panel</h2>
+    <div className="min-h-screen p-2">
 
-      <div className="flex items-center mb-4 space-x-4">
-        <div className="flex items-center">
-          <label className="text-teal-700 font-semibold mr-2">Filter by:</label>
-          <select
-            className="p-2 pr-7 border border-teal-400 rounded-md focus:outline-none focus:ring focus:border-teal-500"
-            value={filterType}
-            onChange={e => setFilterType(e.target.value)}
-          >
-            <option value="all">All</option>
-            <option value="doctors">Doctors</option>
-            <option value="hospitals">Hospitals</option>
-          </select>
+      <div className="flex">
+        <h2 className="text-3xl font-bold text-teal-800 mb-6 ">Admin Verification Panel</h2>
+
+        <div className="flex items-center mb-4 space-x-4 ml-64">
+          <div className="flex items-center">
+            <label className="text-teal-700 font-semibold mr-2">Filter by:</label>
+            <select
+              className="p-2 pr-7 border border-teal-400 rounded-md focus:outline-none focus:ring focus:border-teal-500"
+              value={filterType}
+              onChange={e => setFilterType(e.target.value)}
+            >
+              <option value="all">All</option>
+              <option value="doctors">Doctors</option>
+              <option value="hospitals">Hospitals</option>
+            </select>
+          </div>
+
+          <div className="flex items-center">
+            <label className="text-teal-700 font-semibold ml-4 mr-2">Filter Status:</label>
+            <select
+              className="p-2 pr-7 border border-teal-400 rounded-md focus:outline-none focus:ring focus:border-teal-500"
+              value={filterStatus}
+              onChange={e => setFilterStatus(e.target.value)}
+            >
+              <option value="all">All</option>
+              <option value="pending">Pending</option>
+              <option value="approved">Approved</option>
+              <option value="cancelled">Rejected</option>
+            </select>
+          </div>
         </div>
 
-        <div className="flex items-center">
-          <label className="text-teal-700 font-semibold ml-4 mr-2">Filter Status:</label>
-          <select
-            className="p-2 pr-7 border border-teal-400 rounded-md focus:outline-none focus:ring focus:border-teal-500"
-            value={filterStatus}
-            onChange={e => setFilterStatus(e.target.value)}
-          >
-            <option value="all">All</option>
-            <option value="pending">Pending</option>
-            <option value="approved">Approved</option>
-            <option value="cancelled">Rejected</option>
-          </select>
-        </div>
       </div>
 
+
       <div className="mb-8">
-        <h3 className="text-xl font-semibold text-teal-700 mb-4">Verify Entries </h3>
         <table className="min-w-full bg-white border border-teal-400 ">
           <thead>
             <tr>
