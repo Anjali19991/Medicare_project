@@ -55,11 +55,17 @@ const Header = () => {
             >
               Become a Doctor
             </Link>
+              <Link
+                to="/createHospital"
+                className="link link-hover text-sm sm:text-sm font-bold text-white"
+              >
+                New Hospital ?
+              </Link>
             <Link
               to="/login"
               className="link link-hover text-sm sm:text-sm font-bold text-white"
             >
-              Sign in / Guest
+              Login
             </Link>
             <Link
               to="/register"

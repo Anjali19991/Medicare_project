@@ -53,17 +53,18 @@ const AdminAnnouncements = () => {
   };
 
   return (
-    <div className="">
-      <div className="flex items-center justify-center h-screen -mt-20 ml-56">
-        <div className="max-w-full  p-8 rounded-lg shadow-xl h-[40rem] flex items-center justify-center bg-teal-50">
+    <div className="relative">
+      <div className="absolute left-[2rem] top-[28rem] -rotate-[30deg]">
+        <img
+          src="/admin-announcement.svg"
+          alt="Admin Announcement"
+          className="w-80 h-80 ml-4 -mt-20"
+        />
+      </div>
+      <div className="flex min-h-[80vh] w-[50vw] items-center justify-center  ml-56">
+
+        <div className="max-w-full  p-8 rounded-lg shadow-xl flex items-center justify-center bg-teal-50">
           {/* Left Section with SVG */}
-          <div>
-            <img
-              src="/admin-announcement.svg"
-              alt="Admin Announcement"
-              className="w-80 h-80 ml-4 -mt-20"
-            />
-          </div>
 
           {/* Right Section with Form */}
           <div className="ml-6">

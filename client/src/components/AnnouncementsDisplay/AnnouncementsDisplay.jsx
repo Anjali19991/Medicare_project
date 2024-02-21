@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { FaBell } from 'react-icons/fa';
-import { HomeLayout } from '../../pages';
 
 const AnnouncementsDisplay = () => {
     const [announcements, setAnnouncements] = useState([]);
@@ -10,7 +9,6 @@ const AnnouncementsDisplay = () => {
     useEffect(() => {
         const fetchAnnouncements = async () => {
             try {
-                console.log('Fetching announcements...');
                 const response = await fetch('http://localhost:3000/admin/display-announcements');
 
                 if (!response.ok) {

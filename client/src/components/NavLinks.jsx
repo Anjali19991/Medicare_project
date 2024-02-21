@@ -5,9 +5,9 @@ const links = [
   { id: 1, url: "/", text: "home" },
   { id: 2, url: "/consultdoctor", text: "Consult Doctors" },
   { id: 3, url: "/buymedicines", text: "MediStore" },
-  { id: 4, url: "/display-announcements", text: "Announcements" },
-
-  { id: 5, url: "/about-us", text: "About" },
+  { id: 4, url: "/display-hospitals", text: "Hospitals" },
+  { id: 5, url: "/display-announcements", text: "Announcements" },
+  { id: 6, url: "/about-us", text: "About" },
 ];
 
 const NavLinks = () => {

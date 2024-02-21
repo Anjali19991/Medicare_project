@@ -28,10 +28,17 @@ exports.updateDoctor = async (req, res) => {
         res.status(500).json({ success: false, message: "Failed to Update" });
     }
 }
-
 exports.getAllDoctors = async (req, res) => {
     try {
-        const doctors = await Doctor.find().populate({
+        const { isApproved } = req.query;
+
+        let filter = {};
+
+        if (isApproved) {
+            filter = { isApproved };
+        }
+
+        const doctors = await Doctor.find(filter).populate({
             path: 'reviews',
             populate: {
                 path: 'user',
@@ -39,13 +46,13 @@ exports.getAllDoctors = async (req, res) => {
                 select: 'name email photo'
             }
         });
-        console.log(doctors)
         res.status(200).json({ success: true, data: doctors });
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ success: false, message: "Failed to fetch" })
+        console.log("Error fetching doctors:", error);
+        res.status(500).json({ success: false, message: "Failed to fetch doctors" });
     }
-}
+};
+
 
 exports.updateAppointment = async (req, res) => {
     console.log(req.user)
