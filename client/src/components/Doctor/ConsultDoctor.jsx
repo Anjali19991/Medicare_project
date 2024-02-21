@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 // import { Link as ScrollLink } from 'react-scroll';
 // import { Link } from 'react-router-dom';
 import DoctorCard from './DoctorCard';
+import Rating from 'react-rating-stars-component';
 
 
 
