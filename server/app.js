@@ -7,6 +7,7 @@ const otpRouter = require('./routes/otpRoutes.js')
 const userRouter = require('./routes/userRoutes.js')
 const doctorRouter = require('./routes/doctorRoutes.js')
 const adminRouter = require('./routes/adminRoutes.js')
+const hospitalRouter=require('./routes/hospitalRoutes.js')
 const bodyParser = require('body-parser');
 require('dotenv').config();
 
@@ -27,6 +28,7 @@ app.use('/otp', otpRouter);
 app.use('/user',userRouter)
 app.use('/doctor',doctorRouter)
 app.use('/admin',adminRouter);
+app.use('/hospital',hospitalRouter);
 
 
 const start = async () => {

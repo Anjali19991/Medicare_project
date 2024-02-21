@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { GiHospital } from 'react-icons/gi';
 import { IoIosPin, IoIosCall, IoMdMail, IoIosPeople } from 'react-icons/io';
 import { IoMdCheckmark } from 'react-icons/io';

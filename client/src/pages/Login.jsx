@@ -77,11 +77,11 @@ const Login = () => {
         },
         body: JSON.stringify({ email, password }),
       });
+      
       const data = await response.json();
       cookies.set("TOKEN", data.token, {
         path: "/",
       });
-      console.log(data);
       setUser(data.user);
       
       if (data.user.role === "patient") {
