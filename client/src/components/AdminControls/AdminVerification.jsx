@@ -1,99 +1,297 @@
-// AdminVerificationPage.js
 import { useState, useEffect } from 'react';
+import { useAuth } from "../../AuthContext";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const AdminVerificationPage = () => {
-  const [allRequests, setAllRequests] = useState([]);
-  const [statusFilter, setStatusFilter] = useState('pending');
-  const [typeFilter, setTypeFilter] = useState('all');
+const AdminVerification = () => {
+  const [newHospitals, setNewHospitals] = useState([]);
+  const [newDoctors, setNewDoctors] = useState([]);
+  const [filterType, setFilterType] = useState('all');
+  const [filterStatus, setFilterStatus] = useState('all');
+
+
+  const { token } = useAuth();
+  const API_ENDPOINT = 'http://localhost:3000';
 
   useEffect(() => {
-    // Fetch all requests from your backend
-    // For simplicity, I'll assume there's an API endpoint for all requests
-    fetch(`http://localhost:3000/admin/all-requests?status=${statusFilter}&type=${typeFilter}`)
-      .then((res) => res.json())
-      .then((data) => setAllRequests(data));
-  }, [statusFilter, typeFilter]); // Trigger fetch when either filter changes
+    let endpoint = '';
 
-  const handleApprove = (requestId) => {
-    // Implement the logic to approve a request
-    console.log(`Approved request with ID ${requestId}`);
+    if (filterType === 'all') {
+      const hospitalsEndpoint = `${API_ENDPOINT}/hospital/getAllHospitals`;
+      const doctorsEndpoint = `${API_ENDPOINT}/doctor/getalldoctors`;
+
+      Promise.all([
+        fetch(hospitalsEndpoint).then(response => response.json()),
+        fetch(doctorsEndpoint).then(response => response.json())
+      ])
+        .then(([hospitalsData, doctorsData]) => {
+          console.log('Hospitals data:', hospitalsData);
+          console.log('Doctors data:', doctorsData);
+
+          // Update the state based on the response
+          setNewHospitals(hospitalsData.data.filter(hospital => filterStatus === 'all' || hospital.isApproved === filterStatus));
+          setNewDoctors(doctorsData.data.filter(doctor => filterStatus === 'all' || doctor.isApproved === filterStatus));
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    } else {
+      let statusFilter = '';
+
+      if (filterStatus !== 'all' && filterStatus !== 'pending') {
+        statusFilter = `&isApproved=${filterStatus}`;
+      }
+
+      endpoint = filterType === 'hospitals'
+        ? `${API_ENDPOINT}/hospital/getAllHospitals?${statusFilter}`
+        : `${API_ENDPOINT}/doctor/getalldoctors?${statusFilter}`;
+
+      fetch(endpoint)
+        .then(response => response.json())
+        .then(data => {
+          console.log('Filtered Data:', data);
+
+          // Update the state based on the response
+          setNewHospitals(filterType === 'hospitals' ? data.data : []);
+          setNewDoctors(filterType === 'doctors' ? data.data : []);
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    }
+  }, [filterStatus, filterType]);
+
+  const handleApproval = async (entityType, id) => {
+    try {
+      if (!token) {
+        console.error('Authorization token is missing or invalid.');
+        return;
+      }
+
+      let endpoint = '';
+      if (entityType === 'doctor') {
+
+        endpoint = `${API_ENDPOINT}/admin/approvedoctor/${id}`;
+
+      } else if (entityType === 'hospital') {
+        endpoint = `${API_ENDPOINT}/admin/approvehospital/${id}`;
+
+      }
+
+      const response = await fetch(endpoint, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        console.error(`Failed to approve ${entityType} with id ${id}. Server returned ${response.status}: ${await response.text()}`);
+        return;
+      }
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Update the state based on the approved data
+        if (entityType === 'hospital') {
+          setNewHospitals((prevHospitals) =>
+            prevHospitals.map((hospital) =>
+              hospital._id === id ? { ...hospital, isApproved: 'approved' } : hospital
+            )
+          );
+        } else if (entityType === 'doctor') {
+          setNewDoctors((prevDoctors) =>
+            prevDoctors.map((doctor) =>
+              doctor._id === id ? { ...doctor, isApproved: 'approved' } : doctor
+            )
+          );
+        }
+
+        // Show toast message
+        toast.success(`Successfully approved ${entityType} with id ${id}`);
+      } else {
+        console.error(`Failed to approve ${entityType} with id ${id}: ${data.message}`);
+      }
+    } catch (error) {
+      console.error(`Error approving ${entityType} with id ${id}: ${error.message}`);
+    }
   };
 
-  const handleReject = (requestId) => {
-    // Implement the logic to reject a request
-    console.log(`Rejected request with ID ${requestId}`);
+  const handleRejection = async (entityType, id) => {
+    try {
+      if (!token) {
+        console.error('Authorization token is missing or invalid.');
+        return;
+      }
+
+      let endpoint = '';
+      if (entityType === 'doctor') {
+        endpoint = `${API_ENDPOINT}/admin/canceldoctor/${id}`;
+      } else if (entityType === 'hospital') {
+        endpoint = `${API_ENDPOINT}/admin/cancelhospital/${id}`;
+      }
+
+      const response = await fetch(endpoint, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        console.error(`Failed to reject ${entityType} with id ${id}. Server returned ${response.status}: ${await response.text()}`);
+        return;
+      }
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Update the state based on the rejected data
+        if (entityType === 'hospital') {
+          setNewHospitals((prevHospitals) =>
+            prevHospitals.map((hospital) =>
+              hospital._id === id ? { ...hospital, isApproved: 'cancelled' } : hospital
+            )
+          );
+        } else if (entityType === 'doctor') {
+          setNewDoctors((prevDoctors) =>
+            prevDoctors.map((doctor) =>
+              doctor._id === id ? { ...doctor, isApproved: 'cancelled' } : doctor
+            )
+          );
+        }
+
+          toast.success(`Successfully rejected ${entityType} with id ${id}`);
+      } else {
+        console.error(`Failed to reject ${entityType} with id ${id}: ${data.message}`);
+      }
+    } catch (error) {
+      console.error(`Error rejecting ${entityType} with id ${id}: ${error.message}`);
+    }
   };
+
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-semibold mb-4">Admin Verification</h1>
+    <div className="min-h-screen p-8">
+      <h2 className="text-3xl font-bold text-teal-800 mb-4">Admin Verification Panel</h2>
 
-      {/* Filtering Options */}
-      <div className="mb-4 flex items-center">
-        <div className="mr-4">
-          <label className="mr-2">Filter by Status:</label>
+      <div className="flex items-center mb-4 space-x-4">
+        <div className="flex items-center">
+          <label className="text-teal-700 font-semibold mr-2">Filter by:</label>
           <select
-            className="border p-2 "
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
+            className="p-2 pr-7 border border-teal-400 rounded-md focus:outline-none focus:ring focus:border-teal-500"
+            value={filterType}
+            onChange={e => setFilterType(e.target.value)}
+          >
+            <option value="all">All</option>
+            <option value="doctors">Doctors</option>
+            <option value="hospitals">Hospitals</option>
+          </select>
+        </div>
+
+        <div className="flex items-center">
+          <label className="text-teal-700 font-semibold ml-4 mr-2">Filter Status:</label>
+          <select
+            className="p-2 pr-7 border border-teal-400 rounded-md focus:outline-none focus:ring focus:border-teal-500"
+            value={filterStatus}
+            onChange={e => setFilterStatus(e.target.value)}
           >
             <option value="all">All</option>
             <option value="pending">Pending</option>
             <option value="approved">Approved</option>
-            <option value="rejected">Rejected</option>
-          </select>
-        </div>
-
-        <div>
-          <label className="mr-2">Filter by Type:</label>
-          <select
-            className="border p-2"
-            value={typeFilter}
-            onChange={(e) => setTypeFilter(e.target.value)}
-          >
-            <option value="all">All</option>
-            <option value="doctor">Doctor</option>
-            <option value="hospital">Hospital</option>
+            <option value="cancelled">Rejected</option>
           </select>
         </div>
       </div>
 
-      {/* Combined Requests */}
-      <div>
-        <h2 className="text-2xl font-semibold mb-2">Verification Requests</h2>
-        <table className="min-w-full border">
+      <div className="mb-8">
+        <h3 className="text-xl font-semibold text-teal-700 mb-4">Verify Entries </h3>
+        <table className="min-w-full bg-white border border-teal-400 ">
           <thead>
             <tr>
-              <th className="border p-2">ID</th>
-              <th className="border p-2">Name</th>
-              <th className="border p-2">Type</th>
-              <th className="border p-2">Status</th>
-              <th className="border p-2">Action</th>
+              <th className="py-2 px-4 border-b text-start">ID</th>
+              <th className="py-2 px-4 border-b text-start">Name</th>
+              <th className="py-2 px-4 border-b text-start">Type</th>
+              <th className="py-2 px-4 border-b text-start">Status</th>
+              <th className="py-2 px-4 border-b text-start">Actions</th>
             </tr>
           </thead>
-          <tbody>
-            {allRequests.map((request) => (
-              <tr key={request.id}>
-                <td className="border p-2">{request.id}</td>
-                <td className="border p-2">{request.name}</td>
-                <td className="border p-2">{request.type}</td>
-                <td className="border p-2">{request.status}</td>
-                <td className="border p-2">
+          <tbody >
+            {newHospitals.map((hospital) => (
+              <tr key={hospital._id}>
+                <td className=" py-2 px-4 border-b">{hospital._id}</td>
+                <td className=" py-2 px-4 border-b">{hospital.name}</td>
+                <td className=" py-2 px-4 border-b">Hospital</td>
+                <td className=" py-2 px-4 border-b">
+
+                  <span className={`inline-flex items-center px-3 py-0.5 text-md font-medium ${hospital.isApproved === 'approved' ? 'bg-green-100 text-green-800' :
+                      hospital.isApproved === 'cancelled' ? 'bg-red-100 text-red-800' :
+                        'bg-yellow-100 text-yellow-800'
+                    } rounded-full`}>
+                    {hospital.isApproved === 'approved' ? 'Approved' :
+                      hospital.isApproved === 'cancelled' ? 'Rejected' :
+                        'Pending'}
+                  </span>
+
+
+
+
+                </td>
+                <td className="py-2 px-4 border-b ml-10">
                   <button
-                    className="bg-green-500 text-white p-2 rounded mr-2"
-                    onClick={() => handleApprove(request.id)}
+                    className="text-white bg-green-500 hover:bg-green-600 px-3 py-1 rounded-md mr-2 focus:outline-none"
+                    onClick={() => handleApproval('hospital', hospital._id)}
                   >
                     Approve
                   </button>
                   <button
-                    className="bg-red-500 text-white p-2 rounded"
-                    onClick={() => handleReject(request.id)}
+                    className="text-white bg-red-500 hover:bg-red-600 px-3 py-1 rounded-md focus:outline-none"
+                    onClick={() => handleRejection('hospital', hospital._id)}
                   >
                     Reject
                   </button>
                 </td>
+
               </tr>
             ))}
+            {newDoctors.map((doctor) => (
+              <tr key={doctor._id}>
+                <td className="py-2 px-4 border-b">{doctor._id}</td>
+                <td className="py-2 px-4 border-b">{doctor.name}</td>
+                <td className="py-2 px-4 border-b">Doctor</td>
+                <td className="py-2 px-4 border-b">
+                  <span className={`inline-flex items-center px-3 py-0.5 text-md font-medium ${doctor.isApproved === 'approved' ? 'bg-green-100 text-green-800' :
+                      doctor.isApproved === 'cancelled' ? 'bg-red-100 text-red-800' :
+                        'bg-yellow-100 text-yellow-800'
+                    } rounded-full`}>
+                    {doctor.isApproved === 'approved' ? 'Approved' :
+                      doctor.isApproved === 'cancelled' ? 'Rejected' :
+                        'Pending'}
+                  </span>
+
+
+
+                </td>
+
+                <td className="py-2 px-4 border-b">
+                  <button
+                    className="text-white bg-green-500 hover:bg-green-600 px-3 py-1 rounded-md mr-2 focus:outline-none"
+                    onClick={() => handleApproval('doctor', doctor._id)}
+                  >
+                    Approve
+                  </button>
+                  <button
+                    className="text-white bg-red-500 hover:bg-red-600 px-3 py-1 rounded-md focus:outline-none"
+                    onClick={() => handleRejection('doctor', doctor._id)}
+                  >
+                    Reject
+                  </button>
+                </td>
+
+              </tr>
+            ))}
+
           </tbody>
         </table>
       </div>
@@ -101,4 +299,4 @@ const AdminVerificationPage = () => {
   );
 };
 
-export default AdminVerificationPage;
+export default AdminVerification;

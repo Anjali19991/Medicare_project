@@ -1,6 +1,6 @@
 // import { BsMoonFill, BsSunFill } from "react-icons/bs";
 import { FaBarsStaggered } from "react-icons/fa6";
-import { NavLink, useLocation } from "react-router-dom";
+import {  useLocation } from "react-router-dom";
 import NavLinks from "./NavLinks";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -22,7 +22,7 @@ const Navbar = () => {
             to="/"
             className=""
           >
-            <img src="MEDICARE-logos_transparent.png" className="w-48 rounded" alt="" />
+            <img src="logo.png" className="w-16 rounded" alt="" />
           </Link>
           {/* DROPDOWN */}
           <div className="dropdown">

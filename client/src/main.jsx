@@ -67,7 +67,7 @@ const router = createBrowserRouter([
         errorElement: <ErrorElement />,
       },
       {
-        path: "register-hospital",
+        path: "createHospital",
         element: <HospitalForm />,
       },
       {

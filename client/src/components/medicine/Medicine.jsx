@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import MedicineCard from './MedicineCard';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../features/MedicineSlice';

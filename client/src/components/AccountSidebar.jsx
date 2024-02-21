@@ -6,6 +6,10 @@ import { PiUserCircleLight } from "react-icons/pi";
 import { FiLogOut } from "react-icons/fi";
 import { VscFeedback } from "react-icons/vsc";
 import { BiPurchaseTag } from "react-icons/bi";
+import { FaUsersGear } from "react-icons/fa6";
+import { GrDocumentVerified } from "react-icons/gr";
+import { AiOutlineMedicineBox } from "react-icons/ai";
+import { TfiAnnouncement } from "react-icons/tfi";
 
 export const AccountSidebar = () => {
     const { user, setUser } = useAuth();
@@ -25,7 +29,8 @@ export const AccountSidebar = () => {
             <div className="fixed">
                 <aside className="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto border-r rtl:border-r-0 rtl:border-l bg-teal-800 dark:border-gray-700">
                     <Link to="/">
-                        <h1 className="text-white text-3xl font-bold">MEDICARE</h1>
+                        {/* <h1 className="text-white text-3xl font-bold">MEDICARE</h1> */}
+                        <img className="w-48" src="MEDICARE-logos_white.png" />
                     </Link>
 
                     <div className="flex flex-col justify-between flex-1 mt-6">
@@ -229,14 +234,7 @@ export const AccountSidebar = () => {
                                         className="flex items-center px-3 py-2 text-gray-300 transition-colors duration-300 transform rounded-lg  hover:bg-gray-100  hover:text-gray-700"
                                         to="/users"
                                     >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            strokeWidth="1.5"
-                                            stroke="currentColor"
-                                            className="w-5 h-5"
-                                        ></svg>
+                                        <FaUsersGear className="text-xl" />
                                         <span className="mx-2 text-sm font-medium">
                                             Manage Users
                                         </span>
@@ -246,14 +244,7 @@ export const AccountSidebar = () => {
                                         className="flex items-center px-3 py-2 text-gray-300 transition-colors duration-300 transform rounded-lg  hover:bg-gray-100  hover:text-gray-700"
                                         to="/admin-verification"
                                     >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            strokeWidth="1.5"
-                                            stroke="currentColor"
-                                            className="w-5 h-5"
-                                        ></svg>
+                                        <GrDocumentVerified className="text-lg" />
                                         <span className="mx-2 text-sm font-medium">
                                             Verification Requests
                                         </span>
@@ -263,14 +254,7 @@ export const AccountSidebar = () => {
                                         className="flex items-center px-3 py-2 text-gray-300 transition-colors duration-300 transform rounded-lg  hover:bg-gray-100  hover:text-gray-700"
                                         to="/medicine-delivery-status"
                                     >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            strokeWidth="1.5"
-                                            stroke="currentColor"
-                                            className="w-5 h-5"
-                                        ></svg>
+                                        <AiOutlineMedicineBox className="text-lg" />
                                         <span className="mx-2 text-sm font-medium">
                                             Medicine Delivery
                                         </span>
@@ -280,14 +264,7 @@ export const AccountSidebar = () => {
                                         className="flex items-center px-3 py-2 text-gray-300 transition-colors duration-300 transform rounded-lg  hover:bg-gray-100  hover:text-gray-700"
                                         to="/post-announcement"
                                     >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            strokeWidth="1.5"
-                                            stroke="currentColor"
-                                            className="w-5 h-5"
-                                        ></svg>
+                                        <TfiAnnouncement className="text-lg" />
                                         <span className="mx-2 text-sm font-medium">
                                             Post Announcements
                                         </span>

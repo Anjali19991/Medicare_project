@@ -180,7 +180,7 @@ export const DoctorRegister = () => {
   };
 
   return (
-    <div className="flex items-center min-h-[82vh] ">
+    <div className="flex items-center min-h-[86vh] ">
       <div className="flex-1 h-full max-w-2xl mx-auto bg-zinc-100 rounded-lg shadow-xl ">
         <div className="flex items-center justify-center p-6 sm:p-12">
           <div className="w-full">

@@ -38,17 +38,25 @@ exports.createHospital = async (req, res) => {
   }
 };
 
+
 exports.getAllHospitals = async (req, res) => {
   try {
-    const hospitals = await Hospital.find({ approved: true });
+    const { isApproved } = req.query;
+
+    let filter = {};
+
+    if (isApproved) {
+      filter = { isApproved };
+    }
+
+    const hospitals = await Hospital.find(filter);
     res.status(200).json({ success: true, data: hospitals });
   } catch (error) {
     //console.log(error);
-    res
-      .status(500)
-      .json({ success: false, message: "Failed to fetch hospitals" });
+    res.status(500).json({ success: false, message: "Failed to fetch hospitals" });
   }
 };
+
 
 exports.searchHospitalByName = async (req, res) => {
   const { name } = req.query;

@@ -17,7 +17,6 @@ exports.approve = async (req, res) => {
       { isApproved: "approved" },
       { new: true }
     );
-    console.log(updatedDoctor);
     return res.status(200).json({ success: true, message: "Doctor Approved" });
   } catch (error) {
     console.log(error);
@@ -148,29 +147,52 @@ exports.deleteHospital = async (req, res) => {
 };
 
 exports.approveHospital = async (req, res) => {
-  const { id, approval } = req.body;
-  const hospital = await Hospital.findById(id);
-  if (!hospital) {
-    return res.status(500).send({
-      success: false,
-      message: "Internal Server error",
-    });
+  const { hospId } = req.params;
+  const { id, role } = req.user;
+
+  if (role !== "admin") {
+    return res.status(400).send({ message: "Invalid Request" });
   }
-  hospital.set("approved", approval);
-  const updatedHospital = await hospital.save();
-  if (!updatedHospital) {
-    return res.status(500).send({
-      success: false,
-      message: "Internal Server error",
-    });
+  try {
+    const updatedHospital = await Hospital.findByIdAndUpdate(
+      hospId,
+      { isApproved: "approved" },
+      { new: true }
+    );
+    return res
+      .status(200)
+      .json({ success: true, message: "Hospital Approved" });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Failed to approve Hospital" });
   }
-  return res.status(200).send({
-    success: true,
-    message: (!approval ?? "Dis") + "Approved the hospital",
-  });
 };
 
-exports.updateMedicineDeliveryStatus = async(req,res) =>{
+exports.rejectHospital = async (req, res) => {
+  const { hospId } = req.params;
+  const { id, role } = req.user;
+  if (role !== "admin") {
+    return res.status(400).send({ message: "Invalid Request" });
+  }
+  console.log(id);
+  try {
+    const updatedHospital = await Hospital.findByIdAndUpdate(
+      hospId,
+      { isApproved: "cancelled" },
+      { new: true }
+    );
+    console.log(updatedHospital);
+    return res
+      .status(200)
+      .json({ success: true, message: "Hospital License Cancelled" });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Failed to reject Hospital" });
+  }
+};
 
-}
-
+exports.updateMedicineDeliveryStatus = async (req, res) => {};

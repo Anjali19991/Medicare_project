@@ -34,19 +34,20 @@ const HospitalSchema = new mongoose.Schema({
   },
   doctors: [
     {
-      type: mongoose.Types.ObjectId,
-      ref: "DoctorModel",
+      type: Number,
+      required:true
     },
   ],
   patients: [
     {
-      type: mongoose.Types.ObjectId,
-      ref: "UserModel",
+      type: Number,
+      required: true
     },
   ],
-  approved: {
-    type: Boolean,
-    default: false,
+  isApproved: {
+    type: String,
+    enum: ["pending", "approved", "cancelled"],
+    default: "pending",
   },
 });
 

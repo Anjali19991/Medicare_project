@@ -26,7 +26,7 @@ const Header = () => {
 
 
   return (
-    <header className="bg-teal-800 py-4 text-neutral-content h-1/4  px-6">
+    <header className="bg-teal-800 py-2 text-neutral-content h-1/4  px-6">
       <div className="align-element flex justify-center sm:justify-end">
         {user ? (
           <div className="flex gap-x-2 sm:gap-x-8 items-center">
@@ -56,7 +56,7 @@ const Header = () => {
               Become a Doctor
             </Link>
               <Link
-                to="/register-hospital"
+                to="/createHospital"
                 className="link link-hover text-sm sm:text-sm font-bold text-white"
               >
                 New Hospital ?

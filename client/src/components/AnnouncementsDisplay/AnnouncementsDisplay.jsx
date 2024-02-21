@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { FaBell } from 'react-icons/fa';
-import { HomeLayout } from '../../pages';
 
 const AnnouncementsDisplay = () => {
     const [announcements, setAnnouncements] = useState([]);
