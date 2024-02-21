@@ -32,7 +32,14 @@ exports.getUserDetails = async (req, res) => {
         if (user) {
             return res.status(200).json({ user });
         }
-        const doctor = await Doctor.findById({ _id: id }).select("-password").populate('appointments')
+        const doctor = await Doctor.findById({ _id: id }).select("-password").populate({
+            path: 'appointments',
+            model: 'AppointmentModel',
+            populate: {
+                path: 'user',
+                model: 'UserModel',
+            },
+        })
         console.log(doctor);
         if (doctor) {
             return res.status(200).json({ doctor });

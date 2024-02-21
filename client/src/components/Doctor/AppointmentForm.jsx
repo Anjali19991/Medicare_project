@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import Cookies from 'universal-cookie'
 
 const AppointmentForm = () => {
@@ -22,6 +23,8 @@ const AppointmentForm = () => {
         doctorId: location.state ? location.state._id : ''
     });
 
+    const navigate = useNavigate();
+
     const cookies = new Cookies();
     const token = cookies.get('TOKEN');
 
@@ -40,7 +43,6 @@ const AppointmentForm = () => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setFormData((prevData) => ({ ...prevData, doctorId: doctor._id }));
@@ -56,24 +58,16 @@ const AppointmentForm = () => {
 
             if (response.ok) {
                 const data = await response.json();
-                console.log(data);
+                toast.success(data.message);
+                navigate('/appointment-history')
             } else {
-                console.error('Failed to book appointment');
+                const errorData = await response.json();
+                toast.error(errorData.message);
             }
         } catch (error) {
             console.error('Error during fetch:', error);
+            toast.error('Failed to book appointment');
         }
-        console.log('Form submitted:', formData);
-        setFormData({
-            name: '',
-            gender: '',
-            age: 0,
-            problem: '',
-            selectedDate: new Date(),
-            selectedTime: '',
-            ticketPrice: 150,
-            doctorId: location.state ? location.state._id : '',
-        });
     };
 
     const maxDate = new Date();
@@ -178,6 +172,8 @@ const AppointmentForm = () => {
                     Book Appointment
                 </button>
             </form>
+            {/* <ToastContainer /> */}
+
         </div>
     );
 };

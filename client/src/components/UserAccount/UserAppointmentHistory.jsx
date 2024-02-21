@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Cookies from 'universal-cookie';
 import { FaEnvelope, FaPhoneAlt } from 'react-icons/fa';
 
@@ -18,6 +18,7 @@ const UserAppointmentHistory = () => {
           },
         });
         const data = await response.json();
+        console.log(data.user.appointments)
         setAppointments(data.user.appointments); // Set appointments in state
         console.log(appointments);
       } catch (error) {
@@ -38,7 +39,10 @@ const UserAppointmentHistory = () => {
             <div className='flex items-center justify-between'>
               <p>Booked On: {new Date(appointment.createdAt).toLocaleString()}</p>
               <p className="mb-2 font-semibold">Appointment Date: {new Date(appointment.appointmentDate).toLocaleDateString()}</p>
-
+            </div>
+            <div className='flex justify-between items-center'>
+              <p className="mb-2 text-gray-700">Patient's Name: {appointment.patientName}</p>
+              <p className="mb-2 text-gray-700">{appointment.patientAge},{appointment.patientGender}</p>
             </div>
             <div className='flex justify-between items-center'>
               <p className="mb-2 text-gray-700">Dr. {appointment.doctor.name}</p>

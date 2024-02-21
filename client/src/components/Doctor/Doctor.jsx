@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FaEnvelope, FaPhoneAlt,FaStar } from 'react-icons/fa';
+import { FaEnvelope, FaPhoneAlt, FaStar } from 'react-icons/fa';
 import Rating from 'react-rating-stars-component';
 import 'react-datepicker/dist/react-datepicker.css';
 import Cookies from 'universal-cookie';
@@ -33,16 +33,17 @@ export const Doctor = () => {
 
 
     useEffect(() => {
-        if (location.state) {
+        if (location.state && location.state.doctor) {
             setDoctor(location.state.doctor);
-            // Calculate and set the average rating when doctor data is available
             if (location.state.doctor.reviews && location.state.doctor.reviews.length > 0) {
                 const totalRating = location.state.doctor.reviews.reduce((sum, review) => sum + review.rating, 0);
                 const avgRating = totalRating / location.state.doctor.reviews.length;
                 setAverageRating(avgRating);
             }
         }
+        console.log(location.state?.doctor);  // Use optional chaining to avoid errors
     }, [location.state]);
+
 
     const handleSubmit = async () => {
         navigate('/appointmentform', { state: doctor });
@@ -100,14 +101,16 @@ export const Doctor = () => {
                             </p>
                         </div>
                         {averageRating > 0 ? (
-                            <div className="mt-2">
+                            <div className="mt-2 flex items-center gap-1">
+                                <p className='mt-[0.3rem]'>{averageRating}</p>
                                 <Rating
                                     count={5}
                                     value={averageRating}
                                     size={24}
-                                    edit={false} // Set to false to make it read-only
+                                    edit={false}
                                     activeColor="#FFDF00"
                                 />
+                                <p className='mt-[0.3rem]'>({doctor.reviews.length})</p>
                             </div>
                         ) : (
                             <p className="text-md mt-2">No ratings yet</p>
@@ -125,9 +128,7 @@ export const Doctor = () => {
                         </p>
                     </div>
                     <p className="my-2">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui hic rerum voluptas
-                        obcaecati iure laborum blanditiis eligendi suscipit, alias deserunt est nobis id
-                        praesentium nam reiciendis ab sequi quo neque?
+                        {doctor.bio}
                     </p>
                     <button
                         onClick={handleSubmit}
@@ -141,7 +142,7 @@ export const Doctor = () => {
                 <form onSubmit={postReview}>
                     <div className="flex flex-col">
                         <label htmlFor="rating" className="mr-2">
-                            Rate Your Experience:
+                            Rate Your Experience
                         </label>
                         <Rating
                             count={5}
@@ -177,14 +178,23 @@ export const Doctor = () => {
                     </div>
                 </form>
             </div>
-            <div className="w-full mt-4">
+            <div className="w-full mt-4 min-h-[50vh]">
                 <h3 className="text-2xl font-semibold mb-4">Reviews</h3>
                 {doctor && doctor.reviews && doctor.reviews.length > 0 ? (
-                    <ul>
+                    <ul className='max-w-2xl'>
                         {doctor.reviews.map((review, index) => (
-                            <li key={index}>
+                            <li key={index} className='rounded-md shadow-xl p-4 flex flex-col gap-4'>
+                                <div className='flex items-center justify-between gap-2'>
+                                    <div className='flex items-center gap-2'>
+                                        <img src={review.user ? review.user.photo : ""} className='w-12 rounded-full' alt="" />
+                                        <p className='text-xl text-black' >{review.user ? review.user.name : ""}</p>
+                                    </div>
+                                    <div>
+                                        <StarRating rating={review.rating} />
+                                    </div>
+                                </div>
                                 <div>
-                                    Rating: <StarRating rating={review.rating} /> Review: {review.reviewText}
+                                    {review.reviewText}
                                 </div>
                             </li>
                         ))}
