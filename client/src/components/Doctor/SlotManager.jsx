@@ -25,7 +25,6 @@ const SlotManager = () => {
                 startTime,
                 endTime,
             };
-            // Check if the slot already exists
             const slotExists = daySlots.some(
                 (slot) => slot.startTime === newSlot.startTime && slot.endTime === newSlot.endTime
             );
@@ -46,9 +45,10 @@ const SlotManager = () => {
     };
 
     const [bio, setbio] = useState("");
+    const [ticketPrice, setTicketPrice] = useState(0);
 
 
-    const handleBio = async () => {
+    const handleBioAndPrice = async () => {
         try {
             const response = await fetch('http://localhost:3000/doctor/addbio', {
                 method: 'POST',
@@ -56,7 +56,7 @@ const SlotManager = () => {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
                 },
-                body: JSON.stringify({ bio })
+                body: JSON.stringify({ bio, ticketPrice })
             })
             console.log(response)
             if (response.ok) {
@@ -153,15 +153,21 @@ const SlotManager = () => {
                         </button>
                     </div>
                 </div>
-                <div className='flex flex-col gap-2 shadow-lg p-4 min-h-[22rem]'>
+                <div className='flex flex-col gap-2 shadow-lg p-4 min-h-[22rem] w-[350px]'>
+                    <div className='flex flex-col gap-2'>
+                        <label htmlFor="ticketPrice" className='text-lg'>Enter token Price:</label>
+                        <input type="number" min={10} max={5000} name='ticketPrice' className='rounded-md placeholder:text-sm focus:border-teal-700 focus:border-1 outline-none border-none' placeholder='Enter your price for the appointment' onChange={(e) => {
+                            setTicketPrice(e.target.value)
+                        }} />
+                    </div>
                     <h1 className='text-xl'>Set Your Bio:</h1>
                     <div className="relative w-72">
                         <textarea id="id-textarea" onChange={(e) => {
                             setbio(e.target.value)
-                        }} name="id-textarea" placeholder="Write your bio" className="resize-none relative w-full h-[15rem] px-4 py-2 text-sm placeholder-transparent transition-all border-b outline-none focus-visible:outline-none peer border-slate-200 text-slate-500 autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-green-500 focus:outline-none invalid:focus:border-pink-500 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400">
+                        }} name="id-textarea" placeholder="Write your bio" className="resize-none relative w-full h-[15rem] px-4 py-2 text-sm placeholder-transparent transition-all border-b outline-none focus-visible:outline-none peer border-slate-200 text-slate-500 autofill:bg-white  focus:border-green-500 focus:outline-none invalid:focus:border-pink-500 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400">
                         </textarea>
-                        <label for="id-textarea" className="cursor-text peer-focus:cursor-default absolute left-2 -top-2 z-[1] px-2 text-xs text-slate-400 transition-all before:absolute before:top-0 before:left-0 before:z-[-1] before:block before:h-full before:w-full before:bg-white before:transition-all peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-sm peer-required:after:text-pink-500 peer-required:after:content-['00a0*'] peer-invalid:text-pink-500 peer-focus:-top-2 peer-focus:text-xs peer-focus:text-green-500 peer-invalid:peer-focus:text-pink-500 peer-disabled:cursor-not-allowed peer-disabled:text-slate-400 peer-disabled:before:bg-transparent">Write your Bio</label>
-                        <button className='bg-blue-500 px-4 py-2 text-white rounded-md block mx-auto' onClick={handleBio}>Submit</button>
+                        <label for="id-textarea" className="cursor-text peer-focus:cursor-default absolute left-2 -top-2 z-[1] px-2 text-xs text-slate-400 transition-all before:absolute before:top-0 before:left-0 before:z-[-1] before:block before:h-full before:w-full before:bg-white before:transition-all peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-sm peer-required:after:text-pink-500 peer-required:after:content-['00a0*']  peer-focus:-top-2 peer-focus:text-xs peer-focus:text-green-500 peer-invalid:peer-focus:text-pink-500 peer-disabled:cursor-not-allowed peer-disabled:text-slate-400 peer-disabled:before:bg-transparent">Write your Bio</label>
+                        <button className='bg-blue-500 px-4 py-2 text-white rounded-md block mx-auto' onClick={handleBioAndPrice}>Submit</button>
                     </div>
                 </div>
             </div>

@@ -41,7 +41,7 @@ export const Doctor = () => {
                 setAverageRating(avgRating);
             }
         }
-        console.log(location.state?.doctor);  // Use optional chaining to avoid errors
+        console.log(location.state?.doctor);
     }, [location.state]);
 
 
@@ -71,6 +71,7 @@ export const Doctor = () => {
                 })
                 const data = await response.json();
                 console.log(data);
+                setDoctor(data.doctor)
                 if (!data.success) {
                     alert(data.message);
                 }
@@ -96,7 +97,7 @@ export const Doctor = () => {
                     <div className="flex items-center justify-between w-full">
                         <div>
                             <h2 className="text-4xl font-semibold">Dr. {doctor.name}</h2>
-                            <p className="text-xl font-light my-2">
+                            <p className="text-xl font-normal my-2">
                                 {doctor.specialization},{doctor.qualification}
                             </p>
                         </div>
@@ -116,17 +117,21 @@ export const Doctor = () => {
                             <p className="text-md mt-2">No ratings yet</p>
                         )}
                     </div>
-                    <div className="flex gap-4 items-center">
-                        <p className="text-gray-700 flex items-center">
-                            <FaEnvelope className="mr-2" />
-                            {doctor.email}
-                        </p>
-                        <p className="h-6 w-[1.5px] text-black bg-gray-700"></p>
-                        <p className="text-gray-700 flex items-center">
-                            <FaPhoneAlt className="mr-2" />
-                            {doctor.phone}
-                        </p>
+                    <div className='w-full flex justify-between items-center'>
+                        <div className="flex gap-4 items-center">
+                            <p className="text-gray-700 flex items-center">
+                                <FaEnvelope className="mr-2" />
+                                {doctor.email}
+                            </p>
+                            <p className="h-6 w-[1.5px] text-black bg-gray-700"></p>
+                            <p className="text-gray-700 flex items-center">
+                                <FaPhoneAlt className="mr-2" />
+                                {doctor.phone}
+                            </p>
+                        </div>
+                        <p> <span className='font-semibold'>Rs {doctor.ticketPrice}/-</span> per appointment</p>
                     </div>
+
                     <p className="my-2">
                         {doctor.bio}
                     </p>
@@ -181,7 +186,7 @@ export const Doctor = () => {
             <div className="w-full mt-4 min-h-[50vh]">
                 <h3 className="text-2xl font-semibold mb-4">Reviews</h3>
                 {doctor && doctor.reviews && doctor.reviews.length > 0 ? (
-                    <ul className='max-w-2xl flex flex-col gap-4'>
+                    <ul className='grid grid-cols-2 gap-4'>
                         {doctor.reviews.map((review, index) => (
                             <li key={index} className='rounded-md shadow-md p-4 flex flex-col gap-4'>
                                 <div className='flex items-center justify-between gap-2'>

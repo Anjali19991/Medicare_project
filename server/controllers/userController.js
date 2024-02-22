@@ -115,6 +115,7 @@ exports.bookappointment = async (req, res) => {
         return res.status(201).json({
             success: true,
             message: "Appointment Booked Successfully",
+            doctor
         });
     } catch (error) {
         console.log(error.message);
@@ -159,7 +160,14 @@ exports.writeReview = async (req, res) => {
 
     try {
         const user = await User.findById(id);
-        const doc = await Doctor.findById(req.body.docId);
+        const doc = await Doctor.findById(req.body.docId).select("-password").populate({
+            path: 'appointments',
+            model: 'AppointmentModel',
+            populate: {
+                path: 'user',
+                model: 'UserModel',
+            },
+        });
 
         if (!user || !doc) {
             return res.status(400).send({ message: "User or Doctor not found", success: false });
@@ -171,7 +179,7 @@ exports.writeReview = async (req, res) => {
         doc.reviews.push(newReview);
         await doc.save();
 
-        return res.status(200).send({ message: "Review Created Successfully", success: true });
+        return res.status(200).send({ message: "Review Created Successfully", success: true, doctor: doc });
     } catch (error) {
         console.error(error);
         return res.status(500).send({ message: "Error in Creating review", success: false });

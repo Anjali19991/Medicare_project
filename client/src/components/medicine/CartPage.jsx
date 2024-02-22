@@ -91,7 +91,7 @@ const CartPage = () => {
 
     return (
         <>
-            <div className="my-12 px-4">
+            <div className="my-12 px-4 min-h-screen">
                 <h1 className="text-2xl my-4 text-center">Your Cart</h1>
                 <div className={`flex justify-between max-[1100px]:flex-wrap mt-4 ${cartItems.length === 0 ? 'min-h-[75vh] items-center' : ''}`}>
                     <div className="w-full flex flex-col items-center justify-center px-4">

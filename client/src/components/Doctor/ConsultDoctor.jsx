@@ -15,7 +15,7 @@ export const ConsultDoctor = () => {
     useEffect(() => {
         const fetchDoctors = async () => {
             try {
-                const response = await fetch('http://localhost:3000/doctor/getalldoctors')
+                const response = await fetch('http://localhost:3000/doctor/getalldoctors?isApproved=approved')
                 const data = await response.json();
                 console.log(data);
                 setDoctors(data.data);

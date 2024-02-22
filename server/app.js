@@ -10,6 +10,10 @@ const doctorRouter = require("./routes/doctorRoutes.js");
 const adminRouter = require("./routes/adminRoutes.js");
 const bodyParser = require("body-parser");
 require("dotenv").config();
+const morgan = require('morgan');
+
+app.use(morgan('[:date[clf]] :method :url :status :response-time ms - :res[content-length]'));
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
