@@ -2,6 +2,7 @@ const Hospital = require("../models/HospitalSchema");
 const Doctor = require("../models/DoctorSchema");
 const User = require("../models/UserSchema");
 const Announcement = require("../models/AnnouncementScheme");
+const MedicineOrder = require("../models/OrderSchema")
 
 exports.approve = async (req, res) => {
   const { docId } = req.params;
@@ -216,4 +217,37 @@ exports.rejectHospital = async (req, res) => {
   }
 };
 
-exports.updateMedicineDeliveryStatus = async (req, res) => {};
+
+exports.getAllOrders = async (req, res) => {
+  try {
+    const { deliveryStatus } = req.query;
+    const query = deliveryStatus ? { deliveryStatus: Boolean(deliveryStatus) } : {};
+    const orders = await MedicineOrder.find(query);
+    res.status(200).json(orders);
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+exports.updateMedicineDeliveryStatus = async (req, res) => {
+  const {orderId} = req.params;
+
+  try {
+    const medicineOrder = await MedicineOrder.findById(orderId);
+
+    if (!medicineOrder) {
+      return res.status(404).json({ message: 'Medicine order not found' });
+    }
+    if (medicineOrder.deliveryStatus) {
+      return res.status(400).json({ message: 'Medicine order is already delivered' });
+    }
+    medicineOrder.deliveryStatus = true;
+    await medicineOrder.save();
+    res.status(200).json({ message: 'Delivery status updated successfully', medicineOrder });
+  } catch (error) {
+    console.error('Error updating delivery status:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+

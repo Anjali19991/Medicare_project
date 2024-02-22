@@ -11,8 +11,8 @@ router.put('/approvehospital/:hospId',auth,adminController.approveHospital)
 router.put('/cancelhospital/:hospId', auth, adminController.rejectHospital)
 router.put('/blockuser/:userId',auth,adminController.blockUser)
 router.put('/unblockuser/:userId',auth,adminController.unblockUser)
-
-
+router.get('/getAllOrders', auth,adminController.getAllOrders);
+router.put('/updateDeliveryStatus/:orderId', auth,adminController.updateMedicineDeliveryStatus);
 
 module.exports = router
 

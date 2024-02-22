@@ -5,7 +5,7 @@ const About = () => {
         <h1 className="text-4xl font-bold leading-none tracking-tight sm:text-6xl text-teal-800">
           Welcome to MediCare
         </h1>
-        <p className="text-lg px-20">
+        <p className="text-lg px-20 ">
           Welcome to Medicare where health and compassion converge to create a
           healthcare experience like no other. At the heart of our mission is a
           commitment to your well-being, offering a range of comprehensive medical
