@@ -20,12 +20,11 @@ export const NewAppointments = () => {
             const response = await fetch(`http://localhost:3000/doctor/updateAppointment/accepted/${appointmentId}`, {
                 method: 'PUT',
                 headers: {
-                    'Authorization': `Bearer ${token}`, // Replace with your authentication token
+                    'Authorization': `Bearer ${token}`,
                 },
             });
 
             if (response.ok) {
-                // Update the UI or show a success message
                 toast.success('Appointment Accepted Successfully');
             } else {
                 // Handle error response
