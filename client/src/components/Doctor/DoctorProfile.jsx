@@ -1,6 +1,7 @@
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../../AuthContext";
 import { PiUserCircleLight } from "react-icons/pi";
+import { toast } from 'react-toastify';
 
 export const DoctorProfile = () => {
     const { user, token, setUser } = useAuth();
@@ -15,7 +16,7 @@ export const DoctorProfile = () => {
         qualification: user?.qualification || "",
         phone: user?.phone || "",
         gender: user?.gender || "",
-        bloodType: user?.bloodType || "",   
+        bloodType: user?.bloodType || "",
     });
 
     useEffect(() => {
@@ -52,11 +53,11 @@ export const DoctorProfile = () => {
             console.log(data);
             if (response.ok) {
                 setUser((prevUser) => ({ ...prevUser, ...newUser }));
-                alert("Updated User");
+                toast.success(data.message)
             } else {
                 console.log("User Update Failed");
+                toast.error(data.message);
             }
-            alert("Updated User");
         } catch (error) {
             console.log(error);
             console.log("User Update Failed");
@@ -104,7 +105,7 @@ export const DoctorProfile = () => {
                                 onChange={(e) => handleInputChange(e)}
                             />
                         </div>
-                      
+
                         <div className="flex gap-[2.9rem] items-center">
                             <label htmlFor="phone" className="text-lg ">
                                 Phone:
@@ -112,7 +113,7 @@ export const DoctorProfile = () => {
                             <input
                                 type="text"
                                 name="phone"
-                                value={user.phone ? user.phone : newUser.phone}
+                                value={newUser.phone}
                                 placeholder="Enter Your Phone Number"
                                 className="p-2 border-2 w-64"
                                 onChange={(e) => handleInputChange(e)}
@@ -124,7 +125,7 @@ export const DoctorProfile = () => {
                             </label>
                             <select
                                 name="gender"
-                                value={user.gender ? user.gender : newUser.gender}
+                                value={newUser.gender}
                                 className="p-2 border-2 w-64"
                                 onChange={(e) => handleInputChange(e)}
                             >
@@ -141,7 +142,7 @@ export const DoctorProfile = () => {
                             <select
                                 className="p-2 border-2 w-64"
                                 onChange={(e) => handleInputChange(e)}
-                                value={user.specialization ? user.specialization : newUser.specialization}
+                                value={newUser.specialization}
                                 name="specialization"
                                 required
                             >
@@ -169,7 +170,7 @@ export const DoctorProfile = () => {
                             <select
                                 className="p-2 border-2 w-64"
                                 onChange={(e) => handleInputChange(e)}
-                                value={user.qualification ? user.qualification : newUser.qualification}
+                                value={newUser.qualification}
                                 name="qualification"
                                 required
                             >
@@ -180,17 +181,6 @@ export const DoctorProfile = () => {
                                 <option value="MD">MD</option>
                                 <option value="Other">Other</option>
                             </select>
-                        </div>
-                        <div className="flex items-center gap-6">
-                            <label className="text-lg -ml-10">Phone Number:</label>
-                            <input
-                                type="text"
-                                name="phone"
-                                value={user.phone ? user.phone : newUser.phone}
-                                onChange={(e) => handleInputChange(e)}
-                                className="p-2 border-2 w-64"
-                                placeholder="Enter Phone Number"
-                            />
                         </div>
                         {/* <div className="flex gap-[3.3rem] items-center">
                             <label htmlFor="bloodType" className="text-lg">

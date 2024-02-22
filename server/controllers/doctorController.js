@@ -18,10 +18,13 @@ exports.getDoctorDetails = async (req, res) => {
 }
 
 exports.updateDoctor = async (req, res) => {
-    const { id } = req.params;
-
+    const { id } = req.user;
+    console.log(req.body)
+    const { newUser } = req.body;
+    console.log(newUser)
     try {
-        const updatedDoctor = await Doctor.findByIdAndUpdate(id, { $set: req.body }, { new: true })
+        const updatedDoctor = await Doctor.findByIdAndUpdate(id, { $set: newUser }, { new: true })
+        console.log(updatedDoctor)
         res.status(200).json({ success: true, message: "Updated Successfully", data: updatedDoctor });
     } catch (error) {
         console.log(error);

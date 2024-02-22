@@ -25,7 +25,10 @@ const DoctorSchema = new mongoose.Schema({
         type: String,
         default: 'doctor'
     },
-    //After registration should fill these details
+    gender: {
+        type: String,
+        enum: ["male", "female", "other"]
+    },
     phone: {
         type: String
     },
