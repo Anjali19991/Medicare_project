@@ -1,37 +1,60 @@
-import { FaChevronRight } from "react-icons/fa";
-import {BarChartComponent} from "./Charts/BarChartComponent";
-import {AreaChartComponent} from "./Charts/AreaChartComponent"
-import Counter from "../Counter"
+import { useEffect, useState } from 'react';
+import { FaChevronRight } from 'react-icons/fa';
+import Counter from '../Counter';
+import { BarChartComponent } from './Charts/BarChartComponent';
+import { AreaChartComponent } from './Charts/AreaChartComponent';
+import { useAuth } from "../../AuthContext";
 
-import { useEffect, useState } from "react";
+const AdminDashboard = () => {
+   const [counts, setCounts] = useState({
+      pendingDoctorRegistrations: 0,
+      pendingHospitals: 0,
+      approvedHospitals: 0,
+      approvedDoctors: 0,
+      deliveredOrders: 0,
+      activeUsers: 0,
+   });
 
-// Dummy data for hospital details
-const hospitalData = {
-   totalPendingRegistrations: 25,
-   pendingDoctorRegistrations: 10,
-   pendingHospitalRegistrations:15,
-   approvedHospitals: 15,
-   approvedDoctors: 30,
-   medicineBuyingEngagement: 40
-};
-
-const HospitalDashboard = () => {
-   const [totalPendingRegistrations, setTotalPendingRegistrations] = useState(0);
-   const [pendingDoctorRegistrations, setPendingDoctorRegistrations] = useState(0);
-   const[pendingHospitalRegistrations,setPendingHospitalRegistrations]=useState(0);
-   const [approvedHospitals, setApprovedHospitals] = useState(0);
-   const [approvedDoctors, setApprovedDoctors] = useState(0);
-   const [medicineBuyingEngagement, setMedicineBuyingEngagement] = useState(0);
+   const API_ENDPOINT = 'http://localhost:3000';
+   const { token } = useAuth();
 
    useEffect(() => {
-      // Fetch data from API or set dummy data
-      setTotalPendingRegistrations(hospitalData.totalPendingRegistrations);
-      setPendingDoctorRegistrations(hospitalData.pendingDoctorRegistrations);
-      setPendingHospitalRegistrations(hospitalData.pendingHospitalRegistrations);
-      setApprovedHospitals(hospitalData.approvedHospitals);
-      setApprovedDoctors(hospitalData.approvedDoctors);
-      setMedicineBuyingEngagement(hospitalData.medicineBuyingEngagement);
-   }, []);
+      const fetchData = async () => {
+         try {
+            const headers = {
+               Authorization: `Bearer ${token}`,
+               'Content-Type': 'application/json',
+            };
+
+            const getResponseData = async (url) => {
+               const response = await fetch(url, { headers });
+               const data = await response.json();
+               return data;
+            };
+
+            const pendingHospitalRegistrations = await getResponseData(`${API_ENDPOINT}/hospital/getAllHospitals?isApproved=pending`);
+            const pendingDoctorRegistrations = await getResponseData(`${API_ENDPOINT}/doctor/getAlldoctors?isApproved=pending`);
+            const activeUsers = await getResponseData(`${API_ENDPOINT}/user/getAllUsers?isActive=active`);
+            const approvedHospitals = await getResponseData(`${API_ENDPOINT}/hospital/getAllHospitals?isApproved=approved`);
+            const approvedDoctors = await getResponseData(`${API_ENDPOINT}/doctor/getAlldoctors?isApproved=approved`);
+            const deliveredOrders = await getResponseData(`${API_ENDPOINT}/admin/getAllOrders?deliveryStatus=true`);
+
+            setCounts({
+               pendingDoctorRegistrations: pendingDoctorRegistrations.data?.length || 0,
+               pendingHospitals: pendingHospitalRegistrations.data?.length || 0,
+               approvedHospitals: approvedHospitals.data?.length || 0,
+               approvedDoctors: approvedDoctors.data?.length || 0,
+               activeUsers: activeUsers.users?.length || 0,
+               deliveredOrders: deliveredOrders.length || 0,
+
+            });
+         } catch (error) {
+            console.error('Error fetching data:', error);
+         }
+      };
+
+      fetchData();
+   }, [token]);
 
    return (
       <div className="w-full px-4">
@@ -45,30 +68,31 @@ const HospitalDashboard = () => {
                <p className="text-teal-500 underline">Dashboard</p>
             </div>
          </div>
+
          <div className="grid md:grid-cols-3 gap-6 grid-cols-1 my-10">
             <div className="border border-1 rounded-md items-center justify-center gap-y-3 p-3 flex flex-col hover:border-teal-500">
-               <Counter to={totalPendingRegistrations} />
-               <p className="text-lg font-medium">Total Pending Registrations</p>
-            </div>
-            <div className="border border-1 rounded-md items-center justify-center gap-y-3 p-3 flex flex-col hover:border-teal-500">
-               <Counter to={pendingHospitalRegistrations} />
-               <p className="text-lg font-medium"> Pending Hospital Registrations</p>
-            </div>
-            <div className="border border-1 rounded-md items-center justify-center gap-y-3 p-3 flex flex-col hover:border-teal-500">
-               <Counter to={pendingDoctorRegistrations} />
+               <Counter to={counts.pendingDoctorRegistrations} />
                <p className="text-lg font-medium">Pending Doctor Registrations</p>
             </div>
             <div className="border border-1 rounded-md items-center justify-center gap-y-3 p-3 flex flex-col hover:border-teal-500">
-               <Counter to={approvedHospitals} />
+               <Counter to={counts.pendingHospitals} />
+               <p className="text-lg font-medium">Pending Hospital Registrations</p>
+            </div>
+            <div className="border border-1 rounded-md items-center justify-center gap-y-3 p-3 flex flex-col hover:border-teal-500">
+               <Counter to={counts.approvedHospitals} />
                <p className="text-lg font-medium">Approved Hospitals</p>
             </div>
             <div className="border border-1 rounded-md items-center justify-center gap-y-3 p-3 flex flex-col hover:border-teal-500">
-               <Counter to={approvedDoctors} />
+               <Counter to={counts.approvedDoctors} />
                <p className="text-lg font-medium">Approved Doctors</p>
             </div>
             <div className="border border-1 rounded-md items-center justify-center gap-y-3 p-3 flex flex-col hover:border-teal-500">
-               <Counter to={medicineBuyingEngagement} />
+               <Counter to={counts.deliveredOrders} />
                <p className="text-lg font-medium">Medicine Buying Engagement</p>
+            </div>
+            <div className="border border-1 rounded-md items-center justify-center gap-y-3 p-3 flex flex-col hover:border-teal-500">
+               <Counter to={counts.activeUsers} />
+               <p className="text-lg font-medium">Active Users</p>
             </div>
          </div>
 
@@ -80,4 +104,4 @@ const HospitalDashboard = () => {
    );
 };
 
-export default HospitalDashboard;
+export default AdminDashboard;
