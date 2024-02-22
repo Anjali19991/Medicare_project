@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { FaChevronRight } from 'react-icons/fa';
 import Counter from '../Counter';
 import { BarChartComponent } from './Charts/BarChartComponent';
-import { AreaChartComponent } from './Charts/AreaChartComponent';
+import { LineChartComponent } from './Charts/LineChartComponent';
+
 import { useAuth } from "../../AuthContext";
 
 const AdminDashboard = () => {
@@ -72,11 +73,11 @@ const AdminDashboard = () => {
          <div className="grid md:grid-cols-3 gap-6 grid-cols-1 my-10">
             <div className="border border-1 rounded-md items-center justify-center gap-y-3 p-3 flex flex-col hover:border-teal-500">
                <Counter to={counts.pendingDoctorRegistrations} />
-               <p className="text-lg font-medium">Pending Doctor Registrations</p>
+               <p className="text-lg font-medium">Pending Doctor Approvals</p>
             </div>
             <div className="border border-1 rounded-md items-center justify-center gap-y-3 p-3 flex flex-col hover:border-teal-500">
                <Counter to={counts.pendingHospitals} />
-               <p className="text-lg font-medium">Pending Hospital Registrations</p>
+               <p className="text-lg font-medium">Pending Hospital Approvals</p>
             </div>
             <div className="border border-1 rounded-md items-center justify-center gap-y-3 p-3 flex flex-col hover:border-teal-500">
                <Counter to={counts.approvedHospitals} />
@@ -88,7 +89,7 @@ const AdminDashboard = () => {
             </div>
             <div className="border border-1 rounded-md items-center justify-center gap-y-3 p-3 flex flex-col hover:border-teal-500">
                <Counter to={counts.deliveredOrders} />
-               <p className="text-lg font-medium">Medicine Buying Engagement</p>
+               <p className="text-lg font-medium">Successful Medicine Orders</p>
             </div>
             <div className="border border-1 rounded-md items-center justify-center gap-y-3 p-3 flex flex-col hover:border-teal-500">
                <Counter to={counts.activeUsers} />
@@ -97,8 +98,8 @@ const AdminDashboard = () => {
          </div>
 
          <div className="flex my-20">
-            <BarChartComponent />
-            <AreaChartComponent />
+            <LineChartComponent/>
+            <BarChartComponent/>
          </div>
       </div>
    );

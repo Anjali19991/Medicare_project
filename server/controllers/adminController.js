@@ -221,7 +221,8 @@ exports.rejectHospital = async (req, res) => {
 exports.getAllOrders = async (req, res) => {
   try {
     const { deliveryStatus } = req.query;
-    const query = deliveryStatus ? { deliveryStatus: Boolean(deliveryStatus) } : {};
+    const query = deliveryStatus !== undefined ? { deliveryStatus: deliveryStatus === 'true' } : {};
+    console.log(query)
     const orders = await MedicineOrder.find(query);
     res.status(200).json(orders);
   } catch (error) {
@@ -229,6 +230,7 @@ exports.getAllOrders = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
 
 exports.updateMedicineDeliveryStatus = async (req, res) => {
   const {orderId} = req.params;
