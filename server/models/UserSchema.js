@@ -38,8 +38,12 @@ const UserSchema = new mongoose.Schema({
         default: "active"
     },
     appointments: [{ type: mongoose.Types.ObjectId, ref: 'AppointmentModel' }],
-    orders:[{type:mongoose.Types.ObjectId,ref:'MedicineOrder'}]
-})
+    orders:[{type:mongoose.Types.ObjectId,ref:'MedicineOrder'}],
+},
+{
+timestamps:true,
+}
+)
 
 const UserModel = mongoose.model('UserModel', UserSchema);
 

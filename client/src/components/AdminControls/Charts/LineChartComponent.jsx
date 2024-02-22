@@ -24,18 +24,27 @@ export function LineChartComponent() {
                 // Fetch data for medicine orders
                 const medicineOrdersResponse = await getResponseData(`${API_ENDPOINT}/admin/getAllOrders?deliveryStatus=true`);
                 const medicineOrdersData = medicineOrdersResponse || [];
+
+                medicineOrdersData
                 const medicineOrdersCount = medicineOrdersData.length || 0;
 
-                const currentCount = (chartData.length > 0 ? chartData[chartData.length - 1]['Medicine Orders'] : 0);
+                const currentDate = new Date();
+                const currentMonthYear = `${currentDate.getMonth() }-${currentDate.getFullYear()}`;
 
-                if (medicineOrdersCount !== currentCount) {
+                const currentMonthData = chartData.find(entry => entry.date === currentMonthYear);
+
+                if (currentMonthData) {
+                    // Update existing entry for the current month
+                    currentMonthData['Medicine Orders'] = medicineOrdersCount;
+                } else {
+                    // Add a new entry for the current month
                     setChartData(prevData => [
                         ...prevData,
                         {
-                            date: new Date().toISOString(),
+                            date: currentMonthYear,
                             'Medicine Orders': medicineOrdersCount,
                         },
-                    ].slice(-10)); // Adjust this value based on your needs
+                    ]);
                 }
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -44,7 +53,7 @@ export function LineChartComponent() {
 
         fetchData();
 
-        const intervalId = setInterval(fetchData, 1 * 60 *60* 1000);
+        const intervalId = setInterval(fetchData, 1 * 60 * 60 * 1000);
 
         return () => clearInterval(intervalId);
     }, [token, API_ENDPOINT, chartData]);
@@ -59,9 +68,10 @@ export function LineChartComponent() {
             categories={['Medicine Orders']}
             colors={['lime']}
             valueFormatter={dataFormatter}
-            yAxisWidth={100} 
-            xAxisLabel="Time"
-            yAxisLabel="Number of Orders"  
+            yAxisWidth={100}
+            showXAxis={true}
+            showYAxis={true}
+            intervalType="month" // Assuming you want to show data for each month
             onValueChange={(v) => console.log(v)}
         />
     );

@@ -53,9 +53,7 @@ export function BarChartComponent() {
             index="date"
             categories={['Registrations']}
             colors={['teal']}
-            valueFormatter={dataFormatter}
-            xAxisLabel="Time"  
-            yAxisLabel="Number of Registrations"  
+            valueFormatter={dataFormatter} 
             yAxisWidth={100}
             onValueChange={(v) => console.log(v)}
         />
