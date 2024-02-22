@@ -112,9 +112,9 @@ exports.manageSlots = async (req, res) => {
 
 exports.addBio = async (req, res) => {
     const { id } = req.user;
-    const { bio } = req.body;
+    const { bio, ticketPrice } = req.body;
     try {
-        const doctor = await Doctor.findByIdAndUpdate(id, { bio });
+        const doctor = await Doctor.findByIdAndUpdate(id, { bio, ticketPrice });
         res.status(200).send({ message: 'Bio added successfully', data: doctor, success: true });
     } catch (error) {
         console.log(error);

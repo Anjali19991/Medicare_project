@@ -32,7 +32,7 @@ const DoctorSchema = new mongoose.Schema({
     photo: {
         type: String,
     },
-    tokenPrice: {
+    ticketPrice: {
         type: Number
     },
     specialization: {

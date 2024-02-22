@@ -42,7 +42,7 @@ export const NewAppointments = () => {
             const response = await fetch(`http://localhost:3000/doctor/updateAppointment/rejected/${appointmentId}`, {
                 method: 'PUT',
                 headers: {
-                    'Authorization': `Bearer ${token}`, // Replace with your authentication token
+                    'Authorization': `Bearer ${token}`,
                 },
             });
 

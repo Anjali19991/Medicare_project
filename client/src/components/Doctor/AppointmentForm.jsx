@@ -7,6 +7,8 @@ import Cookies from 'universal-cookie'
 
 const AppointmentForm = () => {
     const location = useLocation();
+    const [doctor, setDoctor] = useState({});
+
     useEffect(() => {
         if (location.state) {
             setDoctor(location.state);
@@ -28,7 +30,6 @@ const AppointmentForm = () => {
     const cookies = new Cookies();
     const token = cookies.get('TOKEN');
 
-    const [doctor, setDoctor] = useState({});
 
 
     const handleDateChange = (date) => {
@@ -57,6 +58,7 @@ const AppointmentForm = () => {
             });
 
             if (response.ok) {
+                console.log(data.doctor);
                 const data = await response.json();
                 toast.success(data.message);
                 navigate('/appointment-history')
@@ -75,8 +77,8 @@ const AppointmentForm = () => {
 
     return (
         <div className='flex items-center justify-center min-h-[85vh]'>
-            <form onSubmit={handleSubmit} className='flex flex-col bg-gray-100 rounded-md shadow-sm w-[500px] border-2 p-4'>
-                <h1 className='text-xl text-center mb-4'>Appointment Form</h1>
+            <form onSubmit={handleSubmit} className='flex flex-col bg-gray-100 rounded-md shadow-lg w-[500px] p-6'>
+                <h1 className='text-xl text-center mb-4 font-semibold'>Appointment Form</h1>
                 <label className=''>
                     Name of the Patient:
                 </label>
@@ -167,7 +169,7 @@ const AppointmentForm = () => {
                     </label>
                 </div>
                 <label htmlFor="ticketPrice">Consultation Fee:</label>
-                <input className='my-2' name='ticketPrice' type="number" value={150} readOnly />
+                <input className='my-2 rounded-md' name='ticketPrice' type="number" value={doctor.ticketPrice} readOnly />
                 <button type="submit" id="submit-btn" className='mt-4 bg-teal-700 text-white px-4 py-2 rounded-md'>
                     Book Appointment
                 </button>

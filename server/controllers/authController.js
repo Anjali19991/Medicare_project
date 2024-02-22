@@ -120,6 +120,12 @@ exports.login = async (req, res) => {
         let user;
         if (regularUser) {
             user = regularUser;
+            if(user.isActive === 'blocked'){
+                return res.status(400).json({
+                    success:false,
+                    message:"You have been blocked by the Admin"
+                })
+            }
         } else if (doctor) {
             user = doctor;
         }

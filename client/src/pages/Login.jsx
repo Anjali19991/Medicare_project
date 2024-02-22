@@ -77,22 +77,29 @@ const Login = () => {
         },
         body: JSON.stringify({ email, password }),
       });
-      
+
       const data = await response.json();
-      cookies.set("TOKEN", data.token, {
-        path: "/",
-      });
-      setUser(data.user);
-      
-      if (data.user.role === "patient") {
-        navigate('/', { replace: true,state: data.user })
-      }
-      else if (data.user.role === "doctor") {
-        navigate('/doctordashboard', { replace: true, state: data.user })
+
+      if (data.success) {
+        cookies.set("TOKEN", data.token, {
+          path: "/",
+        });
+        setUser(data.user);
+
+        if (data.user.role === "patient") {
+          navigate('/', { replace: true, state: data.user })
+        }
+        else if (data.user.role === "doctor") {
+          navigate('/doctordashboard', { replace: true, state: data.user })
+        }
+        else {
+          navigate('/admin-dashboard', { replace: true, state: data.user })
+        }
       }
       else {
-        navigate('/admin-dashboard', { replace: true,state: data.user })
+        toast.error(data.message);
       }
+
     } catch (error) {
       console.log("Error: ", error.message);
     }
@@ -120,9 +127,8 @@ const Login = () => {
             <div className="flex items-center border-b-2 border-teal-500 py-2">
               <FaEnvelope className="text-teal-500 mr-2" />
               <input
-                className={`px-4 py-3 focus:border-teal-400 focus:outline-none border-none focus:ring-1 focus:ring-teal-600 rounded-md flex-1 ${
-                  emailError ? "border-red-500" : ""
-                }`}
+                className={`px-4 py-3 focus:border-teal-400 focus:outline-none border-none focus:ring-1 focus:ring-teal-600 rounded-md flex-1 ${emailError ? "border-red-500" : ""
+                  }`}
                 placeholder="Email"
                 type="email"
                 name="identifier"
@@ -137,9 +143,8 @@ const Login = () => {
             <div className="flex items-center border-b-2 border-teal-500 py-2 relative">
               <FaLock className="text-teal-500 mr-2" />
               <input
-                className={`px-4 py-3 focus:border-teal-400 focus:outline-none border-none focus:ring-1 focus:ring-teal-600 rounded-md flex-1 ${
-                  passwordError ? "border-red-500" : ""
-                }`}
+                className={`px-4 py-3 focus:border-teal-400 focus:outline-none border-none focus:ring-1 focus:ring-teal-600 rounded-md flex-1 ${passwordError ? "border-red-500" : ""
+                  }`}
                 placeholder="Password"
                 type={showPassword ? "text" : "password"}
                 name="password"
