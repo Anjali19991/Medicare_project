@@ -11,12 +11,20 @@ const adminRouter = require("./routes/adminRoutes.js");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 const morgan = require('morgan');
+const error = require('./middleware/error.js')
+const rfs = require('rotating-file-stream');
 
-app.use(morgan('[:date[clf]] :method :url :status :response-time ms - :res[content-length]'));
+const accessLogStream = rfs.createStream('access.log', {
+  interval: '1d',
+  path: __dirname + '/log'
+})
+
+app.use(morgan('[:date[clf]] :method :url :status :response-time ms - :res[content-length]', { stream: accessLogStream }));
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(error)
 
 const corsOptions = {
   origin: "http://localhost:5173",
@@ -24,7 +32,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-//routes
+
 app.use("/auth", authRouter);
 app.use("/otp", otpRouter);
 app.use("/user", userRouter);

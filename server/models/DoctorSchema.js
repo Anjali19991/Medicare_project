@@ -25,7 +25,6 @@ const DoctorSchema = new mongoose.Schema({
         type: String,
         default: 'doctor'
     },
-    //After registration should fill these details
     phone: {
         type: String
     },
