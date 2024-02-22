@@ -31,14 +31,9 @@ exports.updateDoctor = async (req, res) => {
 exports.getAllDoctors = async (req, res) => {
     try {
         const { isApproved } = req.query;
+        console.log(isApproved);
 
-        let filter = {};
-
-        if (isApproved) {
-            filter = { isApproved };
-        }
-
-        const doctors = await Doctor.find(filter).populate({
+        const doctors = await Doctor.find({ isApproved }).populate({
             path: 'reviews',
             populate: {
                 path: 'user',
