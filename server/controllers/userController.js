@@ -23,8 +23,6 @@ exports.getAllUsers = async (req, res) => {
     }
 };
 
-
-
 exports.getUserDetails = async (req, res) => {
     console.log(req.user)
     const { id } = req.user;
