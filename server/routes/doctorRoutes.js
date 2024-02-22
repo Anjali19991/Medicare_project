@@ -5,7 +5,7 @@ const auth = require('../middleware/auth')
 
 router.get('/profile/:id', doctorController.getDoctorDetails);
 router.get('/getdoctor/:id', doctorController.getDoctorDetails);
-router.put('/updateDoctor', doctorController.updateDoctor);
+router.put('/updateDoctor',auth, doctorController.updateDoctor);
 router.get('/getalldoctors', doctorController.getAllDoctors);
 router.put('/updateAppointment/:status/:appointid', auth, doctorController.updateAppointment)
 router.post('/manageslots', auth, doctorController.manageSlots)

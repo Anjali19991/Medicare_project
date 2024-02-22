@@ -7,7 +7,7 @@ const MedicineDeliveryStatus = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [deliveredFilter, setDeliveredFilter] = useState(false);
+  const [deliveredFilter, setDeliveredFilter] = useState(null); // Change initial state to null
   const API_ENDPOINT = 'http://localhost:3000';
   const { token } = useAuth();
 
@@ -19,8 +19,8 @@ const MedicineDeliveryStatus = () => {
       try {
         let ordersEndpoint = `${API_ENDPOINT}/admin/getAllOrders`;
 
-        if (deliveredFilter) {
-          ordersEndpoint += `?deliveryStatus=true`;
+        if (deliveredFilter !== null) {
+          ordersEndpoint += `?deliveryStatus=${deliveredFilter === 'undelivered' ? false : true}`;
         }
 
         const response = await fetch(ordersEndpoint, {
@@ -79,6 +79,7 @@ const MedicineDeliveryStatus = () => {
       if (!response.ok) {
         throw new Error(`Failed to update delivery status. Status: ${response.status}`);
       }
+
       setOrders((prevOrders) =>
         prevOrders.map((order) =>
           order._id === orderId ? { ...order, deliveryStatus: true } : order
@@ -92,6 +93,7 @@ const MedicineDeliveryStatus = () => {
     }
   };
 
+
   return (
     <div className="min-h-screen p-2">
       <h2 className="text-3xl font-bold text-teal-800 mb-4">Medicine Delivery Status</h2>
@@ -101,12 +103,16 @@ const MedicineDeliveryStatus = () => {
           <label className="text-teal-700 font-semibold ml-4 mr-2">Filter Status:</label>
           <select
             className="p-2 pr-7 border border-teal-400 rounded-md focus:outline-none focus:ring focus:border-teal-500"
-            value={deliveredFilter ? 'delivered' : 'undelivered'}
-            onChange={(e) => setDeliveredFilter(e.target.value === 'delivered')}
+            value={deliveredFilter !== null ? deliveredFilter.toString() : 'all'}
+            onChange={(e) => setDeliveredFilter(e.target.value !== 'all' ? e.target.value : null)}
           >
+            <option value="all">All</option>
             <option value="undelivered">Yet to Deliver</option>
             <option value="delivered">Delivered</option>
           </select>
+
+
+           
         </div>
       </div>
 
@@ -165,9 +171,6 @@ const MedicineDeliveryStatus = () => {
       </table>
     </div>
   );
-
-
-
 };
 
 export default MedicineDeliveryStatus;
