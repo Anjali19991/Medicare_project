@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../AuthContext";
 import { PiUserCircleLight } from "react-icons/pi";
+import { toast } from 'react-toastify';
 
 export const Profile = () => {
   const { user, token, setUser } = useAuth();
@@ -47,11 +48,11 @@ export const Profile = () => {
       console.log(data);
       if (response.ok) {
         setUser((prevUser) => ({ ...prevUser, ...newUser }));
-        alert("Updated User");
+        toast.success("Updated Profile Details")
       } else {
+        toast.error("Failed to update profile details")
         console.log("User Update Failed");
       }
-      alert("Updated User");
     } catch (error) {
       console.log(error);
       console.log("User Update Failed");
@@ -107,7 +108,7 @@ export const Profile = () => {
               <input
                 type="text"
                 name="phone"
-                value={user.phone ? user.phone : newUser.phone}
+                value={newUser.phone}
                 placeholder="Enter Your Phone Number"
                 className="px-4 py-2 border-1 rounded-md  w-64"
                 onChange={(e) => handleInputChange(e)}
@@ -119,7 +120,7 @@ export const Profile = () => {
               </label>
               <select
                 name="gender"
-                value={user.gender ? user.gender : newUser.gender}
+                value={newUser.gender}
                 className="px-4 py-2 border-1 rounded-md  w-64"
                 onChange={(e) => handleInputChange(e)}
               >
@@ -135,7 +136,7 @@ export const Profile = () => {
               </label>
               <select
                 name="bloodType"
-                value={user.bloodType ? user.bloodType : newUser.bloodType}
+                value={newUser.bloodType}
                 className="px-4 py-2 border-1 rounded-md  w-64"
                 onChange={(e) => handleInputChange(e)}
               >
