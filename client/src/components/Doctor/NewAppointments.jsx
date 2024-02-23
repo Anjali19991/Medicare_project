@@ -17,7 +17,7 @@ export const NewAppointments = () => {
     const token = cookies.get('TOKEN');
     const handleAccept = async (appointmentId) => {
         try {
-            const response = await fetch(`http://localhost:3000/doctor/updateAppointment/accepted/${appointmentId}`, {
+            const response = await fetch(`http://localhost:3000/doctor/updateAppointment/approved/${appointmentId}`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -25,6 +25,8 @@ export const NewAppointments = () => {
             });
 
             if (response.ok) {
+                const data = await response.json();
+                console.log(data.doctor)
                 toast.success('Appointment Accepted Successfully');
             } else {
                 // Handle error response
@@ -46,7 +48,8 @@ export const NewAppointments = () => {
             });
 
             if (response.ok) {
-                // Update the UI or show a success message
+                const data = await response.json();
+                console.log(data.doctor)
                 toast.success('Appointment Rejected Successfully');
             } else {
                 // Handle error response
@@ -66,7 +69,7 @@ export const NewAppointments = () => {
                 user && user.appointments.length !== 0 ? (
                     <div>
                         <ul>
-                            {user.appointments.map((appointment) => (
+                            {user.appointments.filter((appointment) => appointment.status === 'pending').map((appointment) => (
                                 <li key={appointment._id} className="mb-4 p-4 flex flex-col bg-gray-100 gap-2 border rounded shadow-md">
                                     <div className='flex items-center justify-between'>
                                         <p>Booked On: {new Date(appointment.createdAt).toLocaleString()}</p>

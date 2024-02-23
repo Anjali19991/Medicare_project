@@ -40,6 +40,7 @@ import SlotManager from "./components/Doctor/SlotManager.jsx";
 import { NewAppointments } from "./components/Doctor/NewAppointments.jsx";
 import AppointmentForm from "./components/Doctor/AppointmentForm.jsx";
 import MedicineDeliveryStatus from "./components/AdminControls/MedicineDeliveryStatus.jsx"
+import { ApprovedAppointments } from "./components/Doctor/ApprovedAppointments.jsx";
 
 const store = configureStore({
   reducer: {
@@ -149,6 +150,10 @@ const router = createBrowserRouter([
         path: "/newappointments",
         element: <NewAppointments />,
         errorElement: <Error />,
+      },
+      {
+        path: "/approvedappointments",
+        element:<ApprovedAppointments />
       },
       {
         path: "/pastappointments",

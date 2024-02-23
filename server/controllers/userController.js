@@ -74,6 +74,7 @@ exports.bookappointment = async (req, res) => {
     console.log(req.body);
     console.log(req.user);
     const { name, gender, age, problem, doctorId, ticketPrice, selectedDate, selectedTime } = req.body;
+    console.log(req.body)
     const { id } = req.user;
 
     try {

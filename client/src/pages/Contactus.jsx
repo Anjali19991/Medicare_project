@@ -47,7 +47,7 @@ const ContactUs = () => {
           <span className="mx-auto flex items-center justify-center mt-2 text-sm text-gray-300">
               Copyright ©
              <span className="text-teal-600 font-semibold">
-              <img src="MEDICARE-logos_white.png" alt="" className="w-40" />  
+              <img src="MEDICARE-logos_white.png" alt="" className="mx-2 w-32" />  
             </span>   
           </span>
         </p>

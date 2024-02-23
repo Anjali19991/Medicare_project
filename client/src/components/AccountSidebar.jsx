@@ -70,7 +70,7 @@ export const AccountSidebar = () => {
 
                                     <Link
                                         className="flex items-center px-3 py-2 text-gray-300 transition-colors duration-300 transform rounded-lg  hover:bg-gray-100  hover:text-gray-700"
-                                        to="/pastappointments"
+                                        to="/approvedappointments"
                                     >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -87,7 +87,7 @@ export const AccountSidebar = () => {
                                             />
                                         </svg>
                                         <span className="mx-2 text-sm font-medium">
-                                            Past Appointments
+                                            Accepted Appointments
                                         </span>
                                     </Link>
 

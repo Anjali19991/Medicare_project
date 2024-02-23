@@ -3,6 +3,11 @@ const router = express.Router()
 const auth = require('../middleware/auth.js')
 const userController = require('../controllers/userController.js')
 
+
+const error = require('../middleware/error')
+
+router.use(error);
+
 router.get('/getAllUsers',auth,userController.getAllUsers)
 router.get('/getuser', auth, userController.getUserDetails)
 router.put('/updateprofile', auth, userController.updateUser)

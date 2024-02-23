@@ -2,6 +2,9 @@ const express = require('express');
 const adminController = require('../controllers/adminController')
 const router = express.Router();
 const auth = require('../middleware/auth')
+const error = require('../middleware/error')
+
+router.use(error);
 
 router.put('/approvedoctor/:docId', auth, adminController.approve)
 router.put('/canceldoctor/:docId', auth, adminController.cancel)

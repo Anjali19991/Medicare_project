@@ -31,7 +31,7 @@ exports.updateDoctor = async (req, res) => {
         res.status(500).json({ success: false, message: "Failed to Update" });
     }
 }
-exports.getAllDoctors = async (req, res) => {
+exports.getAllConsultDoctors = async (req, res) => {
     try {
         const { isApproved } = req.query;
         console.log(isApproved);
@@ -44,10 +44,39 @@ exports.getAllDoctors = async (req, res) => {
                 select: 'name email photo'
             }
         });
+        console.log(doctors);
         res.status(200).json({ success: true, data: doctors });
     } catch (error) {
         console.log("Error fetching doctors:", error);
         res.status(500).json({ success: false, message: "Failed to fetch doctors" });
+    }
+};
+
+
+exports.getAllDoctors = async (req, res) => {
+    try {
+
+        const { isApproved } = req.query;
+
+        let filter = {};
+
+        if (isApproved) {
+            filter = { isApproved };
+        }
+
+        const doctors = await Doctor.find(filter).populate({
+            path: 'reviews',
+            populate: {
+                path: 'user',
+                model: 'UserModel',
+                select: 'name email photo'
+            }
+        });
+
+        res.status(200).json({ success: true, data: doctors });
+    } catch (error) {
+        console.log("Error fetching doctors:", error);
+        res.status(500).json({ success: false, message: "Failed to fetch doctors" });
     }
 };
 
@@ -58,9 +87,17 @@ exports.updateAppointment = async (req, res) => {
     const { id } = req.user;
     const { appointid, status } = req.params;
     try {
+        const doctor = await Doctor.findById(id).select("-password").populate({
+            path: 'appointments',
+            model: 'AppointmentModel',
+            populate: {
+                path: 'user',
+                model: 'UserModel',
+            },
+        })
         const updatedAppointment = await Appointment.findByIdAndUpdate({ _id: appointid }, { status: status });
         console.log(updatedAppointment);
-        res.status(200).json({ success: true, message: "Appointment Updated" })
+        res.status(200).json({ success: true, message: "Appointment Updated", doctor })
     } catch (error) {
         console.log(error);
         res.status(500).json({ success: false, message: "Error In updating Appointment" });
