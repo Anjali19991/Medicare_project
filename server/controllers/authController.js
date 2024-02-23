@@ -8,6 +8,7 @@ const { uploadImage } = require('../utils/uploadImage.js')
 
 
 
+
 const SECRET = "fakhawkehqw232dasasd"
 
 const generateToken = (user) => {

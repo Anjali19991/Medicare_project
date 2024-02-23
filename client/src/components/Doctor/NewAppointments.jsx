@@ -77,7 +77,7 @@ export const NewAppointments = () => {
                                         <p className="mb-2 text-gray-700">{appointment.patientAge},{appointment.patientGender}</p>
                                     </div>
                                     <div>
-                                        Patient's Email: {appointment.user.email}
+                                        Patient's Email: {appointment.user && appointment.user.email}
                                     </div>
                                     <div className='flex justify-between items-center'>
                                         <p className="mb-2 text-gray-700 flex gap-2 items-center">Patient's Problem: {appointment.patientProblem}</p>

@@ -4,6 +4,7 @@ import { FaEnvelope, FaPhoneAlt, FaStar } from 'react-icons/fa';
 import Rating from 'react-rating-stars-component';
 import 'react-datepicker/dist/react-datepicker.css';
 import Cookies from 'universal-cookie';
+import { toast } from 'react-toastify';
 
 
 
@@ -42,7 +43,7 @@ export const Doctor = () => {
             }
         }
         console.log(location.state?.doctor);
-    }, [location.state]);
+    });
 
 
     const handleSubmit = async () => {
@@ -59,7 +60,11 @@ export const Doctor = () => {
         console.log(userRating);
         console.log(userReview)
         console.log(userRating, userReview, doctor._id)
-        if (token) {
+        if (!token || !doctor._id) {
+            toast.error("Login to write Review")
+            return;
+        }
+        else if (token) {
             try {
                 const response = await fetch('http://localhost:3000/user/writereview', {
                     method: 'POST',
@@ -73,7 +78,8 @@ export const Doctor = () => {
                 console.log(data);
                 setDoctor(data.doctor)
                 if (!data.success) {
-                    alert(data.message);
+                    navigate('/consultdoctor')
+                    toast.error(data.message)
                 }
             } catch (error) {
                 console.log(error);
@@ -90,15 +96,15 @@ export const Doctor = () => {
             <div className="flex items-start gap-8">
                 <img
                     className="w-1/3 h-full object-cover rounded-md shadow-md"
-                    src={doctor.photo || ''}
-                    alt={doctor.name}
+                    src={doctor && doctor.photo || ''}
+                    alt={doctor && doctor.name}
                 />
                 <div className="flex flex-col items-start justify-start">
                     <div className="flex items-center justify-between w-full">
                         <div>
-                            <h2 className="text-4xl font-semibold">Dr. {doctor.name}</h2>
+                            <h2 className="text-4xl font-semibold">Dr. {doctor && doctor.name}</h2>
                             <p className="text-xl font-normal my-2">
-                                {doctor.specialization},{doctor.qualification}
+                                {doctor && doctor.specialization},{doctor && doctor.qualification}
                             </p>
                         </div>
                         {averageRating > 0 ? (

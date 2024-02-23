@@ -58,7 +58,9 @@ const AppointmentForm = () => {
             });
 
             if (response.ok) {
+                
                 const data = await response.json();
+                toast.error("Login to write Review")
                 toast.success(data.message);
                 navigate('/appointment-history')
             } else {

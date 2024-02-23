@@ -155,7 +155,7 @@ exports.writeReview = async (req, res) => {
     if (role !== "patient") {
         return res.status(400).send({ message: "Only Patients can write a review for doctors", success: false });
     }
-
+    
     try {
         const user = await User.findById(id);
         const doc = await Doctor.findById(req.body.docId).select("-password").populate({
@@ -169,6 +169,11 @@ exports.writeReview = async (req, res) => {
 
         if (!user || !doc) {
             return res.status(400).send({ message: "User or Doctor not found", success: false });
+        }
+        const hasValidAppointment = doc.appointments.some(appointment => appointment.user._id.equals(user._id));
+
+        if (!hasValidAppointment) {
+            return res.status(400).send({ message: "You can only write a review for a doctor if you have booked an appointment", success: false });
         }
 
         const { userRating, userReview, docId } = req.body;

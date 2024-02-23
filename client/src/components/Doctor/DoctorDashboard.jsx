@@ -33,16 +33,7 @@ export const DoctorDashboard = () => {
                 const doctorDetails = await getResponseData(`${API_ENDPOINT}/doctor/getdoctor/:_id`);
                 console.log(doctorDetails.doctor)
 
-                // const pendingAppointments = await getResponseData(`${API_ENDPOINT}/doctor/getAllAppointments?status=pending`);
-                // const approvedAppointments = await getResponseData(`${API_ENDPOINT}/doctor/getAllAppointments?status=approved`);
-                // const earnings = await getResponseData(`${API_ENDPOINT}/doctor/getEarnings`);
-
-                // setAppointments({
-                //     totalAppointments: allAppointments.data?.length || 0,
-                //     pendingAppointments: pendingAppointments.data?.length || 0,
-                //     approvedAppointments: approvedAppointments.data?.length || 0,
-                //     earnings: earnings.total || 0,
-                // });
+              
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
