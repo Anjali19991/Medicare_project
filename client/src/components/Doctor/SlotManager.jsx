@@ -6,7 +6,7 @@ import { MdDelete } from "react-icons/md";
 import { toast } from 'react-toastify';
 
 const SlotManager = () => {
-    const { user } = useAuth();
+    const { user,setUser } = useAuth();
     const location = useLocation();
     console.log(location.state);
 
@@ -62,6 +62,7 @@ const SlotManager = () => {
             if (response.ok) {
                 const data = await response.json();
                 toast.success(data.message);
+                // setUser(data.doctor);
                 console.log(data);
             }
             else {
@@ -96,6 +97,7 @@ const SlotManager = () => {
             if (response.ok) {
                 const data = await response.json();
                 toast.success(data.message);
+                setUser(data.doctor)
                 console.log(data);
             } else {
                 const errorData = await response.json();
@@ -166,7 +168,7 @@ const SlotManager = () => {
                             setbio(e.target.value)
                         }} name="id-textarea" placeholder="Write your bio" className="resize-none relative w-full h-[15rem] px-4 py-2 text-sm placeholder-transparent transition-all border-b outline-none focus-visible:outline-none peer border-slate-200 text-slate-500 autofill:bg-white  focus:border-green-500 focus:outline-none invalid:focus:border-pink-500 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400">
                         </textarea>
-                        <label for="id-textarea" className="cursor-text peer-focus:cursor-default absolute left-2 -top-2 z-[1] px-2 text-xs text-slate-400 transition-all before:absolute before:top-0 before:left-0 before:z-[-1] before:block before:h-full before:w-full before:bg-white before:transition-all peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-sm peer-required:after:text-pink-500 peer-required:after:content-['00a0*']  peer-focus:-top-2 peer-focus:text-xs peer-focus:text-green-500 peer-invalid:peer-focus:text-pink-500 peer-disabled:cursor-not-allowed peer-disabled:text-slate-400 peer-disabled:before:bg-transparent">Write your Bio</label>
+                        <label htmlFor="id-textarea" className="cursor-text peer-focus:cursor-default absolute left-2 -top-2 z-[1] px-2 text-xs text-slate-400 transition-all before:absolute before:top-0 before:left-0 before:z-[-1] before:block before:h-full before:w-full before:bg-white before:transition-all peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-sm peer-required:after:text-pink-500 peer-required:after:content-['00a0*']  peer-focus:-top-2 peer-focus:text-xs peer-focus:text-green-500 peer-invalid:peer-focus:text-pink-500 peer-disabled:cursor-not-allowed peer-disabled:text-slate-400 peer-disabled:before:bg-transparent">Write your Bio</label>
                         <button className='bg-blue-500 px-4 py-2 text-white rounded-md block mx-auto' onClick={handleBioAndPrice}>Submit</button>
                     </div>
                 </div>

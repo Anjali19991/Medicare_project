@@ -47,7 +47,7 @@ const Users = () => {
     };
 
     fetchUsers();
-  }, [filterStatus, token]);
+  }, [filterStatus, token,users]);
 
 
 
@@ -116,7 +116,7 @@ const Users = () => {
         </div>
       </div>
 
-      {loading && <p className="text-teal-700">Loading...</p>}
+      {/* {loading && <p className="text-teal-700">Loading...</p>} */}
       {error && <p className="text-red-500">Error: {error}</p>}
 
       <table className="min-w-full border ">

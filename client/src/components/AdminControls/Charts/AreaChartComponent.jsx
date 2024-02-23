@@ -21,7 +21,6 @@ export function AreaChartComponent() {
                     return data;
                 };
 
-                // Fetch data for medicine orders
                 const medicineOrdersResponse = await getResponseData(`${API_ENDPOINT}/admin/getAllOrders?deliveryStatus=true`);
                 const medicineOrdersData = medicineOrdersResponse || [];
                 const medicineOrdersCount = medicineOrdersData.length || 0;
@@ -30,26 +29,22 @@ export function AreaChartComponent() {
                 // Get the current timestamp
                 const timestamp = Date.now();
 
-                // Update areaChartData with timestamp and count data
                 setAreaChartData(prevData => [
-                    ...prevData,
+                    // ...prevData,
                     {
                         time: timestamp,
                         name: 'Medicine Orders',
                         Count: medicineOrdersCount,
                     },
-                    // Repeat the above pattern for other data categories
                 ]);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
 
-        // Fetch data initially
         fetchData();
 
-        // Set up an interval to fetch data every 2-3 hours
-        const intervalId = setInterval(fetchData, 2 *5*5 * 1000); 
+        const intervalId = setInterval(fetchData, 1 *60*60 * 1000); 
 
         // Clear the interval when the component is unmounted
         return () => clearInterval(intervalId);

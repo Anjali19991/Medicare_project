@@ -20,7 +20,7 @@ const AppointmentForm = () => {
         age: 0,
         problem: '',
         selectedDate: new Date(),
-        ticketPrice: doctor && doctor.ticketPrice,
+        ticketPrice: doctor && doctor.ticketPrice || 0,
         selectedTime: '',
         doctorId: location.state ? location.state._id : ''
     });

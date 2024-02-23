@@ -27,7 +27,7 @@ export function BarChartComponent() {
                 const registrationsCount = registrationsData.users?.length || 0;
 
                 setChartData(prevData => [
-                    ...prevData,
+                    // ...prevData,
                     {
                         date: new Date().toISOString(),
                         'Registrations': registrationsCount,

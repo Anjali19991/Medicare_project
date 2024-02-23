@@ -4,12 +4,13 @@ const User = require('../models/UserSchema.js');
 const OTP = require('../models/OtpSchema.js');
 const Doctor = require('../models/DoctorSchema.js')
 const { uploadImage } = require('../utils/uploadImage.js')
+require('dotenv').config();
 
 
 
 
 
-const SECRET = "fakhawkehqw232dasasd"
+const SECRET = process.env.SECRET;
 
 const generateToken = (user) => {
     return jwt.sign({ id: user._id, role: user.role }, SECRET, {
@@ -17,14 +18,7 @@ const generateToken = (user) => {
     })
 }
 
-// const hashedPass = async()=>{
-//     const hashedPass = await bcrypt.hash("Admin@123", 10);
-//     console.log(hashedPass);
-// }
-
-// hashedPass();
-
-
+   
 exports.signup = async (req, res) => {
     try {
         console.log(req.body);

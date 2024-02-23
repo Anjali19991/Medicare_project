@@ -76,7 +76,7 @@ exports.getAllDoctors = async (req, res) => {
         res.status(200).json({ success: true, data: doctors });
     } catch (error) {
         console.log("Error fetching doctors:", error);
-        res.status(500).json({ success: false, message: "Failed to fetch doctors" });
+        res.status(500).json({ success: false, message: "Failed to fetch doctors" });
     }
 };
 
@@ -133,7 +133,7 @@ exports.manageSlots = async (req, res) => {
         const doctor = await Doctor.findById(doctorId);
         doctor.timeSlots = daySlots;
         await doctor.save();
-        res.status(200).json({ message: 'Slots added successfully' });
+        res.status(200).json({ message: 'Slots added successfully', doctor });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });

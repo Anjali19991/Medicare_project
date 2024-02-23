@@ -10,7 +10,6 @@ const doctorRouter = require("./routes/doctorRoutes.js");
 const adminRouter = require("./routes/adminRoutes.js");
 require("dotenv").config();
 const morgan = require('morgan');
-// const error = require('./middleware/error.js')
 const rfs = require('rotating-file-stream');
 
 const accessLogStream = rfs.createStream('access.log', {
@@ -23,7 +22,6 @@ app.use(morgan('[:date[clf]] :method :url :status :response-time ms - :res[conte
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// app.use(error)
 
 const corsOptions = {
   origin: "http://localhost:5173",

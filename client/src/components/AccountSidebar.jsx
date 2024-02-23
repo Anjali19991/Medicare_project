@@ -306,12 +306,12 @@ export const AccountSidebar = () => {
                         <div className="mt-6">
                             <div className="flex items-center justify-between mt-6">
                                 <a to="#" className="flex items-center gap-x-2">
-                                    {user ? (
+                                {user && user.role==='patient' || user.role==='doctor' ? (
                                         <img src={user.photo} className='rounded-full border-white border-2 w-11 h-11' alt='profile-pic' />
                                     ) : (
-                                        <PiUserCircleLight className='w-10 h-10' />
-                                    )}
-                                    <span className="text-sm font-medium text-gray-700 dark:text-gray-200">{user ? user.name : ""}</span>
+                                        <PiUserCircleLight className='w-10 h-10 text-white' />
+                                    )}                          
+                                <span className="text-sm font-medium text-gray-700 dark:text-gray-200">{user ? user.name : ""}</span>
                                 </a>
 
                                 <button
