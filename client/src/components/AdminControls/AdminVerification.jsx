@@ -22,7 +22,8 @@ const AdminVerification = () => {
 
       Promise.all([
         fetch(hospitalsEndpoint).then(response => response.json()),
-        fetch(doctorsEndpoint).then(response => response.json())
+        fetch(doctorsEndpoint).then(response => response.json()),
+        console.log(doctorsEndpoint)
       ])
         .then(([hospitalsData, doctorsData]) => {
           console.log('Hospitals data:', hospitalsData);

@@ -33,10 +33,16 @@ exports.updateDoctor = async (req, res) => {
 }
 exports.getAllDoctors = async (req, res) => {
     try {
-        const { isApproved } = req.query;
-        console.log(isApproved);
 
-        const doctors = await Doctor.find({ isApproved }).populate({
+        const { isApproved } = req.query;
+
+        let filter = {};
+
+        if (isApproved) {
+            filter = { isApproved };
+        }
+
+        const doctors = await Doctor.find(filter).populate({
             path: 'reviews',
             populate: {
                 path: 'user',
@@ -44,13 +50,13 @@ exports.getAllDoctors = async (req, res) => {
                 select: 'name email photo'
             }
         });
+
         res.status(200).json({ success: true, data: doctors });
     } catch (error) {
         console.log("Error fetching doctors:", error);
         res.status(500).json({ success: false, message: "Failed to fetch doctors" });
     }
 };
-
 
 exports.updateAppointment = async (req, res) => {
     console.log(req.user)
@@ -66,7 +72,6 @@ exports.updateAppointment = async (req, res) => {
         res.status(500).json({ success: false, message: "Error In updating Appointment" });
     }
 }
-
 
 exports.getNewAppointments = async (req, res) => {
     const { id } = req.user;
@@ -87,9 +92,6 @@ exports.getNewAppointments = async (req, res) => {
         res.status(500).json({ success: false, message: "Error in fetching Appointments" })
     }
 }
-
-
-
 
 exports.manageSlots = async (req, res) => {
     const { daySlots } = req.body;

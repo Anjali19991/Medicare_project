@@ -27,7 +27,7 @@ import { ConsultDoctor } from "./components/Doctor/ConsultDoctor.jsx";
 import { DoctorRegister } from "./components/Doctor/DoctorRegister.jsx";
 import { DoctorDashboard } from "./components/Doctor/DoctorDashboard.jsx";
 import { Doctor } from "./components/Doctor/Doctor.jsx";
-import UserDashBoard from "./components/UserAccount/UserDashBoard.jsx";
+import {UserDashBoard} from "./components/UserAccount/UserDashBoard.jsx";
 import { AuthProvider } from "./AuthContext.jsx";
 import HospitalList from "./components/HospitalsList/HospitalList.jsx";
 import { AccountSidebar } from "./components/AccountSidebar.jsx";
