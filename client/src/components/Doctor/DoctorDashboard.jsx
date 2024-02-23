@@ -1,5 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useAuth } from '../../AuthContext';
+import { useEffect, useState } from 'react';
+import { FaChevronRight } from 'react-icons/fa';
+import Counter from '../Counter';
+
+
+import { useAuth } from "../../AuthContext";
 
 export const DoctorDashboard = () => {
   const { user } = useAuth();

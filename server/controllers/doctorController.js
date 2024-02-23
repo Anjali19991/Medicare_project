@@ -104,7 +104,6 @@ exports.updateAppointment = async (req, res) => {
     }
 }
 
-
 exports.getNewAppointments = async (req, res) => {
     const { id } = req.user;
     try {
@@ -124,9 +123,6 @@ exports.getNewAppointments = async (req, res) => {
         res.status(500).json({ success: false, message: "Error in fetching Appointments" })
     }
 }
-
-
-
 
 exports.manageSlots = async (req, res) => {
     const { daySlots } = req.body;

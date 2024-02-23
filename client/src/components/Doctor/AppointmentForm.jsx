@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 import Cookies from 'universal-cookie'
 
 const AppointmentForm = () => {

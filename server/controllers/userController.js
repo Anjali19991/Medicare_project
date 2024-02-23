@@ -27,7 +27,13 @@ exports.getUserDetails = async (req, res) => {
     console.log(req.user)
     const { id } = req.user;
     try {
-        const user = await User.findById({ _id: id }).select("-password")
+        const user = await User.findById({ _id: id }).select("-password").populate({
+            path:'appointments',
+            model:'AppointmentModel'
+        }).populate({
+            path:'orders',
+            model:'MedicineOrder'
+        })
         console.log(user)
         if (user) {
             return res.status(200).json({ user });

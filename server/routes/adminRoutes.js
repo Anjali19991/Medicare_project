@@ -19,4 +19,3 @@ router.put('/updateDeliveryStatus/:orderId', auth,adminController.updateMedicine
 
 module.exports = router
 
-
