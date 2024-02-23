@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FaChevronRight } from 'react-icons/fa';
 import Counter from '../Counter';
-
-
 import { useAuth } from "../../AuthContext";
 
 export const DoctorDashboard = () => {
@@ -27,11 +25,7 @@ export const DoctorDashboard = () => {
       const accepted = appointments.filter(appointment => appointment.status === 'approved').length;
       const pending = appointments.filter(appointment => appointment.status === 'pending').length;
       const rejected = appointments.filter(appointment => appointment.status === 'rejected').length;
-
-      // Calculate earnings
       const earnings = appointments.reduce((total, appointment) => total + appointment.ticketPrice, 0);
-
-      // Update state variables
       setAcceptedCount(accepted);
       setPendingCount(pending);
       setRejectedCount(rejected);
@@ -40,23 +34,40 @@ export const DoctorDashboard = () => {
   };
 
   return (
-    <div>
-      <h1>Doctor Dashboard</h1>
-      <div>
-        <h2>Accepted Appointments: {acceptedCount}</h2>
+    <div className="w-full px-4">
+      <div className="flex justify-between items-center">
+        <h1 className="text-xl font-medium">Doctor Dashboard</h1>
+        <div className="flex items-center py-2.5 gap-2 mx-5">
+          <p>Account</p>
+          <span>
+            <FaChevronRight className="text-gray-500" />
+          </span>
+          <p className="text-teal-500 underline">Dashboard</p>
+        </div>
       </div>
 
-      <div>
-        <h2>Pending Appointments: {pendingCount}</h2>
+      <div className="grid md:grid-cols-2 gap-6 grid-cols-1 my-10">
+        <div className="border border-1 rounded-md items-center justify-center gap-y-3 p-3 flex flex-col hover:border-teal-500">
+          <Counter to={acceptedCount} />
+          <p className="text-lg font-medium">Accepted Appointments</p>
+        </div>
+        <div className="border border-1 rounded-md items-center justify-center gap-y-3 p-3 flex flex-col hover:border-teal-500">
+          <Counter to={pendingCount} />
+          <p className="text-lg font-medium">Pending Appointments</p>
+        </div>
+        <div className="border border-1 rounded-md items-center justify-center gap-y-3 p-3 flex flex-col hover:border-teal-500">
+          <Counter to={rejectedCount} />
+          <p className="text-lg font-medium">Rejected Appointments</p>
+        </div>
+        <div className="border border-1 rounded-md items-center justify-center gap-y-3 p-3 flex flex-col hover:border-teal-500">
+          <Counter to={totalEarnings} />
+          <p className="text-lg font-medium">Total Earnings</p>
+        </div>
       </div>
 
-      <div>
-        <h2>Rejected Appointments: {rejectedCount}</h2>
-      </div>
-
-      <div>
-        <h2>Total Earnings: Rs {totalEarnings}</h2>
-      </div>
+      {/* <div className="flex my-20">
+    
+      </div> */}
     </div>
   );
 };
